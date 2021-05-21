@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Gomoku GUI</string>
+    <string name="gomoku_gui">Gomoku GUI</string>
+</resources>
