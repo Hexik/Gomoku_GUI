@@ -1,4 +1,15 @@
 <resources>
+    <string name="ai_black">AI plays Black</string>
+    <string name="ai_settings">AI settings</string>
+    <string name="ai_white">AI plays White</string>
     <string name="app_name">Gomoku GUI</string>
+    <string name="board">Board</string>
+    <string name="coordinates">Coordinates</string>
+    <string name="coordinates_off">Hidden coordinates</string>
+    <string name="coordinates_on">Visible coordinates</string>
     <string name="gomoku_gui">Gomoku GUI</string>
+    <string name="menu_settings">Settings</string>
+    <string name="numbered_moves">Numbered moves</string>
+    <string name="numbered_moves_off">Unordered moves</string>
+    <string name="numbered_moves_on">Show moves order</string>
 </resources>
