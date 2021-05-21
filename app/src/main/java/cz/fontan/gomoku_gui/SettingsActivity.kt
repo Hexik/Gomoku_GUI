@@ -21,7 +21,8 @@ class SettingsActivity : AppCompatActivity() {
 
         if (supportFragmentManager.findFragmentById(android.R.id.content) == null) {
             supportFragmentManager.beginTransaction()
-                .add(android.R.id.content, SettingsFragment()).commit()
+                .add(android.R.id.content, SettingsFragment())
+                .commit()
         }
     }
 
