@@ -3,6 +3,14 @@ plugins {
     id 'kotlin-android'
 }
 
+import org.ajoberstar.grgit.Grgit
+
+ext {
+        git = Grgit.open(currentDir: projectDir)
+        gitVersionName = git.describe()
+        gitVersionCode = git.tag.list().size()
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -11,8 +19,8 @@ android {
         applicationId "cz.fontan.gomoku_gui"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 1
-        versionName "0.0.1"
+        versionCode gitVersionCode
+        versionName gitVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
@@ -23,7 +31,7 @@ android {
     }
 
     applicationVariants.all { variant ->
-        variant.resValue "string", "versionName", variant.versionName
+        variant.resValue "string", "versionName", gitVersionName
     }
 
     buildTypes {
