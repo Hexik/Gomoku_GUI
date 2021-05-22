@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         binding.textView.text = NativeInterface.helloStringFromJNI("Hi from Kotlin")
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_settings) {
-            Log.d(TAG, "Setting selected")
+            Log.d(TAG, "Settings selected")
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
