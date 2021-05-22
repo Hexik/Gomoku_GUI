@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Example of a call to a native method
-        binding.textView.text = stringFromJNI("Hi from Kotlin")
+        binding.textView.text = NativeInterface.helloStringFromJNI("Hi from Kotlin")
     }
 
 
@@ -39,11 +39,35 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    external fun stringFromJNI(s :String): String
+    override fun onStart() {
+        super.onStart()
+        Log.v(TAG, "onStart")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.v(TAG, "onRestart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.v(TAG, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.v(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.v(TAG, "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.v(TAG, "onDestroy")
+    }
 
     companion object {
         // Used to load the 'native-lib' library on application startup.
