@@ -6,5 +6,9 @@
         android:id="@+id/menu_settings"
         android:title="@string/menu_settings"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/about_dialog"
+        android:title="@string/about_dialog"
+        app:showAsAction="never" />
 
 </menu>

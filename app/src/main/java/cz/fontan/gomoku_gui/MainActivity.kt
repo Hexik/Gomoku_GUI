@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
+        if (item.itemId == R.id.about_dialog) {
+            Log.d(TAG, "About")
+        }
         return super.onOptionsItemSelected(item)
     }
 

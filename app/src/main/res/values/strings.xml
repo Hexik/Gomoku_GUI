@@ -1,4 +1,5 @@
 <resources>
+    <string name="about_dialog">About</string>
     <string name="ai_black">AI plays Black</string>
     <string name="ai_settings">AI settings</string>
     <string name="ai_white">AI plays White</string>
