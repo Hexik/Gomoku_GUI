@@ -1,6 +1,7 @@
 package cz.fontan.gomoku_gui
 
 import android.os.Bundle
+import android.os.StrictMode
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 
@@ -9,7 +10,12 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-            addPreferencesFromResource(R.xml.preferences)
+            val oldPolicy = StrictMode.allowThreadDiskReads()
+            try {
+                addPreferencesFromResource(R.xml.preferences)
+            } finally {
+                StrictMode.setThreadPolicy(oldPolicy)
+            }
         }
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

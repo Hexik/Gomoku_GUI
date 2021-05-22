@@ -2,11 +2,15 @@ package cz.fontan.gomoku_gui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.os.StrictMode.VmPolicy
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
+
 
 private const val TAG = "MainActivity"
 
@@ -16,6 +20,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork() // or .detectAll() for all detectable problems
+                    .penaltyLog()
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .penaltyLog()
+                    .build()
+            )
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
