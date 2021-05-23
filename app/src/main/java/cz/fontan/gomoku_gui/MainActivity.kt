@@ -60,6 +60,8 @@ class MainActivity : AppCompatActivity() {
         }
         if (item.itemId == R.id.about_dialog) {
             Log.d(TAG, "About")
+            val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }
