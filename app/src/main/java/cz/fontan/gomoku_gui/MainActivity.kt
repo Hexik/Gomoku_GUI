@@ -69,18 +69,19 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
+
         if (item.itemId == R.id.menu_about) {
             Log.d(TAG, "About")
             val intent = Intent(this, AboutActivity::class.java)
             startActivity(intent)
         }
+
         if (item.itemId == R.id.menu_quit) {
             Log.d(TAG, "Quit")
-            if (Build.VERSION.SDK_INT < 21) {
-                finishAffinity()
-            }
             if (Build.VERSION.SDK_INT >= 21) {
                 finishAndRemoveTask()
+            } else {
+                finishAffinity()
             }
             exitProcess(0)
         }
