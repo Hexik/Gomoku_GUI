@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
+import cz.fontan.gomoku_gui.game.Engine
 import kotlin.system.exitProcess
 
 
@@ -19,6 +20,7 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var engine = Engine()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +49,13 @@ class MainActivity : AppCompatActivity() {
 
         // Example of a call to a native method
         binding.textViewDataStatus.text = NativeInterface.helloStringFromJNI("Hi from Kotlin")
+
+        // Game controlling buttons, work delegated to the Engine class
+        binding.buttonPlay.setOnClickListener { engine.startSearch() }
+        binding.buttonStop.setOnClickListener { engine.stopSearch() }
+        binding.buttonUndo.setOnClickListener { engine.undoMove() }
+        binding.buttonRedo.setOnClickListener { engine.redoMove() }
+        binding.buttonNew.setOnClickListener { engine.newGame() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
