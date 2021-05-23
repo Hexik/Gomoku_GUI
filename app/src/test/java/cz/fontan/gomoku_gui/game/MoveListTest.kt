@@ -153,4 +153,58 @@ class MoveListTest {
         }
         assert(counter == list.size())
     }
+
+    @Test
+    fun to_board_empty() {
+        val list = MoveList()
+        assert(list.toBoard(false) == "yxboard\ndone\n")
+    }
+
+    @Test
+    fun to_board_B() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.Black))
+        assert(list.toBoard(true) == "board\n1,1,2\ndone\n")
+    }
+
+    @Test
+    fun to_board_BW() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.Black))
+        list.add(Move(2, 2, EnumMove.White))
+        assert(list.toBoard(true) == "board\n1,1,1\n2,2,2\ndone\n")
+    }
+
+    @Test
+    fun to_board_BWB() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.Black))
+        list.add(Move(2, 2, EnumMove.White))
+        list.add(Move(3, 3, EnumMove.Black))
+        assert(list.toBoard(false) == "yxboard\n1,1,2\n2,2,1\n3,3,2\ndone\n")
+    }
+
+    @Test
+    fun to_board_BWBW() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.Black))
+        list.add(Move(2, 2, EnumMove.White))
+        list.add(Move(3, 3, EnumMove.Black))
+        list.add(Move(4, 4, EnumMove.White))
+        assert(list.toBoard(true) == "board\n1,1,1\n2,2,2\n3,3,1\n4,4,2\ndone\n")
+    }
+
+    @Test
+    fun to_board_BWBW_undo() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.Black))
+        list.add(Move(2, 2, EnumMove.White))
+        list.add(Move(3, 3, EnumMove.Black))
+        list.add(Move(4, 4, EnumMove.White))
+        list.undo()
+        assert(list.toBoard(true) == "board\n1,1,1\n2,2,2\n3,3,1\ndone\n")
+        list.redo()
+        assert(list.toBoard(true) == "board\n1,1,1\n2,2,2\n3,3,1\n4,4,2\ndone\n")
+    }
+
 }
