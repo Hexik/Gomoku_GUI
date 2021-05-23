@@ -1,0 +1,129 @@
+package cz.fontan.gomoku_gui.game
+
+import org.junit.Test
+
+class MoveListTest {
+
+    @Test
+    fun empty() {
+        val list = MoveList()
+        assert(list.isValid())
+        assert(list.getCurrentMove() == Move())
+        assert(list.getIndex() == -1)
+        assert(list.getLastIndex() == -1)
+        assert(list.size() == 0)
+    }
+
+    @Test
+    fun add() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.XX))
+        assert(list.getCurrentMove() == Move(1, 1, EnumMove.XX))
+        assert(list.getIndex() == 0)
+        assert(list.getLastIndex() == 0)
+        list.add(Move(2, 2, EnumMove.OO))
+        assert(list.getCurrentMove() == Move(2, 2, EnumMove.OO))
+        assert(list.getIndex() == 1)
+        assert(list.getLastIndex() == 1)
+        assert(list.size() == 2)
+    }
+
+    @Test
+    fun reset() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.XX))
+        list.add(Move(2, 2, EnumMove.OO))
+        list.reset()
+        assert(list.isValid())
+        assert(list.getCurrentMove() == Move())
+        assert(list.getIndex() == -1)
+        assert(list.getLastIndex() == -1)
+        assert(list.size() == 0)
+    }
+
+    @Test
+    fun undo() {
+        val list = MoveList()
+        list.undo()
+        list.add(Move(1, 1, EnumMove.XX))
+        list.add(Move(2, 2, EnumMove.OO))
+
+        list.undo()
+        assert(list.getCurrentMove() == Move(1, 1, EnumMove.XX))
+        assert(list.getIndex() == 0)
+        assert(list.getLastIndex() == 1)
+        list.undo()
+        assert(list.getCurrentMove() == Move())
+        assert(list.getIndex() == -1)
+        assert(list.getLastIndex() == 1)
+        assert(list.size() == 2)
+    }
+
+    @Test
+    fun redo() {
+        val list = MoveList()
+        list.undo()
+        list.add(Move(1, 1, EnumMove.XX))
+        list.add(Move(2, 2, EnumMove.OO))
+        list.undo()
+        list.undo()
+
+        list.redo()
+        assert(list.getCurrentMove() == Move(1, 1, EnumMove.XX))
+        assert(list.getIndex() == 0)
+        assert(list.getLastIndex() == 1)
+        list.redo()
+        assert(list.getCurrentMove() == Move(2, 2, EnumMove.OO))
+        assert(list.getIndex() == 1)
+        assert(list.getLastIndex() == 1)
+    }
+
+    @Test
+    fun undo_add() {
+        val list = MoveList()
+        list.undo()
+        list.add(Move(1, 1, EnumMove.XX))
+        list.add(Move(2, 2, EnumMove.OO))
+        list.add(Move(3, 3, EnumMove.XX))
+        assert(list.size() == 3)
+        list.undo()
+        list.undo()
+        assert(list.size() == 3)
+        list.add(Move(4, 4, EnumMove.OO))
+
+        assert(list.getCurrentMove() == Move(4, 4, EnumMove.OO))
+        assert(list.getIndex() == 1)
+        assert(list.getLastIndex() == 1)
+
+        list.add(Move(5, 5, EnumMove.XX))
+        assert(list.getCurrentMove() == Move(5, 5, EnumMove.XX))
+        assert(list.getIndex() == 2)
+        assert(list.getLastIndex() == 2)
+        assert(list.size() == 3)
+    }
+
+    @Test
+    fun iterate() {
+        val list = MoveList()
+        list.undo()
+        list.add(Move(1, 1, EnumMove.XX))
+        list.add(Move(2, 2, EnumMove.OO))
+        list.add(Move(3, 3, EnumMove.XX))
+        list.add(Move(4, 4, EnumMove.OO))
+        list.add(Move(5, 5, EnumMove.XX))
+        assert(list.getCurrentMove() == Move(5, 5, EnumMove.XX))
+        assert(list.getIndex() == 4)
+        assert(list.getLastIndex() == 4)
+        assert(list.size() == 5)
+        for (it in list) {
+            assert(it != Move())
+        }
+        list.rewind()
+        var counter = 0
+        for (it in list) {
+            assert(it != Move())
+            ++counter
+        }
+        assert(counter == list.size())
+    }
+}
