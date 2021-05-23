@@ -1,6 +1,7 @@
 package cz.fontan.gomoku_gui
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -10,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
+import kotlin.system.exitProcess
 
 
 private const val TAG = "MainActivity"
@@ -58,10 +60,20 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
-        if (item.itemId == R.id.about_dialog) {
+        if (item.itemId == R.id.menu_about) {
             Log.d(TAG, "About")
             val intent = Intent(this, AboutActivity::class.java)
             startActivity(intent)
+        }
+        if (item.itemId == R.id.menu_quit) {
+            Log.d(TAG, "Quit")
+            if (Build.VERSION.SDK_INT < 21) {
+                finishAffinity()
+            }
+            if (Build.VERSION.SDK_INT >= 21) {
+                finishAndRemoveTask()
+            }
+            exitProcess(0)
         }
         return super.onOptionsItemSelected(item)
     }

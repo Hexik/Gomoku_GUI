@@ -31,6 +31,7 @@
     <string name="numbered_moves">Numbered moves</string>
     <string name="numbered_moves_off">Unordered moves</string>
     <string name="numbered_moves_on">Show moves order</string>
+    <string name="quit">Quit</string>
     <string name="speed">N/s</string>
     <string name="status">Status</string>
     <string name="sw_name">SW name</string>
