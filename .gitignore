@@ -4,6 +4,8 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/app/debug/output-metadata.json
+/app/release/output-metadata.json
 /build
 /captures
 .cxx

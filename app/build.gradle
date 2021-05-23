@@ -6,9 +6,9 @@ plugins {
 import org.ajoberstar.grgit.Grgit
 
 ext {
-        git = Grgit.open(currentDir: projectDir)
-        gitVersionName = git.describe()
-        gitVersionCode = git.tag.list().size()
+    git = Grgit.open(currentDir: projectDir)
+    gitVersionName = git.describe()
+    gitVersionCode = git.tag.list().size()
 }
 
 android {

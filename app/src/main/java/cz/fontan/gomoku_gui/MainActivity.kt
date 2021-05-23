@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Example of a call to a native method
-        binding.textView.text = NativeInterface.helloStringFromJNI("Hi from Kotlin")
+        binding.textViewDataStatus.text = NativeInterface.helloStringFromJNI("Hi from Kotlin")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
