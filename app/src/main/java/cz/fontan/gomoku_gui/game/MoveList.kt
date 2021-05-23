@@ -3,7 +3,7 @@ package cz.fontan.gomoku_gui.game
 const val BOARD_SIZE = 15
 
 enum class EnumMove {
-    Empty, XX, OO, Block
+    Empty, Black, White, Wall
 }
 
 class Move(val x: Int = 0, val y: Int = 0, val type: EnumMove = EnumMove.Empty) {
