@@ -28,6 +28,33 @@ class MoveListTest {
         assert(list.size() == 2)
     }
 
+    @Test(expected = IllegalArgumentException::class)
+    fun add_empty_move() {
+        val list = MoveList()
+        list.add(Move())
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun add_bad_W_move() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.White))
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun add_bad_BB_move() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.Black))
+        list.add(Move(2, 2, EnumMove.Black))
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun add_bad_BWW_move() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.Black))
+        list.add(Move(2, 2, EnumMove.White))
+        list.add(Move(3, 3, EnumMove.White))
+    }
+
     @Test
     fun reset() {
         val list = MoveList()

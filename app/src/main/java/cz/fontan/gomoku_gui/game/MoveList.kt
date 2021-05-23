@@ -65,7 +65,15 @@ class MoveList : Iterator<Move> {
     }
 
     fun add(move: Move) {
+        // move type validation
+        // odd moves are Black, even are White
+        when (move.type) {
+            EnumMove.Black -> require(currentMoveIndex % 2 != 0)
+            EnumMove.White -> require(currentMoveIndex % 2 == 0)
+            else -> require(false)
+        }
         require(isValid())
+
         when (currentMoveIndex) {
             moveList.size - 1 -> {
                 moveList.add(move)
