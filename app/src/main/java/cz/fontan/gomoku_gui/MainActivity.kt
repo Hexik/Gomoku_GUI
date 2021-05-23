@@ -50,12 +50,38 @@ class MainActivity : AppCompatActivity() {
         // Example of a call to a native method
         binding.textViewDataStatus.text = NativeInterface.helloStringFromJNI("Hi from Kotlin")
 
+        // Preset buttons
+        stoppedModeButtons()
+
         // Game controlling buttons, work delegated to the Engine class
-        binding.buttonPlay.setOnClickListener { engine.startSearch() }
-        binding.buttonStop.setOnClickListener { engine.stopSearch() }
+        binding.buttonPlay.setOnClickListener {
+            playModeButtons()
+            engine.startSearch()
+        }
+        binding.buttonStop.setOnClickListener {
+            stoppedModeButtons()
+            engine.stopSearch()
+        }
         binding.buttonUndo.setOnClickListener { engine.undoMove() }
         binding.buttonRedo.setOnClickListener { engine.redoMove() }
         binding.buttonNew.setOnClickListener { engine.newGame() }
+    }
+
+    private fun playModeButtons() {
+        binding.buttonPlay.isEnabled = false
+        binding.buttonStop.isEnabled = true
+        binding.buttonRedo.isEnabled = false
+        binding.buttonUndo.isEnabled = false
+        binding.buttonNew.isEnabled = false
+    }
+
+    private fun stoppedModeButtons() {
+        binding.buttonPlay.isEnabled = true
+        binding.buttonStop.isEnabled = false
+        binding.buttonRedo.isEnabled = true
+        binding.buttonUndo.isEnabled = true
+        binding.buttonNew.isEnabled = true
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
