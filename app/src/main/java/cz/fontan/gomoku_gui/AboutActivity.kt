@@ -11,7 +11,6 @@ class AboutActivity : AppCompatActivity() {
         setContentView(R.layout.activity_about)
 
         // Build date from BuildConfig
-        val textViewBuildDate = findViewById(R.id.textViewAboutBuildDateValue) as TextView
-        textViewBuildDate.text = BuildConfig.BUILD_TIME
+        findViewById<TextView>(R.id.textViewAboutBuildDateValue).text = BuildConfig.BUILD_TIME
     }
 }
