@@ -103,7 +103,7 @@ class MoveList : Iterator<Move> {
     private var iteratorPtr = 0
 
     override fun hasNext(): Boolean {
-        return iteratorPtr < moveList.size
+        return iteratorPtr <= currentMoveIndex
     }
 
     override fun next(): Move {
