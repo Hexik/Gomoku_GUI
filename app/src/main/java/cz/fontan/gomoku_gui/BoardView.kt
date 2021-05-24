@@ -14,7 +14,7 @@ private const val TAG: String = "BoardView"
 
 class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    private val scaleFactor = 1.0f
+    private val kStepCount = BOARD_SIZE - 1
     private val paint = Paint()
     private var offset = 0f
     private var step = 0f
@@ -40,10 +40,33 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     }
 
     private fun drawBoard(canvas: Canvas) {
-        for (i in 0 until BOARD_SIZE) {
-            canvas.drawLine(offset + i * step, offset, offset + i * step, width - offset, paint)
-            canvas.drawLine(offset, offset + i * step, width - offset, offset + i * step, paint)
+        for (i in 0..kStepCount) {
+            canvas.drawLine(
+                offset + i * step,
+                offset,
+                offset + i * step,
+                offset + kStepCount * step,
+                paint
+            )
+            canvas.drawLine(
+                offset,
+                offset + i * step,
+                offset + kStepCount * step,
+                offset + i * step,
+                paint
+            )
         }
+    }
+
+    private fun coords2Move(x: Float, y: Float): Move {
+        return Move(
+            ((x - offset + step / 2) / step).toInt(),
+            kStepCount - ((y - offset + step / 2) / step).toInt()
+        )
+    }
+
+    private fun move2Point(move: Move): PointF {
+        return PointF(offset + move.x * step, offset + (kStepCount - move.y) * step)
     }
 
     @SuppressLint("ClickableViewAccessibility")
