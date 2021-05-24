@@ -25,22 +25,27 @@ class MoveList : Iterator<Move> {
     }
 
     fun undo() {
-        if (currentMoveIndex >= 0) {
-            --currentMoveIndex
-        }
+        require(canUndo())
+        --currentMoveIndex
         check(isValid())
+    }
+
+    fun canUndo(): Boolean {
+        return currentMoveIndex >= 0
     }
 
     fun redo() {
-        if (currentMoveIndex < lastMoveIndex) {
-            ++currentMoveIndex
-        }
+        require(canRedo())
+        ++currentMoveIndex
         check(isValid())
     }
 
+    fun canRedo(): Boolean {
+        return currentMoveIndex < lastMoveIndex
+    }
+
     fun add(move: Move) {
-        // move type validation
-        // odd moves are Black, even are White
+        // move type validation, odd moves are Black, even are White
         when (move.type) {
             EnumMove.Black -> require(currentMoveIndex % 2 != 0)
             EnumMove.White -> require(currentMoveIndex % 2 == 0)

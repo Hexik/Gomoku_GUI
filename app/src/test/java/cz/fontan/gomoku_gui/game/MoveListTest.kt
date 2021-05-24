@@ -55,6 +55,29 @@ class MoveListTest {
         list.add(Move(3, 3, EnumMove.White))
     }
 
+    @Test(expected = IllegalArgumentException::class)
+    fun undo_empty() {
+        val list = MoveList()
+        list.undo()
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun undo2_empty() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.Black))
+        list.undo()
+        list.undo()
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun redo2_empty() {
+        val list = MoveList()
+        list.add(Move(1, 1, EnumMove.Black))
+        list.undo()
+        list.redo()
+        list.redo()
+    }
+
     @Test
     fun reset() {
         val list = MoveList()
@@ -71,7 +94,6 @@ class MoveListTest {
     @Test
     fun undo() {
         val list = MoveList()
-        list.undo()
         list.add(Move(1, 1, EnumMove.Black))
         list.add(Move(2, 2, EnumMove.White))
 
@@ -89,7 +111,6 @@ class MoveListTest {
     @Test
     fun redo() {
         val list = MoveList()
-        list.undo()
         list.add(Move(1, 1, EnumMove.Black))
         list.add(Move(2, 2, EnumMove.White))
         list.undo()
@@ -108,7 +129,6 @@ class MoveListTest {
     @Test
     fun undo_add() {
         val list = MoveList()
-        list.undo()
         list.add(Move(1, 1, EnumMove.Black))
         list.add(Move(2, 2, EnumMove.White))
         list.add(Move(3, 3, EnumMove.Black))
@@ -132,7 +152,6 @@ class MoveListTest {
     @Test
     fun iterate() {
         val list = MoveList()
-        list.undo()
         list.add(Move(1, 1, EnumMove.Black))
         list.add(Move(2, 2, EnumMove.White))
         list.add(Move(3, 3, EnumMove.Black))
