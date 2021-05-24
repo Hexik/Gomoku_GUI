@@ -20,6 +20,7 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var boardView: BoardView
     private var engine = Engine()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         // Preset buttons
         stoppedModeButtons()
 
+        binding.boardView.engineDelegate = engine
         // Game controlling buttons, work delegated to the Engine class
         binding.buttonPlay.setOnClickListener {
             playModeButtons()

@@ -5,6 +5,8 @@ import android.util.Log
 private const val TAG = "Engine"
 
 class Engine {
+    private val moveList = MoveList()
+
     init {
         Log.d(TAG, "Init")
     }
@@ -27,6 +29,11 @@ class Engine {
 
     fun newGame() {
         Log.d(TAG, "New Game")
+    }
+
+    fun addMove(move: Move) {
+        require(move.isPlayable())
+        moveList.add(move)
     }
 
 

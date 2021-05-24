@@ -15,6 +15,10 @@ class Move(val x: Int = 0, val y: Int = 0, val type: EnumMove = EnumMove.Empty) 
         require(y < BOARD_SIZE)
     }
 
+    fun isPlayable(): Boolean {
+        return type == EnumMove.Black || type == EnumMove.White
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
 

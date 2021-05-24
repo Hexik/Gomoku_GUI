@@ -11,6 +11,8 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.doOnPreDraw
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
+import cz.fontan.gomoku_gui.game.Engine
+import cz.fontan.gomoku_gui.game.EnumMove
 import cz.fontan.gomoku_gui.game.Move
 
 private const val TAG: String = "BoardView"
@@ -24,6 +26,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     private var step = 0f
     private var limitLow = 0f
     private var limitHigh = 0f
+    var engineDelegate: Engine? = null
 
     init {
         // Make one time precalculation at correct time,
@@ -71,7 +74,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     private fun coords2Move(x: Float, y: Float): Move {
         return Move(
             ((x - offset + step / 2) / step).toInt(),
-            kStepCount - ((y - offset + step / 2) / step).toInt()
+            kStepCount - ((y - offset + step / 2) / step).toInt(), EnumMove.Wall
         )
     }
 
@@ -95,6 +98,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
             MotionEvent.ACTION_MOVE -> {
             }
             MotionEvent.ACTION_UP -> {
+                engineDelegate?.addMove(lastMove)
                 invalidate()
             }
         }
