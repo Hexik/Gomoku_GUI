@@ -78,25 +78,6 @@ class MoveList : Iterator<Move> {
         return moveList.size
     }
 
-    fun toBoard(stdBoard: Boolean): String {
-        require(isValid())
-
-        val sb = StringBuilder()
-        when (stdBoard) {
-            true -> sb.appendLine("board")
-            false -> sb.appendLine("yxboard")
-        }
-        rewind()
-        var player = if (currentMoveIndex % 2 == 0) 2 else 1
-        for (it in this) {
-            sb.appendLine("${it.x},${it.y},$player")
-            player = 1 + player % 2
-        }
-
-        sb.appendLine("done")
-        return sb.toString()
-    }
-
     // Simple iterator implementation
     private var iteratorPtr = 0
 

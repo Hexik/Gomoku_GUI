@@ -68,6 +68,26 @@ class Game(val dim: Int) {
         return 1 + moveList.getIndex()
     }
 
+    fun toBoard(stdBoard: Boolean): String {
+        require(moveList.isValid())
+
+        val sb = StringBuilder()
+        when (stdBoard) {
+            true -> sb.appendLine("board")
+            false -> sb.appendLine("yxboard")
+        }
+        moveList.rewind()
+        var player = if (moveList.getIndex() % 2 == 0) 2 else 1
+        for (it in moveList) {
+            sb.appendLine("${it.x},${it.y},$player")
+            player = 1 + player % 2
+        }
+
+        sb.appendLine("done")
+        return sb.toString()
+    }
+
+
     private fun deskIndex(m: Move): Int {
         return m.x + m.y * dim
     }

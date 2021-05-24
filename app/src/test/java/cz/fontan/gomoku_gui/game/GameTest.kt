@@ -87,4 +87,57 @@ class GameTest {
         game.redoMove()
     }
 
+    @Test
+    fun to_board_empty() {
+        val game = Game(BOARD_SIZE)
+        assert(game.toBoard(false) == "yxboard\ndone\n")
+    }
+
+    @Test
+    fun to_board_B() {
+        val game = Game(BOARD_SIZE)
+        game.makeMove(Move(1, 1, EnumMove.Black))
+        assert(game.toBoard(true) == "board\n1,1,2\ndone\n")
+    }
+
+    @Test
+    fun to_board_BW() {
+        val game = Game(BOARD_SIZE)
+        game.makeMove(Move(1, 1, EnumMove.Black))
+        game.makeMove(Move(2, 2, EnumMove.White))
+        assert(game.toBoard(true) == "board\n1,1,1\n2,2,2\ndone\n")
+    }
+
+    @Test
+    fun to_board_BWB() {
+        val game = Game(BOARD_SIZE)
+        game.makeMove(Move(1, 1, EnumMove.Black))
+        game.makeMove(Move(2, 2, EnumMove.White))
+        game.makeMove(Move(3, 3, EnumMove.Black))
+        assert(game.toBoard(false) == "yxboard\n1,1,2\n2,2,1\n3,3,2\ndone\n")
+    }
+
+    @Test
+    fun to_board_BWBW() {
+        val game = Game(BOARD_SIZE)
+        game.makeMove(Move(1, 1, EnumMove.Black))
+        game.makeMove(Move(2, 2, EnumMove.White))
+        game.makeMove(Move(3, 3, EnumMove.Black))
+        game.makeMove(Move(4, 4, EnumMove.White))
+        assert(game.toBoard(true) == "board\n1,1,1\n2,2,2\n3,3,1\n4,4,2\ndone\n")
+    }
+
+    @Test
+    fun to_board_BWBW_undo() {
+        val game = Game(BOARD_SIZE)
+        game.makeMove(Move(1, 1, EnumMove.Black))
+        game.makeMove(Move(2, 2, EnumMove.White))
+        game.makeMove(Move(3, 3, EnumMove.Black))
+        game.makeMove(Move(4, 4, EnumMove.White))
+        game.undoMove()
+        assert(game.toBoard(true) == "board\n1,1,2\n2,2,1\n3,3,2\ndone\n")
+        game.redoMove()
+        assert(game.toBoard(true) == "board\n1,1,1\n2,2,2\n3,3,1\n4,4,2\ndone\n")
+    }
+
 }
