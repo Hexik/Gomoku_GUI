@@ -3,6 +3,7 @@ package cz.fontan.gomoku_gui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
 import android.util.AttributeSet
@@ -49,7 +50,11 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     }
 
     private fun drawStones(canvas: Canvas) {
-
+        for (i in 0 until engineDelegate?.game?.moveCount()!!) {
+            val p = move2Point(engineDelegate?.game!![i])
+            paint.setColor(if (i % 2 != 0) Color.RED else Color.DKGRAY);
+            canvas.drawCircle(p.x, p.y, step / 2.1f, paint)
+        }
     }
 
     private fun drawBoard(canvas: Canvas) {

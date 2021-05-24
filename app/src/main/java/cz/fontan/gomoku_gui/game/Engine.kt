@@ -21,14 +21,17 @@ class Engine(private val dim: Int) {
 
     fun undoMove() {
         Log.d(TAG, "Undo")
+        game.undoMove()
     }
 
     fun redoMove() {
         Log.d(TAG, "Redo")
+        game.redoMove()
     }
 
     fun newGame() {
         Log.d(TAG, "New Game")
+        game.reset()
     }
 
     fun addMove(move: Move) {

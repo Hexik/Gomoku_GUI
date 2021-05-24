@@ -89,7 +89,6 @@ class Game(private val dim: Int) {
         return sb.toString()
     }
 
-
     private fun deskIndex(m: Move): Int {
         return m.x + m.y * dim
     }
