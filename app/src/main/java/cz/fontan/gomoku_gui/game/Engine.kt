@@ -4,8 +4,8 @@ import android.util.Log
 
 private const val TAG = "Engine"
 
-class Engine {
-    val game: Game = Game(BOARD_SIZE)
+class Engine(private val dim: Int) {
+    val game: Game = Game(dim)
 
     init {
         Log.d(TAG, "Init")

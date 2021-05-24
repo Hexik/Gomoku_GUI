@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
+import cz.fontan.gomoku_gui.game.BOARD_SIZE
 import cz.fontan.gomoku_gui.game.Engine
 import kotlin.system.exitProcess
 
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var boardView: BoardView
-    private var engine = Engine()
+    private var engine = Engine(BOARD_SIZE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
