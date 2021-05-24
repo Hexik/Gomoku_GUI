@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.PointF
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.view.doOnPreDraw
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
+import cz.fontan.gomoku_gui.game.Move
 
 private const val TAG: String = "BoardView"
 
@@ -16,21 +19,28 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
 
     private val kStepCount = BOARD_SIZE - 1
     private val paint = Paint()
+    private var lastMove = Move()
     private var offset = 0f
     private var step = 0f
+    private var limitLow = 0f
+    private var limitHigh = 0f
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        Log.d(TAG, "Size $widthMeasureSpec,$heightMeasureSpec")
+    init {
+        // Make one time precalculation at correct time,
+        // if you ask for width, height too early, the value is 0
+        doOnPreDraw {
+            Log.d(TAG, "Pred $width,$height,$offset")
+            offset = 0.05f * width
+            step = (width - 2 * offset) / kStepCount
+            limitLow = offset - step / 2
+            limitHigh = offset + kStepCount * step + step / 2
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
         Log.d(TAG, "Draw $width,$height,$offset")
 
-        val boardSide = kotlin.math.min(width, height) * scaleFactor
-        offset = 0.05f * width
-        step = (width - 2 * offset) / (BOARD_SIZE - 1)
         drawBoard(canvas)
         drawStones(canvas)
     }
@@ -75,7 +85,12 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                Log.d(TAG, "Down " + event.x.toString() + "," + event.y.toString())
+                Log.d(TAG, "Down ${event.x},${event.y}")
+                // Clip event coordinates to be max step/2 from board egdes
+                if (event.x <= limitLow || event.x >= limitHigh) return false
+                if (event.y <= limitLow || event.y >= limitHigh) return false
+                lastMove = coords2Move(event.x, event.y)
+                Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
             }
             MotionEvent.ACTION_MOVE -> {
             }
