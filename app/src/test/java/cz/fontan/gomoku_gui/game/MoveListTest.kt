@@ -202,7 +202,7 @@ class MoveListTest {
         list.add(Move(3, 3, EnumMove.Black))
         list.add(Move(4, 4, EnumMove.White))
         list.undo()
-        assert(list.toBoard(true) == "board\n1,1,1\n2,2,2\n3,3,1\ndone\n")
+        assert(list.toBoard(true) == "board\n1,1,2\n2,2,1\n3,3,2\ndone\n")
         list.redo()
         assert(list.toBoard(true) == "board\n1,1,1\n2,2,2\n3,3,1\n4,4,2\ndone\n")
     }

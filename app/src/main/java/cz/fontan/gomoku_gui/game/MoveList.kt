@@ -82,9 +82,9 @@ class MoveList : Iterator<Move> {
             false -> sb.appendLine("yxboard")
         }
         rewind()
-        var player = if (lastMoveIndex % 2 == 0) 2 else 1
+        var player = if (currentMoveIndex % 2 == 0) 2 else 1
         for (it in this) {
-            sb.append(it.x).append(',').append(it.y).append(',').append(player).appendLine()
+            sb.appendLine("${it.x},${it.y},$player")
             player = 1 + player % 2
         }
 
