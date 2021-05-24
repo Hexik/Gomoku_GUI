@@ -68,6 +68,8 @@ class Game(private val dim: Int) {
         return 1 + moveList.getIndex()
     }
 
+    operator fun get(index: Int): Move = moveList.get(index)
+
     fun toBoard(stdBoard: Boolean): String {
         require(moveList.isValid())
 

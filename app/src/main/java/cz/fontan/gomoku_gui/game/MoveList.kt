@@ -92,4 +92,8 @@ class MoveList : Iterator<Move> {
     fun rewind() {
         iteratorPtr = 0
     }
+
+    fun get(index: Int): Move {
+        return moveList[index]
+    }
 }
