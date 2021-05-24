@@ -85,6 +85,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
+        engineDelegate ?: return false
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -93,6 +94,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
                 if (event.x <= limitLow || event.x >= limitHigh) return false
                 if (event.y <= limitLow || event.y >= limitHigh) return false
                 lastMove = coords2Move(event.x, event.y)
+                if (!(engineDelegate!!.game.canMakeMove(lastMove))) return false
                 Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
             }
             MotionEvent.ACTION_MOVE -> {

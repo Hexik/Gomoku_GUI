@@ -1,9 +1,9 @@
 package cz.fontan.gomoku_gui.game
 
-class Game(val dim: Int) {
+class Game(private val dim: Int) {
     private val moveList = MoveList()
     private val desk = Array(dim * dim) { EnumMove.Empty }
-    var playerToMove = EnumMove.Black
+    var playerToMove: EnumMove = EnumMove.Black
 
     init {
         reset()
@@ -15,13 +15,13 @@ class Game(val dim: Int) {
         desk.fill(EnumMove.Empty)
     }
 
-    fun makeMove(m: Move) {
-        require(canMakeMove(m))
-
-        desk[deskIndex(m)] = playerToMove
-        moveList.add(m)
+    fun makeMove(move: Move) {
+        val localMove = Move(move.x, move.y, playerToMove)
+        require(canMakeMove(localMove))
+        desk[deskIndex(localMove)] = localMove.type
+        moveList.add(localMove)
         playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
-        check(!canMakeMove(m))
+        check(!canMakeMove(localMove))
     }
 
     fun undoMove() {

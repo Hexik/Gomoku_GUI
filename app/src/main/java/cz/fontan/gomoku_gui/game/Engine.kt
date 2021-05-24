@@ -5,7 +5,7 @@ import android.util.Log
 private const val TAG = "Engine"
 
 class Engine {
-    private val moveList = MoveList()
+    val game: Game = Game(BOARD_SIZE)
 
     init {
         Log.d(TAG, "Init")
@@ -32,8 +32,8 @@ class Engine {
     }
 
     fun addMove(move: Move) {
-        require(move.isPlayable())
-        moveList.add(move)
+        require(game.canMakeMove(move))
+        game.makeMove(move)
     }
 
 
