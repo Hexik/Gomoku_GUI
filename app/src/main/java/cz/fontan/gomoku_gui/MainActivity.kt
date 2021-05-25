@@ -65,9 +65,18 @@ class MainActivity : AppCompatActivity() {
             stoppedModeButtons()
             engine.stopSearch()
         }
-        binding.buttonUndo.setOnClickListener { engine.undoMove() }
-        binding.buttonRedo.setOnClickListener { engine.redoMove() }
-        binding.buttonNew.setOnClickListener { engine.newGame() }
+        binding.buttonUndo.setOnClickListener {
+            engine.undoMove()
+            binding.boardView.invalidate()
+        }
+        binding.buttonRedo.setOnClickListener {
+            engine.redoMove()
+            binding.boardView.invalidate()
+        }
+        binding.buttonNew.setOnClickListener {
+            engine.newGame()
+            binding.boardView.invalidate()
+        }
     }
 
     private fun playModeButtons() {
