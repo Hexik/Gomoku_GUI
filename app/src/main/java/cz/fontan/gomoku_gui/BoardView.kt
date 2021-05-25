@@ -50,11 +50,13 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     }
 
     private fun drawStones(canvas: Canvas) {
+        val oldColor = paint.color
         for (i in 0 until engineDelegate?.game?.moveCount()!!) {
             val p = move2Point(engineDelegate?.game!![i])
-            paint.setColor(if (i % 2 != 0) Color.RED else Color.DKGRAY);
+            paint.color = if (i % 2 != 0) Color.RED else Color.DKGRAY
             canvas.drawCircle(p.x, p.y, step / 2.1f, paint)
         }
+        paint.color = oldColor
     }
 
     private fun drawBoard(canvas: Canvas) {
