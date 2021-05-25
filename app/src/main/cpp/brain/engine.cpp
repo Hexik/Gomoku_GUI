@@ -45,10 +45,14 @@ std::string Engine::ReadLine() {
     return m_queueIn.pop(0);
 }
 
+void Engine::WriteLine(std::string data) {
+    m_queueOut.push(data);
+}
+
 bool Engine::CmdExecute(const std::string &cmd) {
     const auto tmpUpper = cmd;
     __android_log_write(ANDROID_LOG_DEBUG, "Exec", cmd.c_str());
-    if (tmpUpper == "about") { m_queueOut.push("ABOUT BRAIN"); }
+    if (tmpUpper == "about") { WriteLine("ABOUT BRAIN"); }
     if (tmpUpper == "end") { return false; }
 
     return true;

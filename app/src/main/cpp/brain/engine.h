@@ -62,6 +62,8 @@ public:
 
     std::string ReadLine();
 
+    void WriteLine(std::string data);
+
     /**
     *@brief Send about info
     */
