@@ -173,6 +173,10 @@ class MainActivity : AppCompatActivity(), InterfaceMain {
         return gameInstance[i]
     }
 
+    override fun isSearching(): Boolean {
+        return gameInstance.searchMode
+    }
+
     companion object {
         // Used to load the 'native-lib' library on application startup.
         init {

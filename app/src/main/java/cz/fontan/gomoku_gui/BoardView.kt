@@ -102,6 +102,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
                 if (event.x <= limitLow || event.x >= limitHigh) return false
                 if (event.y <= limitLow || event.y >= limitHigh) return false
                 lastMove = coordinates2Move(event.x, event.y)
+                if (gameDelegate?.isSearching()!!) return false
                 if (!(gameDelegate!!.canMakeMove(lastMove))) return false
                 Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
             }
