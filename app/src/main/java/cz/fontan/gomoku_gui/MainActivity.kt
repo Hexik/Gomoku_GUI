@@ -49,9 +49,6 @@ class MainActivity : AppCompatActivity(), InterfaceMain {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Example of a call to a native method
-        binding.textViewDataStatus.text = NativeInterface.helloStringFromJNI("Hi from Kotlin")
-
         binding.boardView.gameDelegate = this
 
         // Preset buttons

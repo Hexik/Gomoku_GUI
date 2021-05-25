@@ -6,8 +6,9 @@ class NativeInterface {
      * which is packaged with this application.
      */
     companion object {
-        external fun helloStringFromJNI(s: String): String
-        external fun readStringFromJNI(): String
-        external fun writeStringToJNI(s: String)
+        external fun readFromBrain(timeoutMillis: Int): String
+        external fun writeToBrain(s: String)
+        external fun startBrain(dimension: Int)
+        external fun stopBrain()
     }
 }
