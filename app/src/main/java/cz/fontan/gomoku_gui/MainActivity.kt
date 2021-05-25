@@ -13,12 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
 import cz.fontan.gomoku_gui.game.Game
+import cz.fontan.gomoku_gui.game.Move
 import kotlin.system.exitProcess
 
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), InterfaceMain {
 
     private lateinit var binding: ActivityMainBinding
     private val gameInstance = Game(BOARD_SIZE)
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         // Preset buttons
         stoppedModeButtons()
 
-        binding.boardView.gameDelegate = gameInstance
+        binding.boardView.gameDelegate = this
         // Game controlling buttons, work delegated to the Engine class
         binding.buttonPlay.setOnClickListener {
             playModeButtons()
@@ -153,6 +154,23 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.v(TAG, "onDestroy")
+    }
+
+    override fun canMakeMove(move: Move): Boolean {
+        return gameInstance.canMakeMove(move)
+    }
+
+    override fun makeMove(move: Move) {
+        gameInstance.makeMove(move)
+        stoppedModeButtons()
+    }
+
+    override fun moveCount(): Int {
+        return gameInstance.moveCount()
+    }
+
+    override fun getIthMove(i: Int): Move {
+        return gameInstance[i]
     }
 
     companion object {

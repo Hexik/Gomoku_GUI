@@ -13,7 +13,6 @@ import android.view.View
 import androidx.core.view.doOnPreDraw
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
 import cz.fontan.gomoku_gui.game.EnumMove
-import cz.fontan.gomoku_gui.game.Game
 import cz.fontan.gomoku_gui.game.Move
 
 private const val TAG: String = "BoardView"
@@ -27,7 +26,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     private var step = 0f
     private var limitLow = 0f
     private var limitHigh = 0f
-    var gameDelegate: Game? = null
+    var gameDelegate: InterfaceMain? = null
 
     init {
         // Make one time pre-calculation at correct time,
@@ -54,7 +53,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
         val oldColor = paint.color
 
         for (i in 0 until (safeDelegate.moveCount())) {
-            val p = move2Point(safeDelegate[i])
+            val p = move2Point(safeDelegate.getIthMove(i))
             paint.color = if (i % 2 != 0) Color.RED else Color.DKGRAY
             canvas.drawCircle(p.x, p.y, step / 2.1f, paint)
         }
