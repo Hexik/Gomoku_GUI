@@ -6,10 +6,6 @@
 #include "engine.h"
 
 #include <android/log.h>
-#include <future>
-#include <memory>
-#include <thread>
-#include <chrono>
 
 Engine::Engine(const int /*boardSize*/) :
         m_queueIn(), m_queueOut() {

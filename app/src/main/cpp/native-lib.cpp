@@ -1,11 +1,7 @@
+#include "brain/engine.h"
+
 #include <android/log.h>
 #include <jni.h>
-#include <string>
-#include <unistd.h>
-#include <fcntl.h>
-#include <vector>
-#include <deque>
-#include "brain/engine.h"
 
 Engine *instance = nullptr;
 

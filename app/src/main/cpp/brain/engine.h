@@ -25,8 +25,6 @@
  **/
 
 #include "lockedQueue.h"
-#include <atomic>
-#include <iostream>
 #include <string>
 #include <thread>
 
@@ -44,14 +42,7 @@ public:
     */
     explicit Engine(const int boardSize);
 
-    static Engine &GetInstance() {
-        static Engine instance(20);
-        return instance;
-    }
-
     ~Engine();
-
-    std::string GetMessage() { return "Hello from Brain"; }
 
     Engine &AddCommandsToInputQueue(const std::string &LastCommand);
 
@@ -81,7 +72,7 @@ public:
     void StopLoop();
 
     LockedQueue<std::string> m_queueIn;                    /**< input data  */
-    LockedQueue<std::string> m_queueOut;                    /**< input data  */
+    LockedQueue<std::string> m_queueOut;                   /**< output data  */
     std::thread m_runner;
     std::atomic_bool m_loopIsRunning = false;
 
