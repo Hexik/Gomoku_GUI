@@ -97,11 +97,11 @@ class Game(private val dim: Int) {
 
     operator fun get(index: Int): Move = moveList.get(index)
 
-    fun toBoard(stdBoard: Boolean): String {
+    fun toBoard(commonBoardCommand: Boolean): String {
         require(moveList.isValid())
 
         val sb = StringBuilder()
-        when (stdBoard) {
+        when (commonBoardCommand) {
             true -> sb.appendLine("board")
             false -> sb.appendLine("yxboard")
         }
