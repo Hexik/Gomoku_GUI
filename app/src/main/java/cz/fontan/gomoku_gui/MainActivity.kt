@@ -52,48 +52,43 @@ class MainActivity : AppCompatActivity(), InterfaceMain {
         // Example of a call to a native method
         binding.textViewDataStatus.text = NativeInterface.helloStringFromJNI("Hi from Kotlin")
 
-        // Preset buttons
-        stoppedModeButtons()
-
         binding.boardView.gameDelegate = this
+
+        // Preset buttons
+        updateButtons()
+
         // Game controlling buttons, work delegated to the Engine class
         binding.buttonPlay.setOnClickListener {
-            playModeButtons()
             gameInstance.startSearch()
+            updateButtons()
         }
         binding.buttonStop.setOnClickListener {
-            stoppedModeButtons()
             gameInstance.stopSearch()
+            updateButtons()
         }
         binding.buttonUndo.setOnClickListener {
             gameInstance.undoMove()
             binding.boardView.invalidate()
+            updateButtons()
         }
         binding.buttonRedo.setOnClickListener {
             gameInstance.redoMove()
             binding.boardView.invalidate()
+            updateButtons()
         }
         binding.buttonNew.setOnClickListener {
             gameInstance.newGame()
             binding.boardView.invalidate()
+            updateButtons()
         }
     }
 
-    private fun playModeButtons() {
-        binding.buttonPlay.isEnabled = false
-        binding.buttonStop.isEnabled = true
-        binding.buttonRedo.isEnabled = false
-        binding.buttonUndo.isEnabled = false
-        binding.buttonNew.isEnabled = false
-    }
-
-    private fun stoppedModeButtons() {
-        binding.buttonPlay.isEnabled = true
-        binding.buttonStop.isEnabled = false
-        binding.buttonRedo.isEnabled = true
-        binding.buttonUndo.isEnabled = true
-        binding.buttonNew.isEnabled = true
-
+    private fun updateButtons() {
+        binding.buttonPlay.isEnabled = !gameInstance.searchMode
+        binding.buttonStop.isEnabled = gameInstance.searchMode
+        binding.buttonRedo.isEnabled = !gameInstance.searchMode && gameInstance.canRedo()
+        binding.buttonUndo.isEnabled = !gameInstance.searchMode && gameInstance.canUndo()
+        binding.buttonNew.isEnabled = !gameInstance.searchMode
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -162,7 +157,7 @@ class MainActivity : AppCompatActivity(), InterfaceMain {
 
     override fun makeMove(move: Move) {
         gameInstance.makeMove(move)
-        stoppedModeButtons()
+        updateButtons()
     }
 
     override fun moveCount(): Int {
