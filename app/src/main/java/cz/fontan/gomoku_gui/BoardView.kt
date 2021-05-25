@@ -12,8 +12,8 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.doOnPreDraw
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
-import cz.fontan.gomoku_gui.game.Engine
 import cz.fontan.gomoku_gui.game.EnumMove
+import cz.fontan.gomoku_gui.game.Game
 import cz.fontan.gomoku_gui.game.Move
 
 private const val TAG: String = "BoardView"
@@ -27,13 +27,13 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     private var step = 0f
     private var limitLow = 0f
     private var limitHigh = 0f
-    var engineDelegate: Engine? = null
+    var gameDelegate: Game? = null
 
     init {
-        // Make one time precalculation at correct time,
+        // Make one time pre-calculation at correct time,
         // if you ask for width, height too early, the value is 0
         doOnPreDraw {
-            Log.d(TAG, "Pred $width,$height,$offset")
+            Log.d(TAG, "Pre $width,$height,$offset")
             offset = 0.05f * width
             step = (width - 2 * offset) / kStepCount
             limitLow = offset - step / 2
@@ -50,9 +50,11 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     }
 
     private fun drawStones(canvas: Canvas) {
+        val safeDelegate = gameDelegate ?: return
         val oldColor = paint.color
-        for (i in 0 until engineDelegate?.game?.moveCount()!!) {
-            val p = move2Point(engineDelegate?.game!![i])
+
+        for (i in 0 until (safeDelegate.moveCount())) {
+            val p = move2Point(safeDelegate[i])
             paint.color = if (i % 2 != 0) Color.RED else Color.DKGRAY
             canvas.drawCircle(p.x, p.y, step / 2.1f, paint)
         }
@@ -78,7 +80,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
         }
     }
 
-    private fun coords2Move(x: Float, y: Float): Move {
+    private fun coordinates2Move(x: Float, y: Float): Move {
         return Move(
             ((x - offset + step / 2) / step).toInt(),
             kStepCount - ((y - offset + step / 2) / step).toInt(), EnumMove.Wall
@@ -92,22 +94,22 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
-        engineDelegate ?: return false
+        gameDelegate ?: return false
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 Log.d(TAG, "Down ${event.x},${event.y}")
-                // Clip event coordinates to be max step/2 from board egdes
+                // Clip event coordinates to be max step/2 from board edges
                 if (event.x <= limitLow || event.x >= limitHigh) return false
                 if (event.y <= limitLow || event.y >= limitHigh) return false
-                lastMove = coords2Move(event.x, event.y)
-                if (!(engineDelegate!!.game.canMakeMove(lastMove))) return false
+                lastMove = coordinates2Move(event.x, event.y)
+                if (!(gameDelegate!!.canMakeMove(lastMove))) return false
                 Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
             }
             MotionEvent.ACTION_MOVE -> {
             }
             MotionEvent.ACTION_UP -> {
-                engineDelegate?.addMove(lastMove)
+                gameDelegate?.makeMove(lastMove)
                 invalidate()
             }
         }

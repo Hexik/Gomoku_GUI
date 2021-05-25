@@ -12,7 +12,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
-import cz.fontan.gomoku_gui.game.Engine
+import cz.fontan.gomoku_gui.game.Game
 import kotlin.system.exitProcess
 
 
@@ -21,8 +21,7 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var boardView: BoardView
-    private var engine = Engine(BOARD_SIZE)
+    private val gameInstance = Game(BOARD_SIZE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,26 +54,26 @@ class MainActivity : AppCompatActivity() {
         // Preset buttons
         stoppedModeButtons()
 
-        binding.boardView.engineDelegate = engine
+        binding.boardView.gameDelegate = gameInstance
         // Game controlling buttons, work delegated to the Engine class
         binding.buttonPlay.setOnClickListener {
             playModeButtons()
-            engine.startSearch()
+            gameInstance.startSearch()
         }
         binding.buttonStop.setOnClickListener {
             stoppedModeButtons()
-            engine.stopSearch()
+            gameInstance.stopSearch()
         }
         binding.buttonUndo.setOnClickListener {
-            engine.undoMove()
+            gameInstance.undoMove()
             binding.boardView.invalidate()
         }
         binding.buttonRedo.setOnClickListener {
-            engine.redoMove()
+            gameInstance.redoMove()
             binding.boardView.invalidate()
         }
         binding.buttonNew.setOnClickListener {
-            engine.newGame()
+            gameInstance.newGame()
             binding.boardView.invalidate()
         }
     }

@@ -1,18 +1,30 @@
 package cz.fontan.gomoku_gui.game
 
+import android.util.Log
+
+private const val TAG = "Game"
+
 class Game(private val dim: Int) {
     private val moveList = MoveList()
     private val desk = Array(dim * dim) { EnumMove.Empty }
     var playerToMove: EnumMove = EnumMove.Black
 
     init {
+        Log.d(TAG, "Init")
         reset()
     }
 
-    fun reset() {
-        moveList.reset()
-        playerToMove = EnumMove.Black
-        desk.fill(EnumMove.Empty)
+    fun startSearch() {
+        Log.d(TAG, "Start")
+    }
+
+    fun stopSearch() {
+        Log.d(TAG, "Stop")
+    }
+
+    fun newGame() {
+        Log.d(TAG, "New Game")
+        reset()
     }
 
     fun makeMove(move: Move) {
@@ -25,6 +37,7 @@ class Game(private val dim: Int) {
     }
 
     fun undoMove() {
+        Log.d(TAG, "Undo")
         require(moveCount() > 0)
         require(canUndo())
 
@@ -40,6 +53,7 @@ class Game(private val dim: Int) {
     }
 
     fun redoMove() {
+        Log.d(TAG, "Redo")
         require(canRedo())
 
         moveList.redo()
@@ -50,6 +64,12 @@ class Game(private val dim: Int) {
 
         playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
         check(!canMakeMove(lastMove))
+    }
+
+    fun reset() {
+        moveList.reset()
+        playerToMove = EnumMove.Black
+        desk.fill(EnumMove.Empty)
     }
 
     fun canMakeMove(m: Move): Boolean {
