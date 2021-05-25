@@ -1,31 +1,5 @@
 package cz.fontan.gomoku_gui.game
 
-const val BOARD_SIZE = 15
-
-enum class EnumMove {
-    Empty, Black, White, Wall
-}
-
-class Move(val x: Int = 0, val y: Int = 0, val type: EnumMove = EnumMove.Empty) {
-
-    init {
-        require(x >= 0)
-        require(y >= 0)
-        require(x < BOARD_SIZE)
-        require(y < BOARD_SIZE)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-
-        return (other is Move) && (x == other.x) && (y == other.y) && (type == other.type)
-    }
-
-    override fun hashCode(): Int {
-        return (x * BOARD_SIZE + y) * EnumMove.values().size + type.ordinal
-    }
-}
-
 class MoveList : Iterator<Move> {
     private var moveList: ArrayList<Move> = arrayListOf()
     private var lastMoveIndex: Int = -1
@@ -51,22 +25,27 @@ class MoveList : Iterator<Move> {
     }
 
     fun undo() {
-        if (currentMoveIndex >= 0) {
-            --currentMoveIndex
-        }
+        require(canUndo())
+        --currentMoveIndex
         check(isValid())
+    }
+
+    fun canUndo(): Boolean {
+        return currentMoveIndex >= 0
     }
 
     fun redo() {
-        if (currentMoveIndex < lastMoveIndex) {
-            ++currentMoveIndex
-        }
+        require(canRedo())
+        ++currentMoveIndex
         check(isValid())
     }
 
+    fun canRedo(): Boolean {
+        return currentMoveIndex < lastMoveIndex
+    }
+
     fun add(move: Move) {
-        // move type validation
-        // odd moves are Black, even are White
+        // move type validation, odd moves are Black, even are White
         when (move.type) {
             EnumMove.Black -> require(currentMoveIndex % 2 != 0)
             EnumMove.White -> require(currentMoveIndex % 2 == 0)
@@ -99,25 +78,6 @@ class MoveList : Iterator<Move> {
         return moveList.size
     }
 
-    fun toBoard(stdBoard: Boolean): String {
-        require(isValid())
-
-        val sb = StringBuilder()
-        when (stdBoard) {
-            true -> sb.appendLine("board")
-            false -> sb.appendLine("yxboard")
-        }
-        rewind()
-        var player = if (lastMoveIndex % 2 == 0) 2 else 1
-        for (it in this) {
-            sb.append(it.x).append(',').append(it.y).append(',').append(player).appendLine()
-            player = 1 + player % 2
-        }
-
-        sb.appendLine("done")
-        return sb.toString()
-    }
-
     // Simple iterator implementation
     private var iteratorPtr = 0
 
@@ -131,5 +91,9 @@ class MoveList : Iterator<Move> {
 
     fun rewind() {
         iteratorPtr = 0
+    }
+
+    fun get(index: Int): Move {
+        return moveList[index]
     }
 }

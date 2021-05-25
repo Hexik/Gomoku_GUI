@@ -11,16 +11,18 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
-import cz.fontan.gomoku_gui.game.Engine
+import cz.fontan.gomoku_gui.game.BOARD_SIZE
+import cz.fontan.gomoku_gui.game.Game
+import cz.fontan.gomoku_gui.game.Move
 import kotlin.system.exitProcess
 
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), InterfaceMain {
 
     private lateinit var binding: ActivityMainBinding
-    private var engine = Engine()
+    private val gameInstance = Game(BOARD_SIZE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,38 +52,43 @@ class MainActivity : AppCompatActivity() {
         // Example of a call to a native method
         binding.textViewDataStatus.text = NativeInterface.helloStringFromJNI("Hi from Kotlin")
 
+        binding.boardView.gameDelegate = this
+
         // Preset buttons
-        stoppedModeButtons()
+        updateButtons()
 
         // Game controlling buttons, work delegated to the Engine class
         binding.buttonPlay.setOnClickListener {
-            playModeButtons()
-            engine.startSearch()
+            gameInstance.startSearch()
+            updateButtons()
         }
         binding.buttonStop.setOnClickListener {
-            stoppedModeButtons()
-            engine.stopSearch()
+            gameInstance.stopSearch()
+            updateButtons()
         }
-        binding.buttonUndo.setOnClickListener { engine.undoMove() }
-        binding.buttonRedo.setOnClickListener { engine.redoMove() }
-        binding.buttonNew.setOnClickListener { engine.newGame() }
+        binding.buttonUndo.setOnClickListener {
+            gameInstance.undoMove()
+            binding.boardView.invalidate()
+            updateButtons()
+        }
+        binding.buttonRedo.setOnClickListener {
+            gameInstance.redoMove()
+            binding.boardView.invalidate()
+            updateButtons()
+        }
+        binding.buttonNew.setOnClickListener {
+            gameInstance.newGame()
+            binding.boardView.invalidate()
+            updateButtons()
+        }
     }
 
-    private fun playModeButtons() {
-        binding.buttonPlay.isEnabled = false
-        binding.buttonStop.isEnabled = true
-        binding.buttonRedo.isEnabled = false
-        binding.buttonUndo.isEnabled = false
-        binding.buttonNew.isEnabled = false
-    }
-
-    private fun stoppedModeButtons() {
-        binding.buttonPlay.isEnabled = true
-        binding.buttonStop.isEnabled = false
-        binding.buttonRedo.isEnabled = true
-        binding.buttonUndo.isEnabled = true
-        binding.buttonNew.isEnabled = true
-
+    private fun updateButtons() {
+        binding.buttonPlay.isEnabled = !gameInstance.searchMode
+        binding.buttonStop.isEnabled = gameInstance.searchMode
+        binding.buttonRedo.isEnabled = !gameInstance.searchMode && gameInstance.canRedo()
+        binding.buttonUndo.isEnabled = !gameInstance.searchMode && gameInstance.canUndo()
+        binding.buttonNew.isEnabled = !gameInstance.searchMode
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -142,6 +149,27 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.v(TAG, "onDestroy")
+    }
+
+    override fun canMakeMove(move: Move): Boolean {
+        return gameInstance.canMakeMove(move)
+    }
+
+    override fun makeMove(move: Move) {
+        gameInstance.makeMove(move)
+        updateButtons()
+    }
+
+    override fun moveCount(): Int {
+        return gameInstance.moveCount()
+    }
+
+    override fun getIthMove(i: Int): Move {
+        return gameInstance[i]
+    }
+
+    override fun isSearching(): Boolean {
+        return gameInstance.searchMode
     }
 
     companion object {

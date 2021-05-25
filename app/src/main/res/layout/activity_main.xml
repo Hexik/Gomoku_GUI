@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
 
-    <ImageView
+    <cz.fontan.gomoku_gui.BoardView
         android:id="@+id/board_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
