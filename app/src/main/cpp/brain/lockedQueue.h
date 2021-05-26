@@ -44,14 +44,14 @@ public:
     *@brief Peeks the first item, blocks if no data until timeout occurs
     *@param timeout_ms how long to wait, 0ms is blocking wait
     */
-    T front(int timeout_ms) const {
-        auto lock = std::unique_lock<std::mutex>(m_mutex);
+    T front( int timeout_ms ) const {
+        auto lock = std::unique_lock<std::mutex>( m_mutex );
 
-        if (timeout_ms == 0) {
-            m_cond_var.wait(lock, [this] { return !std::queue<T>::empty(); });
+        if ( timeout_ms == 0 ) {
+            m_cond_var.wait( lock, [this] { return !std::queue<T>::empty(); } );
         } else {
-            if (!m_cond_var.wait_for(lock, std::chrono::milliseconds(timeout_ms),
-                                     [=] { return !std::queue<T>::empty(); })) {
+            if ( !m_cond_var.wait_for( lock, std::chrono::milliseconds( timeout_ms ),
+                                       [=] { return !std::queue<T>::empty(); } )) {
                 // timeout occurred, empty data
                 return {};
             }
@@ -64,20 +64,20 @@ public:
     *@brief Pops the first item, blocks if no data until timeout occurs
     *@param timeout_ms how long to wait, 0ms is blocking wait
     */
-    T pop(int timeout_ms) {
-        auto lock = std::unique_lock<std::mutex>(m_mutex);
+    T pop( int timeout_ms ) {
+        auto lock = std::unique_lock<std::mutex>( m_mutex );
 
-        if (timeout_ms == 0) {
-            m_cond_var.wait(lock, [this] { return !std::queue<T>::empty(); });
+        if ( timeout_ms == 0 ) {
+            m_cond_var.wait( lock, [this] { return !std::queue<T>::empty(); } );
         } else {
-            if (!m_cond_var.wait_for(lock, std::chrono::milliseconds(timeout_ms),
-                                     [=] { return !std::queue<T>::empty(); })) {
+            if ( !m_cond_var.wait_for( lock, std::chrono::milliseconds( timeout_ms ),
+                                       [=] { return !std::queue<T>::empty(); } )) {
                 // timeout occurred, empty data
                 return {};
             }
         }
 
-        T ret = std::move(std::queue<T>::front());
+        T ret = std::move( std::queue<T>::front());
         std::queue<T>::pop();
         return ret;
     }
@@ -86,10 +86,10 @@ public:
     *@brief Peeks the first items, blocks if no data
     *@param item data to store
     */
-    void push(const T &item) {
+    void push( const T& item ) {
         {
-            auto lock = std::unique_lock<std::mutex>(m_mutex);
-            std::queue<T>::push(item);
+            auto lock = std::unique_lock<std::mutex>( m_mutex );
+            std::queue<T>::push( item );
         }
         m_cond_var.notify_one();
     }
@@ -98,10 +98,10 @@ public:
     *@brief Peeks the first items, blocks if no data
     *@param item data to store
     */
-    void push(T &&item) {
+    void push( T&& item ) {
         {
-            auto lock = std::unique_lock<std::mutex>(m_mutex);
-            std::queue<T>::push(std::move(item));
+            auto lock = std::unique_lock<std::mutex>( m_mutex );
+            std::queue<T>::push( std::move( item ));
         }
         m_cond_var.notify_one();
     }
@@ -110,7 +110,7 @@ public:
     *@brief Return true if empty
     */
     bool is_empty() const {
-        auto lock = std::unique_lock<std::mutex>(m_mutex);
+        auto lock = std::unique_lock<std::mutex>( m_mutex );
         return std::queue<T>::empty();
     }
 
@@ -118,20 +118,20 @@ public:
     *@brief Clear the queue
     */
     void clear() {
-        auto lock = std::unique_lock<std::mutex>(m_mutex);
-        std::queue<T>::swap(std::queue<T>());
+        auto lock = std::unique_lock<std::mutex>( m_mutex );
+        std::queue<T>::swap( std::queue<T>());
     }
 
     /**
     *@brief Returns count of items
     */
     size_t count() const {
-        auto lock = std::unique_lock<std::mutex>(m_mutex);
+        auto lock = std::unique_lock<std::mutex>( m_mutex );
         return static_cast<size_t>( std::queue<T>::size());
     }
 
 private:
-    mutable std::mutex m_mutex;    /**< sync primitive, internal state*/
+    mutable std::mutex              m_mutex;    /**< sync primitive, internal state*/
     mutable std::condition_variable m_cond_var; /**< conditional var, internal state */
 };
 
