@@ -69,8 +69,56 @@ class NativeLibrary {
         NativeInterface.startBrain(BOARD_SIZE)
         NativeInterface.writeToBrain("start 15")
         assert(NativeInterface.readFromBrain(10) == "OK")
-        NativeInterface.writeToBrain("info TIMEOUT_TURN 200\ninfo TIME_left 20000\nboard\n1,1,1\n2,2,2\ndone")
+        NativeInterface.writeToBrain(
+            """
+            |info TIMEOUT_TURN 200
+            |info TIME_left 20000
+            |board
+            |1,1,1
+            |2,2,2
+            |done
+            |end""".trimMargin()
+        )
         assert(NativeInterface.readFromBrain(10).contains(","))
+    }
+
+    @Test
+    fun single_existing_response() {
+        NativeInterface.startBrain(BOARD_SIZE)
+        NativeInterface.writeToBrain("start 5")
+        assert(NativeInterface.readFromBrain(10) == "OK")
+        NativeInterface.writeToBrain(
+            """
+            |info TIMEOUT_TURN 200
+            |info TIME_left 20000
+            |board
+            |0,0,1
+            |0,1,2
+            |0,2,1
+            |0,3,2
+            |0,4,1
+            |1,0,1
+            |1,1,2
+            |1,2,1
+            |1,3,2
+            |1,4,1
+            |2,0,2
+            |2,1,1
+            |2,2,2
+            |2,3,1
+            |2,4,2
+            |3,0,2
+            |3,1,1
+            |3,2,2
+            |3,3,1
+            |3,4,2
+            |4,0,1
+            |4,1,2
+            |4,2,1
+            |4,3,2
+            |done""".trimMargin()
+        )
+        assert(NativeInterface.readFromBrain(10) == "4,4")
     }
 
 }
