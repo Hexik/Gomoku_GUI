@@ -15,16 +15,6 @@ class Game(private val dim: Int) {
         reset()
     }
 
-    fun startSearch() {
-        Log.d(TAG, "Start")
-        searchMode = true
-    }
-
-    fun stopSearch() {
-        Log.d(TAG, "Stop")
-        searchMode = false
-    }
-
     fun newGame() {
         Log.d(TAG, "New Game")
         require(!searchMode)

@@ -10,19 +10,20 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
-import cz.fontan.gomoku_gui.game.BOARD_SIZE
-import cz.fontan.gomoku_gui.game.Game
-import cz.fontan.gomoku_gui.game.Move
+import cz.fontan.gomoku_gui.model.MainViewModel
+import cz.fontan.gomoku_gui.model.MainViewModelFactory
 import kotlin.system.exitProcess
 
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), InterfaceMain {
+class MainActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
-    private val gameInstance = Game(BOARD_SIZE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,43 +50,48 @@ class MainActivity : AppCompatActivity(), InterfaceMain {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.boardView.gameDelegate = this
+        val factory = MainViewModelFactory()
+        viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
-        // Preset buttons
-        updateButtons()
+        binding.boardView.gameDelegate = viewModel
 
         // Game controlling buttons, work delegated to the Engine class
         binding.buttonPlay.setOnClickListener {
-            gameInstance.startSearch()
-            updateButtons()
+            viewModel.startSearch()
         }
         binding.buttonStop.setOnClickListener {
-            gameInstance.stopSearch()
-            updateButtons()
+            viewModel.stopSearch()
         }
         binding.buttonUndo.setOnClickListener {
-            gameInstance.undoMove()
+            viewModel.undoMove()
             binding.boardView.invalidate()
-            updateButtons()
         }
         binding.buttonRedo.setOnClickListener {
-            gameInstance.redoMove()
+            viewModel.redoMove()
             binding.boardView.invalidate()
-            updateButtons()
         }
         binding.buttonNew.setOnClickListener {
-            gameInstance.newGame()
+            viewModel.newGame()
             binding.boardView.invalidate()
-            updateButtons()
         }
-    }
 
-    private fun updateButtons() {
-        binding.buttonPlay.isEnabled = !gameInstance.searchMode
-        binding.buttonStop.isEnabled = gameInstance.searchMode
-        binding.buttonRedo.isEnabled = !gameInstance.searchMode && gameInstance.canRedo()
-        binding.buttonUndo.isEnabled = !gameInstance.searchMode && gameInstance.canUndo()
-        binding.buttonNew.isEnabled = !gameInstance.searchMode
+        viewModel.isSearching.observe(this, Observer {
+            binding.buttonPlay.isEnabled = !it
+            binding.buttonStop.isEnabled = it
+            binding.buttonNew.isEnabled = !it
+            if (it) {
+                binding.buttonRedo.isEnabled = false
+                binding.buttonUndo.isEnabled = false
+            }
+        })
+
+        viewModel.canRedo.observe(this, Observer {
+            binding.buttonRedo.isEnabled = it
+        })
+
+        viewModel.canUndo.observe(this, Observer {
+            binding.buttonUndo.isEnabled = it
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -148,26 +154,6 @@ class MainActivity : AppCompatActivity(), InterfaceMain {
         Log.v(TAG, "onDestroy")
     }
 
-    override fun canMakeMove(move: Move): Boolean {
-        return gameInstance.canMakeMove(move)
-    }
-
-    override fun makeMove(move: Move) {
-        gameInstance.makeMove(move)
-        updateButtons()
-    }
-
-    override fun moveCount(): Int {
-        return gameInstance.moveCount()
-    }
-
-    override fun getIthMove(i: Int): Move {
-        return gameInstance[i]
-    }
-
-    override fun isSearching(): Boolean {
-        return gameInstance.searchMode
-    }
 
     companion object {
         // Used to load the 'native-lib' library on application startup.
