@@ -7,7 +7,8 @@ Engine* instance = nullptr;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_startBrain( JNIEnv* env, jobject thiz,
+Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_startBrain( JNIEnv* /* env */,
+                                                                      jobject /* this */,
                                                                       jint dimension ) {
     assert( instance == nullptr );
     instance = new Engine( dimension );
@@ -16,7 +17,8 @@ Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_startBrain( JNIEnv* en
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_stopBrain( JNIEnv* env, jobject thiz ) {
+Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_stopBrain( JNIEnv* /* env */,
+                                                                     jobject /*this*/ ) {
     assert( instance != nullptr );
     instance->AddCommandsToInputQueue( "end" );
     delete instance;
@@ -42,7 +44,7 @@ Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_writeToBrain( JNIEnv* 
     const auto str = env->GetStringUTFChars( s, nullptr );
     __android_log_write( ANDROID_LOG_DEBUG, "JNI write", str );
 
-    if ( str != nullptr ) {
+    if( str != nullptr ) {
         assert( instance != nullptr );
         instance->AddCommandsToInputQueue( str );
         env->ReleaseStringUTFChars( s, str );

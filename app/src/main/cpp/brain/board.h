@@ -85,11 +85,11 @@ public:
     template<eMove_t player>
     [[nodiscard]] Move GenerateRandomMove() const {
         auto m = MOVE_NONE;
-        if ( !IsFull()) {
+        if( !IsFull()) {
             do {
-                m = createMove<player>( System::rand_xor128() % GetDimX(),
-                                        System::rand_xor128() % GetDimY());
-            } while ( !CanMakeMove( m ));
+                m = createMove<player>( Util::rand_xor128() % GetDimX(),
+                                        Util::rand_xor128() % GetDimY());
+            } while( !CanMakeMove( m ));
         }
         return m;
     }
@@ -100,6 +100,11 @@ public:
      */
     [[nodiscard]] bool IsFull() const;
 
+    /**
+     * @brief Put move on desk
+     * @param m Move
+     * @param player side to move
+     */
     void SetDesk( Move m, eMove_t player ) { m_desk[GetCoords( m )] = player; }
     /**@}*/
 
@@ -116,11 +121,7 @@ public:
     }
 
     [[nodiscard]] inline eMove_t GetDesk( Move m ) const { return m_desk[GetCoords( m )]; }
-
-    /**
-     * @brief Class invariant
-     */
-    [[nodiscard]] bool IsValid() const;
+    /**@}*/
 
     /**@{
      * @brief Other properties of the position
@@ -143,13 +144,13 @@ public:
     /**@} */
 
 private:
-    size_t        m_gamePly;                                /**< how many moves on the board */
+    size_t        m_gamePly;                         /**< how many moves on the board */
     const coord_t m_DimX;                            /**< board dimension X-axis */
     const coord_t m_DimY;                            /**< board dimension Y-axis */
-    mutable bool  sideToMove;                         /**< player to move */
+    mutable bool  sideToMove;                        /**< player to move */
 
     eMove_t m_desk[kBoardSize * kMaxBoard];          /**< main board */
-    Move    m_playedMoves[kBoardSize * kPlaySize];      /**< already played move in correct order */
+    Move    m_playedMoves[kBoardSize * kPlaySize];   /**< already played move in correct order */
 
 };
 

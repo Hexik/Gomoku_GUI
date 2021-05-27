@@ -1,21 +1,3 @@
-/*
-  Embryo, a Gomoku/Renju playing engine
-  Copyright (C) 2015-2021 Miroslav Fontan
-
-  Embryo is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Embryo is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #ifndef ENGINE_H
 #define ENGINE_H
 
@@ -65,7 +47,7 @@ public:
     *@brief Constructor
     *@param boardSize desk dimension
     */
-    explicit Engine( const int boardSize );
+    explicit Engine( const uint32_t boardSize );
 
     ~Engine();
 
@@ -75,7 +57,7 @@ public:
 
 private:
 
-    eCommand ParseCmd( const std::string& s, std::string& rest );
+    static eCommand ParseCmd( const std::string& s, std::string& rest );
 
     /**
     *@brief Main engine loop
@@ -89,9 +71,9 @@ private:
     */
     [[nodiscard]] bool CmdExecute( const std::string& cmd );
 
-    std::string ReadIputLine();
+    std::string ReadInputLine();
 
-    void WriteOutputLine( std::string data ) const;
+    void WriteOutputLine( const std::string& data ) const;
 
     /**
     *@brief Send about info
@@ -110,15 +92,15 @@ private:
 
     std::optional<std::vector<int64_t>> CmdParseCoords( const std::string& params );
 
-    void CmdParseInfo( const std::string& paramsg );
+    void CmdParseInfo( const std::string& params );
 
-    void CmdParseTurn( const std::string& paramsg );
+    void CmdParseTurn( const std::string& params );
 
-    void CmdParsePlay( const std::string& paramsg );
+    void CmdParsePlay( const std::string& params );
 
-    void CmdParseStart( const std::string& paramsg );
+    void CmdParseStart( const std::string& params );
 
-    void CmdParseTakeback( const std::string& paramsg );
+    void CmdParseTakeback( const std::string& params );
 
     /**
     *@brief Remove move from board
@@ -187,19 +169,9 @@ private:
     template<typename... Args>
     void pipeOutMessage( Args&& ... args ) const { pipeOut( "MESSAGE ", args... ); }
 
-    /**
-    *@brief Send response to command direct to the console
-    *@param args data to output
-    */
-    template<typename... Args>
-    static void pipeOutDirect( Args&& ... args ) {
-        ( std::cout << ... << args ) << std::endl;
-    }
-
-    std::unique_ptr<Board>           m_board{
-            nullptr};        /**< pointer to main board representation */
-    mutable LockedQueue<std::string> m_queueIn;     /**< input data  */
-    mutable LockedQueue<std::string> m_queueOut;    /**< output data  */
+    std::unique_ptr<Board>           m_board{nullptr}; /**< pointer to main board representation */
+    mutable LockedQueue<std::string> m_queueIn;        /**< input data  */
+    mutable LockedQueue<std::string> m_queueOut;       /**< output data  */
     std::thread                      m_runner;
     std::atomic_bool                 m_loopIsRunning = false;
     uint32_t                         m_infoWidth;

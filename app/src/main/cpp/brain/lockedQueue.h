@@ -1,21 +1,3 @@
-/*
-  Embryo, a Gomoku/Renju playing engine
-  Copyright (C) 2015-2021 Miroslav Fontan
-
-  Embryo is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Embryo is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #ifndef LOCKED_QUEUE_H
 #define LOCKED_QUEUE_H
 
@@ -34,7 +16,7 @@
  * @tparam T data type
  */
 template<typename T>
-class LockedQueue final : std::queue<T> {
+class LockedQueue final {
 public:
     LockedQueue() {}
 
@@ -47,17 +29,17 @@ public:
     T front( int timeout_ms ) const {
         auto lock = std::unique_lock<std::mutex>( m_mutex );
 
-        if ( timeout_ms == 0 ) {
-            m_cond_var.wait( lock, [this] { return !std::queue<T>::empty(); } );
+        if( timeout_ms == 0 ) {
+            m_cond_var.wait( lock, [this] { return !m_queue.empty(); } );
         } else {
-            if ( !m_cond_var.wait_for( lock, std::chrono::milliseconds( timeout_ms ),
-                                       [=] { return !std::queue<T>::empty(); } )) {
+            if( !m_cond_var.wait_for( lock, std::chrono::milliseconds( timeout_ms ),
+                                      [=] { return !m_queue.empty(); } )) {
                 // timeout occurred, empty data
                 return {};
             }
         }
 
-        return std::queue<T>::front();
+        return m_queue.front();
     }
 
     /**
@@ -67,41 +49,41 @@ public:
     T pop( int timeout_ms ) {
         auto lock = std::unique_lock<std::mutex>( m_mutex );
 
-        if ( timeout_ms == 0 ) {
-            m_cond_var.wait( lock, [this] { return !std::queue<T>::empty(); } );
+        if( timeout_ms == 0 ) {
+            m_cond_var.wait( lock, [this] { return !m_queue.empty(); } );
         } else {
-            if ( !m_cond_var.wait_for( lock, std::chrono::milliseconds( timeout_ms ),
-                                       [=] { return !std::queue<T>::empty(); } )) {
+            if( !m_cond_var.wait_for( lock, std::chrono::milliseconds( timeout_ms ),
+                                      [=] { return !m_queue.empty(); } )) {
                 // timeout occurred, empty data
                 return {};
             }
         }
 
-        T ret = std::move( std::queue<T>::front());
-        std::queue<T>::pop();
+        T ret = std::move( m_queue.front());
+        m_queue.pop();
         return ret;
     }
 
     /**
-    *@brief Peeks the first items, blocks if no data
+    *@brief Add item to the queue
     *@param item data to store
     */
     void push( const T& item ) {
         {
-            auto lock = std::unique_lock<std::mutex>( m_mutex );
-            std::queue<T>::push( item );
+            const auto lock = std::unique_lock<std::mutex>( m_mutex );
+            m_queue.push( item );
         }
         m_cond_var.notify_one();
     }
 
     /**
-    *@brief Peeks the first items, blocks if no data
+    *@brief Move item to the queue
     *@param item data to store
     */
     void push( T&& item ) {
         {
-            auto lock = std::unique_lock<std::mutex>( m_mutex );
-            std::queue<T>::push( std::move( item ));
+            const auto lock = std::unique_lock<std::mutex>( m_mutex );
+            m_queue.push( std::move( item ));
         }
         m_cond_var.notify_one();
     }
@@ -110,28 +92,29 @@ public:
     *@brief Return true if empty
     */
     bool is_empty() const {
-        auto lock = std::unique_lock<std::mutex>( m_mutex );
-        return std::queue<T>::empty();
+        const auto lock = std::unique_lock<std::mutex>( m_mutex );
+        return m_queue.empty();
     }
 
     /**
     *@brief Clear the queue
     */
     void clear() {
-        auto lock = std::unique_lock<std::mutex>( m_mutex );
-        std::queue<T>::swap( std::queue<T>());
+        const auto lock = std::unique_lock<std::mutex>( m_mutex );
+        m_queue.swap( std::queue<T>());
     }
 
     /**
     *@brief Returns count of items
     */
     size_t count() const {
-        auto lock = std::unique_lock<std::mutex>( m_mutex );
-        return static_cast<size_t>( std::queue<T>::size());
+        const auto lock = std::unique_lock<std::mutex>( m_mutex );
+        return static_cast<size_t>( m_queue.size());
     }
 
 private:
-    mutable std::mutex              m_mutex;    /**< sync primitive, internal state*/
+    std::queue<T>                   m_queue;    /**< data container */
+    mutable std::mutex              m_mutex;    /**< sync primitive, internal state */
     mutable std::condition_variable m_cond_var; /**< conditional var, internal state */
 };
 

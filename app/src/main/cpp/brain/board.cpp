@@ -10,7 +10,7 @@
 Board::Board( const coord_t dim ) : Board( dim, dim ) {}
 
 Board::Board( const coord_t dimX, const coord_t dimY ) :
-        m_gamePly( DEPTH_ZERO ),
+        m_gamePly( 0U ),
         m_DimX( dimX ),
         m_DimY( dimY ),
         sideToMove( true ) {
@@ -22,10 +22,10 @@ Board::Board( const coord_t dimX, const coord_t dimY ) :
 }
 
 Board::Board( const Board& other ) : Board( other.GetDimX(), other.GetDimY()) {
-    for ( coord_t x = 0; x < m_DimX; x++ ) {
-        for ( coord_t y = 0; y < m_DimY; y++ ) {
-            if ( other.m_desk[x * kBoardSize + y] != eMove_t::eEmpty ) {
-                if ( other.m_desk[x * kBoardSize + y] == eMove_t::eXX ) {
+    for( coord_t x = 0; x < m_DimX; x++ ) {
+        for( coord_t y = 0; y < m_DimY; y++ ) {
+            if( other.m_desk[x * kBoardSize + y] != eMove_t::eEmpty ) {
+                if( other.m_desk[x * kBoardSize + y] == eMove_t::eXX ) {
                     MakeMove( createMove<eMove_t::eXX>( x, y ));
                 } else {
                     MakeMove( createMove<eMove_t::eOO>( x, y ));
@@ -41,7 +41,7 @@ void Board::MakeMove( const Move m ) {
     assert( !IsEmpty( m ));
     assert( CanMakeMove( m ));
 
-    if ( IsTypeXX( m )) {
+    if( IsTypeXX( m )) {
         PutMove<eMove_t::eXX>( m );
         SetSideToMove( false );
     } else {
@@ -72,16 +72,12 @@ void Board::UndoMove( const Move m ) {
 }
 
 void Board::Reset() {
-    m_gamePly  = DEPTH_ZERO;
+    m_gamePly  = 0U;
     sideToMove = true;
 
-    for ( auto& x : m_desk ) {
+    for( auto& x : m_desk ) {
         x = eMove_t::eEmpty;
     }
-}
-
-bool Board::IsValid() const {
-    return true;
 }
 
 bool Board::IsFull() const {

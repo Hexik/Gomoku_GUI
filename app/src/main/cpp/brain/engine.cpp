@@ -8,24 +8,24 @@
 
 #include <android/log.h>
 
-Engine::Engine( const int boardSize ) :
+Engine::Engine( const uint32_t boardSize ) :
         m_queueIn(), m_queueOut(), m_infoWidth( boardSize ), m_infoHeight( boardSize ) {
     StartLoop();
 }
 
 Engine::~Engine() {
     StopLoop();
-    if ( m_runner.joinable()) {
+    if( m_runner.joinable()) {
         m_runner.join();
     }
 }
 
 Engine& Engine::AddCommandsToInputQueue( const std::string& LastCommand ) {
     __android_log_write( ANDROID_LOG_DEBUG, "AddCommandsToInputQueue", LastCommand.c_str());
-    auto res      = StringToUpper( LastCommand );
+    auto res      = Util::StringToUpper( LastCommand );
     auto posToken = size_t{0};
 
-    while (( posToken = res.find( '\n' )) != std::string::npos ) {
+    while(( posToken = res.find( '\n' )) != std::string::npos ) {
         m_queueIn.push( res.substr( 0, posToken ));
         res.erase( 0, posToken + 1 );
     }
@@ -35,18 +35,18 @@ Engine& Engine::AddCommandsToInputQueue( const std::string& LastCommand ) {
 
 bool Engine::Loop() {
     m_loopIsRunning = true;
-    while ( CmdExecute( ReadIputLine())) {
+    while( CmdExecute( ReadInputLine())) {
     }
     __android_log_write( ANDROID_LOG_DEBUG, "Loop", "" );
     m_loopIsRunning = false;
     return true;
 }
 
-std::string Engine::ReadIputLine() {
+std::string Engine::ReadInputLine() {
     return m_queueIn.pop( 0 );
 }
 
-void Engine::WriteOutputLine( std::string data ) const {
+void Engine::WriteOutputLine( const std::string& data ) const {
     m_queueOut.push( data );
 }
 
@@ -67,7 +67,7 @@ Engine::eCommand Engine::ParseCmd( const std::string& s, std::string& rest ) {
                                          {"YXSHOWFORBID", eCommand::eYxShowForbid},
                                          {"YXSTOP",       eCommand::eYxStop}};
 
-    __android_log_write( ANDROID_LOG_VERBOSE, "Exec", s.c_str());
+    __android_log_write( ANDROID_LOG_VERBOSE, "Parse", s.c_str());
 
     const auto it = std::find_if( std::begin( keywords ), std::end( keywords ),
                                   [s]( const auto& a ) {
@@ -78,28 +78,28 @@ Engine::eCommand Engine::ParseCmd( const std::string& s, std::string& rest ) {
                                                s[a.first.length()] == ' ' );
                                   } );
 
-    if ( it != std::end( keywords )) {
-        rest = Misc::Trim( s.substr( it->first.length()));
+    if( it != std::end( keywords )) {
+        rest = Util::Trim( s.substr( it->first.length()));
         return it->second;
     }
     return eCommand::eUnknown;
 }
 
 bool Engine::CmdExecute( const std::string& cmd ) {
-    const auto tmpUpper = StringToUpper( cmd );
+    const auto tmpUpper = Util::StringToUpper( cmd );
     __android_log_write( ANDROID_LOG_DEBUG, "Exec", cmd.c_str());
     std::string rest;
     const auto  eCmd    = ParseCmd( tmpUpper, rest );
 
-    if ( m_bInSearch &&
-         ( eCmd != eCommand::eEnd && eCmd != eCommand::eYxStop )) {
+    if( m_bInSearch &&
+        ( eCmd != eCommand::eEnd && eCmd != eCommand::eYxStop )) {
         pipeOutMessage( ": BAD COMMAND ", tmpUpper.c_str(), " IN SEARCH MODE" );
         return true;
     }
 
     auto bLoop = true;
 
-    switch ( eCmd ) {
+    switch( eCmd ) {
         case eCommand::eAbout:
             CmdAbout();
             break;
@@ -153,13 +153,13 @@ std::string Engine::ReadFromOutputQueue( int timeOutMs ) {
 }
 
 void Engine::StartLoop() {
-    if ( !m_loopIsRunning ) {
+    if( !m_loopIsRunning ) {
         m_runner = std::thread( &Engine::Loop, this );
     }
 }
 
 void Engine::StopLoop() {
-    if ( m_loopIsRunning ) {
+    if( m_loopIsRunning ) {
         m_queueOut.push( "end" );
     }
 }
@@ -174,13 +174,13 @@ void Engine::CmdTurn() {
 }
 
 void Engine::CmdPutMyMove( const coord_t x, const coord_t y ) {
-    if ( !CmdPutMove<eMove_t::eXX>( x, y )) {
+    if( !CmdPutMove<eMove_t::eXX>( x, y )) {
         pipeOut( "ERROR my move [", x, ",", y, "]" );
     }
 }
 
 void Engine::CmdPutYourMove( const coord_t x, const coord_t y ) {
-    if ( !CmdPutMove<eMove_t::eOO>( x, y )) {
+    if( !CmdPutMove<eMove_t::eOO>( x, y )) {
         pipeOut( "ERROR opponent's move [", x, ",", y, "]" );
     }
 }
@@ -189,15 +189,15 @@ void
 Engine::CmdUndoMove( const coord_t x, const coord_t y, const eMove_t type, const bool takeback ) {
     const auto m = SetType( SetCoords( x, y ), type );
 
-    if ( !m_board->CheckCoords( m ) || m_board->CanMakeMove( m )) {
+    if( !m_board->CheckCoords( m ) || m_board->CanMakeMove( m )) {
         pipeOut( "ERROR takeback move [", x, ",", y, "] = ",
                  static_cast<unsigned int>( m_board->GetDesk( m )));
         return;
     }
     m_board->UndoMove( m );
-    if ( type == eMove_t::eXX ) {
+    if( type == eMove_t::eXX ) {
         m_board->SwitchSideToMove();
-        if ( takeback ) {
+        if( takeback ) {
             pipeOut( "OK" );
         }
     }
@@ -208,24 +208,24 @@ bool Engine::CmdPutMove( const coord_t x, const coord_t y ) {
     static_assert( player == eMove_t::eXX || player == eMove_t::eOO, "Bad player" );
     const auto m = createMove<player>( x, y );
 
-    if ( m_board->CheckCoords( m ) && m_board->CanMakeMove( m )) {
+    if( m_board->CheckCoords( m ) && m_board->CanMakeMove( m )) {
         m_board->MakeMove( m );
         return true;
     }
-    if ( !m_board->CheckCoords( m )) {
+    if( !m_board->CheckCoords( m )) {
         pipeOutDebug( "check move [", x, ",", y, "]" );
-    } else if ( !m_board->CanMakeMove( m )) {
-        pipeOutDebug( "make move [", x, ",", y, "] = ", to_underlying( m_board->GetDesk( x, y )));
+    } else if( !m_board->CanMakeMove( m )) {
+        pipeOutDebug( "make move [", x, ",", y, "] = ", m_board->GetDesk( x, y ));
     }
 
     return false;
 }
 
 void Engine::CmdParseStart( const std::string& params ) {
-    const auto&& v = Misc::ParseNumbers( params, "," );
+    const auto&& v = Util::ParseNumbers( params, "," );
 
-    if ( v.size() == 1 ) {
-        if ( v[0] < 5 || static_cast<uint32_t>( v[0] ) > kPlaySize ) {
+    if( v.size() == 1 ) {
+        if( v[0] < 5 || static_cast<uint32_t>( v[0] ) > kPlaySize ) {
             __android_log_write( ANDROID_LOG_INFO, "size [0]=", params.c_str());
             pipeOut( "ERROR size of the board" );
             return;
@@ -255,22 +255,22 @@ void Engine::CmdParseBoard( bool flipSides ) {
     m_board = std::make_unique<Board>( m_infoWidth, m_infoHeight );
 
     auto firstMove = true;
-    while ( true ) {
-        const auto&& s = ReadIputLine();
-        if ( s.find( "DONE" ) != std::string::npos ) {
+    while( true ) {
+        const auto&& s = ReadInputLine();
+        if( s.find( "DONE" ) != std::string::npos ) {
             m_board->SetSideToMove( true );
             break;
         }
-        const auto&& v = Misc::ParseNumbers( s, "," );
+        const auto&& v = Util::ParseNumbers( s, "," );
 
-        if ( v.size() == 3 ) {
-            if (( !flipSides && v[2] == 1 ) || ( flipSides && v[2] == 2 )) {
-                if ( firstMove ) {
+        if( v.size() == 3 ) {
+            if(( !flipSides && v[2] == 1 ) || ( flipSides && v[2] == 2 )) {
+                if( firstMove ) {
                     firstMove = false;
                 }
                 CmdPutMyMove( static_cast<uint32_t>( v[0] ), static_cast<uint32_t>( v[1] ));
-            } else if (( !flipSides && v[2] == 2 ) || ( flipSides && v[2] == 1 )) {
-                if ( firstMove ) {
+            } else if(( !flipSides && v[2] == 2 ) || ( flipSides && v[2] == 1 )) {
+                if( firstMove ) {
                     firstMove = false;
                 }
                 CmdPutYourMove( static_cast<uint32_t>( v[0] ), static_cast<uint32_t>( v[1] ));
@@ -278,7 +278,7 @@ void Engine::CmdParseBoard( bool flipSides ) {
                 break;
             }
         } else {
-            if ( s.find( "DONE" ) == std::string::npos ) {
+            if( s.find( "DONE" ) == std::string::npos ) {
                 pipeOut( "ERROR x,y,who or DONE expected after BOARD" );
             }
             break;
@@ -294,10 +294,10 @@ void Engine::CmdParseInfo( const std::string&/*params*/) {
 }
 
 std::optional<std::vector<int64_t>> Engine::CmdParseCoords( const std::string& params ) {
-    const auto v = Misc::ParseNumbers( params, "," );
+    const auto v = Util::ParseNumbers( params, "," );
 
-    if ( v.size() != 2 || static_cast<uint32_t>( v[0] ) >= m_infoWidth ||
-         static_cast<uint32_t>( v[1] ) >= m_infoHeight ) {
+    if( v.size() != 2 || static_cast<uint32_t>( v[0] ) >= m_infoWidth ||
+        static_cast<uint32_t>( v[1] ) >= m_infoHeight ) {
         pipeOut( "ERROR bad coordinates" );
         return std::nullopt;
     }
@@ -305,20 +305,20 @@ std::optional<std::vector<int64_t>> Engine::CmdParseCoords( const std::string& p
 }
 
 void Engine::CmdParsePlay( const std::string& params ) {
-    if ( const auto v = CmdParseCoords( params )) {
+    if( const auto v = CmdParseCoords( params )) {
         CmdPutMyMove( static_cast<uint32_t>( v.value()[0] ), static_cast<uint32_t>( v.value()[1] ));
     }
 }
 
 void Engine::CmdParseTurn( const std::string& params ) {
-    if ( const auto v = CmdParseCoords( params )) {
+    if( const auto v = CmdParseCoords( params )) {
         CmdPutYourMove( static_cast<uint32_t>( v.value()[0] ),
                         static_cast<uint32_t>( v.value()[1] ));
     }
 }
 
 void Engine::CmdParseTakeback( const std::string& params ) {
-    if ( const auto v = CmdParseCoords( params )) {
+    if( const auto v = CmdParseCoords( params )) {
         CmdUndoMove( static_cast<uint32_t>( v.value()[0] ), static_cast<uint32_t>( v.value()[1] ),
                      eMove_t::eXX, true );
     }
