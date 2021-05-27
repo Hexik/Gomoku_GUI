@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.doOnPreDraw
+import androidx.preference.PreferenceManager
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
 import cz.fontan.gomoku_gui.game.EnumMove
 import cz.fontan.gomoku_gui.game.Move
@@ -26,24 +27,53 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     private var step = 0f
     private var limitLow = 0f
     private var limitHigh = 0f
+    private var showNumbers = false
+    private var showCoordinates = false
     var gameDelegate: InterfaceMain? = null
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+    private fun recalcLimits() {
+        Log.d(TAG, "Reca")
+        showNumbers = sharedPreferences.getBoolean("check_box_preference_numbers", true)
+        showCoordinates = sharedPreferences.getBoolean("check_box_preference_coordinates", true)
+        if (showCoordinates) {
+            offset = 0.08f * width
+            step = (width - 1.6f * offset) / kStepCount
+        } else {
+            offset = 0.05f * width
+            step = (width - 2.0f * offset) / kStepCount
+        }
+        offset = if (showCoordinates) 0.08f * width else 0.05f * width
+        step =
+            if (showCoordinates) (width - 1.6f * offset) / kStepCount else (width - 2.0f * offset) / kStepCount
+        limitLow = offset - step * 0.5f
+        limitHigh = offset + kStepCount * step + step * 0.5f
+        paint.textSize = step * 0.5f
+    }
 
     init {
+        paint.textAlign = Paint.Align.CENTER
+        paint.isAntiAlias = true
+
         // Make one time pre-calculation at correct time,
         // if you ask for width, height too early, the value is 0
         doOnPreDraw {
             Log.d(TAG, "Pre $width,$height,$offset")
-            offset = 0.05f * width
-            step = (width - 2 * offset) / kStepCount
-            limitLow = offset - step / 2
-            limitHigh = offset + kStepCount * step + step / 2
+            recalcLimits()
         }
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val smaller = kotlin.math.min(widthMeasureSpec, heightMeasureSpec)
+        setMeasuredDimension(smaller, smaller)
     }
 
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
         Log.d(TAG, "Draw $width,$height,$offset")
 
+        recalcLimits()
         drawBoard(canvas)
         drawStones(canvas)
     }
@@ -54,8 +84,16 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
 
         for (i in 0 until (safeDelegate.moveCount())) {
             val p = move2Point(safeDelegate.getIthMove(i))
-            paint.color = if (i % 2 != 0) Color.RED else Color.DKGRAY
-            canvas.drawCircle(p.x, p.y, step / 2.1f, paint)
+            paint.color = if (i % 2 != 0) Color.WHITE else Color.DKGRAY
+            canvas.drawCircle(p.x, p.y, step * 0.44f, paint)
+            if (showNumbers) {
+                paint.color = when {
+                    i == safeDelegate.moveCount() - 1 -> Color.RED
+                    i % 2 == 0 -> Color.WHITE
+                    else -> Color.DKGRAY
+                }
+                canvas.drawText((i + 1).toString(), p.x, p.y + paint.textSize * 0.33f, paint)
+            }
         }
         paint.color = oldColor
     }
@@ -69,6 +107,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
                 offset + kStepCount * step,
                 paint
             )
+
             canvas.drawLine(
                 offset,
                 offset + i * step,
@@ -76,6 +115,21 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
                 offset + i * step,
                 paint
             )
+
+            if (showCoordinates) {
+                canvas.drawText(
+                    (i + 'A'.code).toChar().toString(),
+                    offset + i * step,
+                    offset * 0.5f,
+                    paint
+                )
+                canvas.drawText(
+                    (BOARD_SIZE - i).toString(),
+                    offset * 0.33f,
+                    offset + i * step + paint.textSize * 0.33f,
+                    paint
+                )
+            }
         }
     }
 
