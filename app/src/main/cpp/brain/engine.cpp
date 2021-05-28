@@ -175,8 +175,12 @@ void Engine::CmdAbout() const {
 }
 
 void Engine::CmdTurn() {
-    const auto m = m_board->GenerateRandomMove<eMove_t::eXX>();
-    pipeOut( GetX( m ), ",", GetY( m ));
+    if( !m_board->IsFull()) {
+        const auto m = m_board->GenerateRandomMove<eMove_t::eXX>();
+        pipeOut( GetX( m ), ",", GetY( m ));
+    } else {
+        pipeOut( "ERROR Full board" );
+    }
 }
 
 void Engine::CmdPutMyMove( const coord_t x, const coord_t y ) {
