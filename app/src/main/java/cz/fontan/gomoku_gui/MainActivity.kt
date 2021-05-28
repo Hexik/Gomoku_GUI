@@ -10,9 +10,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
+import cz.fontan.gomoku_gui.game.BOARD_SIZE
 import cz.fontan.gomoku_gui.model.MainViewModel
 import cz.fontan.gomoku_gui.model.MainViewModelFactory
 import kotlin.system.exitProcess
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             binding.boardView.invalidate()
         }
 
-        viewModel.isSearching.observe(this, Observer {
+        viewModel.isSearching.observe(this, {
             binding.buttonPlay.isEnabled = !it
             binding.buttonStop.isEnabled = it
             binding.buttonNew.isEnabled = !it
@@ -85,11 +85,11 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.canRedo.observe(this, Observer {
+        viewModel.canRedo.observe(this, {
             binding.buttonRedo.isEnabled = it
         })
 
-        viewModel.canUndo.observe(this, Observer {
+        viewModel.canUndo.observe(this, {
             binding.buttonUndo.isEnabled = it
         })
     }
