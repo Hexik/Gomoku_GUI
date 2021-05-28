@@ -7,8 +7,7 @@ private const val TAG = "Game"
 class Game(private val dim: Int) {
     private val moveList = MoveList()
     private val desk = Array(dim * dim) { EnumMove.Empty }
-    private var playerToMove: EnumMove = EnumMove.Black
-    private var searchMode: Boolean = false
+    var playerToMove: EnumMove = EnumMove.Black
 
     init {
         Log.d(TAG, "Init")
@@ -17,12 +16,10 @@ class Game(private val dim: Int) {
 
     fun newGame() {
         Log.d(TAG, "New Game")
-        require(!searchMode)
         reset()
     }
 
     fun makeMove(move: Move) {
-        require(!searchMode)
         val localMove = Move(move.x, move.y, playerToMove)
         require(canMakeMove(localMove))
         desk[deskIndex(localMove)] = localMove.type
@@ -32,7 +29,6 @@ class Game(private val dim: Int) {
     }
 
     fun undoMove() {
-        require(!searchMode)
         Log.d(TAG, "Undo")
         require(moveCount() > 0)
         require(canUndo())
@@ -49,7 +45,6 @@ class Game(private val dim: Int) {
     }
 
     fun redoMove() {
-        require(!searchMode)
         Log.d(TAG, "Redo")
         require(canRedo())
 
