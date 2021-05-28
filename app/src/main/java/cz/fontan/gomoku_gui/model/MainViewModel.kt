@@ -1,13 +1,13 @@
 package cz.fontan.gomoku_gui.model
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
 import cz.fontan.gomoku_gui.InterfaceMain
 import cz.fontan.gomoku_gui.NativeInterface
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
 import cz.fontan.gomoku_gui.game.Game
 import cz.fontan.gomoku_gui.game.Move
+import kotlinx.coroutines.Dispatchers
 
 class MainViewModel : ViewModel(), InterfaceMain {
     private val game = Game(BOARD_SIZE)
@@ -28,8 +28,19 @@ class MainViewModel : ViewModel(), InterfaceMain {
     val canUndo: LiveData<Boolean>
         get() = _canUndo
 
-    val fromBrain: MutableLiveData<ArrayList<String>> = MutableLiveData<ArrayList<String>>()
+    private val answersRepository = AnswersRepository()
 
+    private val _dataFromBrain = answersRepository
+        .fetchStrings()
+        .asLiveData(
+            // Use Default dispatcher for CPU intensive work and
+            // viewModel scope for auto cancellation when viewModel
+            // is destroyed
+            Dispatchers.Default + viewModelScope.coroutineContext
+        )
+
+    val dataFromBrain: LiveData<ConsumableValue<String>>
+        get() = _dataFromBrain
 
     init {
         _isDirty.value = false
@@ -89,6 +100,28 @@ class MainViewModel : ViewModel(), InterfaceMain {
 
     override fun isSearching(): Boolean {
         return isSearching.value == true
+    }
+
+    fun processResponse(response: String) {
+        val upper = response.uppercase()
+        when {
+            upper.startsWith("DEBUG") -> return
+            upper.startsWith("ERROR") -> return
+            upper.startsWith("MESSAGE") -> return
+            upper.startsWith("OK") -> return
+            upper.startsWith("SUGGEST") -> return
+            upper.startsWith("UNKNOWN") -> return
+            else -> parseMoveResponse(upper)
+        }
+    }
+
+    private fun parseMoveResponse(response: String) {
+        Log.d("Res", response)
+        val splitted = response.split(",")
+        if (splitted.size == 2) {
+            makeMove(Move(splitted[0].toInt(), splitted[1].toInt()))
+            setIdle()
+        }
     }
 
 }

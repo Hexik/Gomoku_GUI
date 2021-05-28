@@ -53,6 +53,11 @@ class MainActivity : AppCompatActivity() {
         val factory = MainViewModelFactory()
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
+        // Observe data stream from brain
+        viewModel.dataFromBrain.observe(this, { it ->
+            it?.consume { viewModel.processResponse(it) }
+        })
+
         binding.boardView.gameDelegate = viewModel
 
         // Game controlling buttons, work delegated to the ViewModel class
