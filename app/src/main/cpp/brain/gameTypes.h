@@ -176,7 +176,7 @@ struct Move {
 
     coord_t x;
     coord_t y;
-    eMove_t  type;
+    eMove_t type;
 };
 
 constexpr Move MOVE_NONE = Move();

@@ -24,7 +24,7 @@ Engine::~Engine() {
 Engine& Engine::AddCommandsToInputQueue( const std::string& LastCommand ) {
     __android_log_write( ANDROID_LOG_DEBUG, "AddCommandsToInputQueue", LastCommand.c_str());
     auto res      = Util::StringToUpper( LastCommand );
-    auto posToken = size_t{0};
+    auto posToken = size_t{ 0 };
 
     while(( posToken = res.find( '\n' )) != std::string::npos ) {
         const auto oneLine = res.substr( 0, posToken );
@@ -59,25 +59,25 @@ void Engine::WriteOutputLine( const std::string& data ) const {
 Engine::eCommand Engine::ParseCmd( const std::string& s, std::string& rest ) {
     rest                = "";
     using eCommandVector = std::vector<std::pair<std::string, Engine::eCommand>>;
-    const auto keywords = eCommandVector{{"ABOUT",        eCommand::eAbout},
-                                         {"BEGIN",        eCommand::eBegin},
-                                         {"END",          eCommand::eEnd},
-                                         {"TURN",         eCommand::eTurn},
-                                         {"TAKEBACK",     eCommand::eTakeback},
-                                         {"BOARD",        eCommand::eBoard},
-                                         {"PLAY",         eCommand::ePlay},
-                                         {"START",        eCommand::eStart},
-                                         {"RESTART",      eCommand::eRestart},
-                                         {"INFO",         eCommand::eInfo},
-                                         {"YXBOARD",      eCommand::eYxBoard},
-                                         {"YXSHOWFORBID", eCommand::eYxShowForbid},
-                                         {"YXSTOP",       eCommand::eYxStop}};
+    const auto keywords = eCommandVector{{ "ABOUT",        eCommand::eAbout },
+                                         { "BEGIN",        eCommand::eBegin },
+                                         { "END",          eCommand::eEnd },
+                                         { "TURN",         eCommand::eTurn },
+                                         { "TAKEBACK",     eCommand::eTakeback },
+                                         { "BOARD",        eCommand::eBoard },
+                                         { "PLAY",         eCommand::ePlay },
+                                         { "START",        eCommand::eStart },
+                                         { "RESTART",      eCommand::eRestart },
+                                         { "INFO",         eCommand::eInfo },
+                                         { "YXBOARD",      eCommand::eYxBoard },
+                                         { "YXSHOWFORBID", eCommand::eYxShowForbid },
+                                         { "YXSTOP",       eCommand::eYxStop }};
 
     __android_log_write( ANDROID_LOG_VERBOSE, "Parse", s.c_str());
 
     const auto it = std::find_if( std::begin( keywords ), std::end( keywords ),
                                   [s]( const auto& a ) {
-                                      auto nPos = size_t{0};
+                                      auto nPos = size_t{ 0 };
                                       return (( nPos = s.find( a.first )) != std::string::npos ) &&
                                              ( nPos == 0 ) &&
                                              ( s.length() == a.first.length() ||
