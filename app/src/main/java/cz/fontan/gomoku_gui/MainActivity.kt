@@ -75,6 +75,10 @@ class MainActivity : AppCompatActivity() {
             binding.boardView.invalidate()
         }
 
+        viewModel.isDirty.observe(
+            this, { binding.boardView.invalidate() }
+        )
+
         viewModel.isSearching.observe(this, {
             binding.buttonPlay.isEnabled = !it
             binding.buttonStop.isEnabled = it

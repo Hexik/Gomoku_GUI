@@ -12,6 +12,10 @@ import cz.fontan.gomoku_gui.game.Move
 class MainViewModel : ViewModel(), InterfaceMain {
     private val game = Game(BOARD_SIZE)
 
+    private val _isDirty = MutableLiveData<Boolean>()
+    val isDirty: LiveData<Boolean>
+        get() = _isDirty
+
     private val _isSearching = MutableLiveData<Boolean>()
     val isSearching: LiveData<Boolean>
         get() = _isSearching
