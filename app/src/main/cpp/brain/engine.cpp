@@ -26,10 +26,15 @@ Engine& Engine::AddCommandsToInputQueue( const std::string& LastCommand ) {
     auto posToken = size_t{0};
 
     while(( posToken = res.find( '\n' )) != std::string::npos ) {
-        m_queueIn.push( res.substr( 0, posToken ));
+        const auto oneLine = res.substr( 0, posToken );
+        if( !oneLine.empty()) {
+            m_queueIn.push( oneLine );
+        }
         res.erase( 0, posToken + 1 );
     }
-    m_queueIn.push( res );
+    if( !res.empty()) {
+        m_queueIn.push( res );
+    }
     return *this;
 }
 

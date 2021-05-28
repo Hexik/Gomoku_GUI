@@ -102,7 +102,7 @@ class Game(private val dim: Int) {
             player = 1 + player % 2
         }
 
-        sb.appendLine("done")
+        sb.append("done")
         return sb.toString()
     }
 
