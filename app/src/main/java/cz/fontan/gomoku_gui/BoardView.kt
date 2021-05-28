@@ -2,6 +2,7 @@ package cz.fontan.gomoku_gui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -30,7 +31,8 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     private var showNumbers = false
     private var showCoordinates = false
     var gameDelegate: InterfaceMain? = null
-    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val sharedPreferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
 
     private fun recalcLimits() {
         Log.d(TAG, "Reca")

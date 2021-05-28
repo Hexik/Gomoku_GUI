@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.boardView.gameDelegate = viewModel
 
-        // Game controlling buttons, work delegated to the Engine class
+        // Game controlling buttons, work delegated to the ViewModel class
         binding.buttonPlay.setOnClickListener {
             viewModel.startSearch()
         }

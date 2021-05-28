@@ -7,8 +7,8 @@ private const val TAG = "Game"
 class Game(private val dim: Int) {
     private val moveList = MoveList()
     private val desk = Array(dim * dim) { EnumMove.Empty }
-    var playerToMove: EnumMove = EnumMove.Black
-    var searchMode: Boolean = false
+    private var playerToMove: EnumMove = EnumMove.Black
+    private var searchMode: Boolean = false
 
     init {
         Log.d(TAG, "Init")
