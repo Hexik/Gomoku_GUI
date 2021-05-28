@@ -32,9 +32,14 @@ class MainViewModel : ViewModel(), InterfaceMain {
 
 
     init {
+        _isDirty.value = false
+        setIdle()
+    }
+
+    private fun setIdle() {
         _isSearching.value = false
-        _canRedo.value = false
-        _canUndo.value = false
+        _canUndo.value = game.canUndo()
+        _canRedo.value = game.canRedo()
     }
 
     fun startSearch() {
@@ -45,27 +50,23 @@ class MainViewModel : ViewModel(), InterfaceMain {
     }
 
     fun stopSearch() {
-        _isSearching.value = false
-        _canUndo.value = game.canUndo()
-        _canRedo.value = game.canRedo()
+        NativeInterface.writeToBrain("YXSTOP")
+        setIdle()
     }
 
     fun undoMove() {
         game.undoMove()
-        _canUndo.value = game.canUndo()
-        _canRedo.value = game.canRedo()
+        setIdle()
     }
 
     fun redoMove() {
         game.redoMove()
-        _canUndo.value = game.canUndo()
-        _canRedo.value = game.canRedo()
+        setIdle()
     }
 
     fun newGame() {
         game.newGame()
-        _canUndo.value = game.canUndo()
-        _canRedo.value = game.canRedo()
+        setIdle()
     }
 
     override fun canMakeMove(move: Move): Boolean {
@@ -74,8 +75,8 @@ class MainViewModel : ViewModel(), InterfaceMain {
 
     override fun makeMove(move: Move) {
         game.makeMove(move)
-        _canUndo.value = isSearching.value == false && game.canUndo()
-        _canRedo.value = isSearching.value == false && game.canRedo()
+        setIdle()
+        _isDirty.value = true
     }
 
     override fun moveCount(): Int {
