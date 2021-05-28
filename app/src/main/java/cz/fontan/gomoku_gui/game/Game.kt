@@ -24,7 +24,7 @@ class Game(private val dim: Int) {
         require(canMakeMove(localMove))
         desk[deskIndex(localMove)] = localMove.type
         moveList.add(localMove)
-        playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
+        switchPlayerToMove()
         check(!canMakeMove(localMove))
     }
 
@@ -40,7 +40,7 @@ class Game(private val dim: Int) {
         desk[deskIndex(lastMove)] = EnumMove.Empty
         moveList.undo()
 
-        playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
+        switchPlayerToMove()
         check(canMakeMove(lastMove))
     }
 
@@ -54,7 +54,7 @@ class Game(private val dim: Int) {
 
         desk[deskIndex(lastMove)] = lastMove.type
 
-        playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
+        switchPlayerToMove()
         check(!canMakeMove(lastMove))
     }
 
@@ -103,5 +103,9 @@ class Game(private val dim: Int) {
 
     private fun deskIndex(m: Move): Int {
         return m.x + m.y * dim
+    }
+
+    private fun switchPlayerToMove() {
+        playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
     }
 }
