@@ -56,7 +56,10 @@ namespace Util {
         return res;
     }
 
-    // random number generator, srand() replacement
+    /**
+     * @brief random number generator, srand() replacement
+     * @return random value
+     */
     inline uint32_t rand_xor128() {
         static uint32_t x = 123456789;
         static uint32_t y = 362436069;
@@ -69,7 +72,27 @@ namespace Util {
         return w = w ^ ( w >> 19 ) ^ ( t ^ ( t >> 8 ));
     }
 
-/**
+    /**
+     * @brief random number generator, version with time value xor-ed
+     * @return random value
+    */
+    inline uint32_t rand_xor128_time() {
+        const auto randomXor128 = rand_xor128();
+        const auto t            = static_cast<uint32_t>( time( nullptr ));
+        return randomXor128 ^ static_cast<uint32_t>(( static_cast<uint64_t>( t ) * t ));
+    }
+
+    /**
+     * @brief random number generator, seed() replacement
+    */
+    inline void rand_xor128_seed() {
+        const auto randomXor128 = rand_xor128_time();
+        for( auto  i            = 0U; i < ( randomXor128 & 0x0000FFFFU ); ++i ) {
+            [[maybe_unused]] const auto thrash = rand_xor128();
+        }
+    }
+
+    /**
  * @brief Convert std::string to uppercase
  * @param strToConvert source string
  * @return UpperCase string

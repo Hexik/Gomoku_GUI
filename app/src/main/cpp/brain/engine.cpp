@@ -10,6 +10,7 @@
 
 Engine::Engine( const uint32_t boardSize ) :
         m_queueIn(), m_queueOut(), m_infoWidth( boardSize ), m_infoHeight( boardSize ) {
+    Util::rand_xor128_seed();
     StartLoop();
 }
 
