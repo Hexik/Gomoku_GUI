@@ -8,41 +8,27 @@ class Game(private val dim: Int) {
     private val moveList = MoveList()
     private val desk = Array(dim * dim) { EnumMove.Empty }
     var playerToMove: EnumMove = EnumMove.Black
-    var searchMode: Boolean = false
 
     init {
         Log.d(TAG, "Init")
         reset()
     }
 
-    fun startSearch() {
-        Log.d(TAG, "Start")
-        searchMode = true
-    }
-
-    fun stopSearch() {
-        Log.d(TAG, "Stop")
-        searchMode = false
-    }
-
     fun newGame() {
         Log.d(TAG, "New Game")
-        require(!searchMode)
         reset()
     }
 
     fun makeMove(move: Move) {
-        require(!searchMode)
         val localMove = Move(move.x, move.y, playerToMove)
         require(canMakeMove(localMove))
         desk[deskIndex(localMove)] = localMove.type
         moveList.add(localMove)
-        playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
+        switchPlayerToMove()
         check(!canMakeMove(localMove))
     }
 
     fun undoMove() {
-        require(!searchMode)
         Log.d(TAG, "Undo")
         require(moveCount() > 0)
         require(canUndo())
@@ -54,12 +40,11 @@ class Game(private val dim: Int) {
         desk[deskIndex(lastMove)] = EnumMove.Empty
         moveList.undo()
 
-        playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
+        switchPlayerToMove()
         check(canMakeMove(lastMove))
     }
 
     fun redoMove() {
-        require(!searchMode)
         Log.d(TAG, "Redo")
         require(canRedo())
 
@@ -69,7 +54,7 @@ class Game(private val dim: Int) {
 
         desk[deskIndex(lastMove)] = lastMove.type
 
-        playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
+        switchPlayerToMove()
         check(!canMakeMove(lastMove))
     }
 
@@ -112,11 +97,15 @@ class Game(private val dim: Int) {
             player = 1 + player % 2
         }
 
-        sb.appendLine("done")
+        sb.append("done")
         return sb.toString()
     }
 
     private fun deskIndex(m: Move): Int {
         return m.x + m.y * dim
+    }
+
+    private fun switchPlayerToMove() {
+        playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
     }
 }

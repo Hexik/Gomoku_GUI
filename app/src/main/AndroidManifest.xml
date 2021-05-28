@@ -12,10 +12,7 @@
         android:theme="@style/Theme.GomokuGUI">
         <activity android:name=".AboutActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

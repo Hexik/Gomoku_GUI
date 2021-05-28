@@ -11,7 +11,7 @@ Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_startBrain( JNIEnv* /*
                                                                       jobject /* this */,
                                                                       jint dimension ) {
     assert( instance == nullptr );
-    instance = new Engine( dimension );
+    instance = new Engine( static_cast<const uint32_t>(dimension));
     assert( instance != nullptr );
 }
 
@@ -32,7 +32,9 @@ Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_readFromBrain( JNIEnv*
                                                                          jint timeoutMillis ) {
     assert( instance != nullptr );
     auto str = instance->ReadFromOutputQueue( timeoutMillis );
-    __android_log_write( ANDROID_LOG_DEBUG, "JNI read", str.c_str());
+    if( !str.empty()) {
+        __android_log_write( ANDROID_LOG_DEBUG, "JNI read", str.c_str());
+    }
     return env->NewStringUTF( str.c_str());
 }
 
