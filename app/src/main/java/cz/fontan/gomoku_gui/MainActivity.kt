@@ -53,14 +53,10 @@ class MainActivity : AppCompatActivity() {
         val factory = MainViewModelFactory()
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
-        // Observe data stream from brain
-        viewModel.dataFromBrain.observe(this, { it ->
-            it?.consume { viewModel.processResponse(it) }
-        })
-
         binding.boardView.gameDelegate = viewModel
 
-        // Game controlling buttons, work delegated to the ViewModel class
+        // Game controlling buttons
+        // work delegated to the ViewModel class
         binding.buttonPlay.setOnClickListener {
             viewModel.startSearch()
         }
@@ -79,6 +75,12 @@ class MainActivity : AppCompatActivity() {
             viewModel.newGame()
             binding.boardView.invalidate()
         }
+
+        // Observers
+        // Observe data stream from brain
+        viewModel.dataFromBrain.observe(this, { it ->
+            it?.consume { viewModel.processResponse(it) }
+        })
 
         viewModel.isDirty.observe(
             this, { binding.boardView.invalidate() }
@@ -163,7 +165,6 @@ class MainActivity : AppCompatActivity() {
         Log.v(TAG, "onDestroy")
     }
 
-
     companion object {
         // Used to load the 'native-lib' library on application startup.
         init {
@@ -171,5 +172,4 @@ class MainActivity : AppCompatActivity() {
             NativeInterface.startBrain(BOARD_SIZE)
         }
     }
-
 }
