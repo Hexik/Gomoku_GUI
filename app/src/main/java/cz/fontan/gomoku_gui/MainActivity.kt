@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.isSearching.observe(this, {
             binding.buttonPlay.isEnabled = !it
             binding.buttonStop.isEnabled = it
-            binding.buttonNew.isEnabled = !it
             if (it) {
                 binding.buttonRedo.isEnabled = false
                 binding.buttonUndo.isEnabled = false
@@ -95,10 +94,12 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.canRedo.observe(this, {
             binding.buttonRedo.isEnabled = it
+            binding.buttonNew.isEnabled = it || binding.buttonUndo.isEnabled
         })
 
         viewModel.canUndo.observe(this, {
             binding.buttonUndo.isEnabled = it
+            binding.buttonNew.isEnabled = it || binding.buttonRedo.isEnabled
         })
     }
 
