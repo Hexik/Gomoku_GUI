@@ -29,6 +29,9 @@
     <string name="gomoku_gui">Gomoku GUI</string>
     <string name="menu_settings">Settings</string>
     <string name="miroslav_fontan">Miroslav Fontan</string>
+    <string name="multithreading">Use more threads</string>
+    <string name="multithreading_on">Run at full strength</string>
+    <string name="multithreading_off">Single core Basic version</string>
     <string name="nodes">Nodes</string>
     <string name="none">---</string>
     <string name="numbered_moves">Numbered moves</string>
@@ -39,6 +42,9 @@
     <string name="status">Status</string>
     <string name="sw_name">SW name</string>
     <string name="version">Version</string>
+    <string name="use_database">Use database</string>
+    <string name="use_database_off">Database not in use</string>
+    <string name="use_database_on">Database ready</string>
     <string name="www">WWW</string>
     <string name="www_address">https://www.facebook.com/embryo.engine</string>
 </resources>
