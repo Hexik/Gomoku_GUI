@@ -7,203 +7,213 @@
     android:layout_marginStart="40dp"
     android:layout_marginTop="40dp"
     android:layout_marginEnd="20dp"
+    android:layout_marginBottom="20dp"
     tools:context=".AboutActivity">
 
-    <TableLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TableRow
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textViewAboutSW"
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/sw_name"
-                tools:text="SW Name" />
+                android:layout_marginBottom="20dp">
 
-            <TextView
-                android:id="@+id/textViewAboutSWValue"
+                <TextView
+                    android:id="@+id/textViewAboutSW"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/sw_name"
+                    tools:text="SW Name" />
+
+                <TextView
+                    android:id="@+id/textViewAboutSWValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/gomoku_gui"
+                    tools:text="@string/gomoku_gui" />
+
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/gomoku_gui"
-                tools:text="@string/gomoku_gui" />
+                android:layout_marginBottom="20dp">
 
-        </TableRow>
+                <TextView
+                    android:id="@+id/textViewAboutAuthor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/author"
+                    tools:text="Author" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/textViewAboutAuthorValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/miroslav_fontan"
+                    tools:text="Miroslav Fontan" />
 
-            <TextView
-                android:id="@+id/textViewAboutAuthor"
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/author"
-                tools:text="Author" />
+                android:layout_marginBottom="20dp">
 
-            <TextView
-                android:id="@+id/textViewAboutAuthorValue"
+                <TextView
+                    android:id="@+id/textViewAboutSWVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/version"
+                    tools:text="Version" />
+
+                <TextView
+                    android:id="@+id/textViewAboutSWVersionValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/versionName"
+                    tools:text="@string/versionName" />
+
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/miroslav_fontan"
-                tools:text="Miroslav Fontan" />
+                android:layout_marginBottom="20dp">
 
-        </TableRow>
+                <TextView
+                    android:id="@+id/textViewAboutEngineName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/engine_name"
+                    tools:text="@string/engine_name" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/textViewAboutEngineNameValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/engine_random"
+                    tools:text="@string/engine_random" />
 
-            <TextView
-                android:id="@+id/textViewAboutSWVersion"
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/version"
-                tools:text="Version" />
+                android:layout_marginBottom="20dp">
 
-            <TextView
-                android:id="@+id/textViewAboutSWVersionValue"
+                <TextView
+                    android:id="@+id/textViewAboutEngineVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/engine_version"
+                    tools:text="@string/engine_version" />
+
+                <TextView
+                    android:id="@+id/textViewAboutEngineVersionValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/versionName"
+                    tools:text="@string/versionName" />
+
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/versionName"
-                tools:text="@string/versionName" />
+                android:layout_marginBottom="20dp">
 
-        </TableRow>
+                <TextView
+                    android:id="@+id/textViewAboutBuildDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/build_date"
+                    tools:text="Build date" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/textViewAboutBuildDateValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/none"
+                    tools:text="@string/none" />
 
-            <TextView
-                android:id="@+id/textViewAboutEngineName"
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/engine_name"
-                tools:text="@string/engine_name" />
+                android:layout_marginBottom="20dp">
 
-            <TextView
-                android:id="@+id/textViewAboutEngineNameValue"
+                <TextView
+                    android:id="@+id/textViewAboutWWW"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/www"
+                    tools:text="WWW:" />
+
+                <TextView
+                    android:id="@+id/textViewAboutWWWLink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autoLink="web"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/www_address"
+                    tools:text="https://www.facebook.com/embryo.engine" />
+
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/engine_random"
-                tools:text="@string/engine_random" />
+                android:layout_marginBottom="20dp">
 
-        </TableRow>
+                <TextView
+                    android:id="@+id/textViewAboutEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/email"
+                    tools:text="Email" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/textViewAboutEmailLink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autoLink="email"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/email_address"
+                    tools:text="mira.fontan@gmail.com" />
 
-            <TextView
-                android:id="@+id/textViewAboutEngineVersion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/engine_version"
-                tools:text="@string/engine_version" />
-
-            <TextView
-                android:id="@+id/textViewAboutEngineVersionValue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/versionName"
-                tools:text="@string/versionName" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
-
-            <TextView
-                android:id="@+id/textViewAboutBuildDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/build_date"
-                tools:text="Build date" />
-
-            <TextView
-                android:id="@+id/textViewAboutBuildDateValue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/none"
-                tools:text="@string/none" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
-
-            <TextView
-                android:id="@+id/textViewAboutWWW"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/www"
-                tools:text="WWW:" />
-
-            <TextView
-                android:id="@+id/textViewAboutWWWLink"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoLink="web"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="@string/www_address"
-                tools:text="https://www.facebook.com/embryo.engine" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
-
-            <TextView
-                android:id="@+id/textViewAboutEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/email"
-                tools:text="Email" />
-
-            <TextView
-                android:id="@+id/textViewAboutEmailLink"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autoLink="email"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="@string/email_address"
-                tools:text="mira.fontan@gmail.com" />
-
-        </TableRow>
-    </TableLayout>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
