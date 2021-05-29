@@ -45,9 +45,6 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
             offset = 0.05f * width
             step = (width - 2.0f * offset) / kStepCount
         }
-        offset = if (showCoordinates) 0.08f * width else 0.05f * width
-        step =
-            if (showCoordinates) (width - 1.6f * offset) / kStepCount else (width - 2.0f * offset) / kStepCount
         limitLow = offset - step * 0.5f
         limitHigh = offset + kStepCount * step + step * 0.5f
         paint.textSize = step * 0.5f
@@ -73,7 +70,6 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
 
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
-        Log.d(TAG, "Draw $width,$height,$offset")
 
         recalcLimits()
         drawBoard(canvas)
@@ -153,20 +149,17 @@ class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                Log.d(TAG, "Down ${event.x},${event.y}")
+                Log.v(TAG, "Down ${event.x},${event.y}")
                 // Clip event coordinates to be max step/2 from board edges
                 if (event.x <= limitLow || event.x >= limitHigh) return false
                 if (event.y <= limitLow || event.y >= limitHigh) return false
-                lastMove = coordinates2Move(event.x, event.y)
                 if (gameDelegate?.isSearching()!!) return false
+                lastMove = coordinates2Move(event.x, event.y)
                 if (!(gameDelegate!!.canMakeMove(lastMove))) return false
                 Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
             }
-            MotionEvent.ACTION_MOVE -> {
-            }
             MotionEvent.ACTION_UP -> {
-                gameDelegate?.makeMove(lastMove)
-                invalidate()
+                gameDelegate!!.makeMove(lastMove)
             }
         }
         return true
