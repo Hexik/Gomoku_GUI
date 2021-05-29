@@ -27,6 +27,7 @@
     <string name="forbidden_moves_off">Forbidden moves are not displayed</string>
     <string name="forbidden_moves_on">Show forbidden moves</string>
     <string name="gomoku_gui">Gomoku GUI</string>
+    <string name="loading">Game\nis\nloading…</string>
     <string name="menu_settings">Settings</string>
     <string name="miroslav_fontan">Miroslav Fontan</string>
     <string name="multithreading">Use more threads</string>
@@ -39,6 +40,7 @@
     <string name="numbered_moves_on">Show moves order</string>
     <string name="quit">Quit</string>
     <string name="speed">N/s</string>
+    <string name="splash_image">Starting screen picture</string>
     <string name="status">Status</string>
     <string name="sw_name">SW name</string>
     <string name="version">Version</string>

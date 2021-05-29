@@ -11,11 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GomokuGUI">
         <activity android:name=".AboutActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".SplashScreenActivity"
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
