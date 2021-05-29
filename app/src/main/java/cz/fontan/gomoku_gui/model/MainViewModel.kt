@@ -43,11 +43,11 @@ class MainViewModel : ViewModel(), InterfaceMain {
         get() = _dataFromBrain
 
     init {
-        _isDirty.value = false
-        setIdle()
+        setIdleStatus()
     }
 
-    private fun setIdle() {
+    private fun setIdleStatus() {
+        _isDirty.value = true
         _isSearching.value = false
         _canUndo.value = game.canUndo()
         _canRedo.value = game.canRedo()
@@ -62,22 +62,22 @@ class MainViewModel : ViewModel(), InterfaceMain {
 
     fun stopSearch() {
         NativeInterface.writeToBrain("YXSTOP")
-        setIdle()
+        setIdleStatus()
     }
 
     fun undoMove() {
         game.undoMove()
-        setIdle()
+        setIdleStatus()
     }
 
     fun redoMove() {
         game.redoMove()
-        setIdle()
+        setIdleStatus()
     }
 
     fun newGame() {
         game.newGame()
-        setIdle()
+        setIdleStatus()
     }
 
     override fun canMakeMove(move: Move): Boolean {
@@ -86,8 +86,7 @@ class MainViewModel : ViewModel(), InterfaceMain {
 
     override fun makeMove(move: Move) {
         game.makeMove(move)
-        setIdle()
-        _isDirty.value = true
+        setIdleStatus()
     }
 
     override fun moveCount(): Int {
@@ -120,7 +119,7 @@ class MainViewModel : ViewModel(), InterfaceMain {
         val splitted = response.split(",")
         if (splitted.size == 2) {
             makeMove(Move(splitted[0].toInt(), splitted[1].toInt()))
-            setIdle()
+            setIdleStatus()
         }
     }
 
