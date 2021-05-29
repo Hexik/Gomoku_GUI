@@ -65,15 +65,12 @@ class MainActivity : AppCompatActivity() {
         }
         binding.buttonUndo.setOnClickListener {
             viewModel.undoMove()
-            binding.boardView.invalidate()
         }
         binding.buttonRedo.setOnClickListener {
             viewModel.redoMove()
-            binding.boardView.invalidate()
         }
         binding.buttonNew.setOnClickListener {
             viewModel.newGame()
-            binding.boardView.invalidate()
         }
 
         // Observers
