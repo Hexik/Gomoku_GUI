@@ -108,4 +108,25 @@ class Game(private val dim: Int) {
     private fun switchPlayerToMove() {
         playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
     }
+
+    fun toStream(): String {
+        require(moveList.isValid())
+
+        val sb = StringBuilder()
+        moveList.rewind()
+        for (it in moveList) {
+            sb.append("${it.x} ${it.y} ")
+        }
+        return sb.toString()
+    }
+
+    fun fromStream(data: String?) {
+        data ?: return
+        val numbers = data.split(" ")
+
+        reset()
+        for (i in 0..numbers.size - 2 step 2) {
+            makeMove(Move(numbers[i].toInt(), numbers[i + 1].toInt()))
+        }
+    }
 }

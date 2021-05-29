@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
 import cz.fontan.gomoku_gui.model.MainViewModel
-import cz.fontan.gomoku_gui.model.MainViewModelFactory
 import kotlin.system.exitProcess
 
 
@@ -22,8 +21,8 @@ private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val factory = MainViewModelFactory()
+        val factory = ViewModelProvider.AndroidViewModelFactory(application)
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
         binding.boardView.gameDelegate = viewModel
@@ -123,6 +122,7 @@ class MainActivity : AppCompatActivity() {
 
         if (item.itemId == R.id.menu_quit) {
             Log.d(TAG, "Quit")
+            viewModel.saveGame()
             if (Build.VERSION.SDK_INT >= 21) {
                 finishAndRemoveTask()
             } else {

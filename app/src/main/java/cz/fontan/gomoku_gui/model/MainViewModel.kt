@@ -1,5 +1,7 @@
 package cz.fontan.gomoku_gui.model
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
 import cz.fontan.gomoku_gui.InterfaceMain
@@ -9,7 +11,7 @@ import cz.fontan.gomoku_gui.game.Game
 import cz.fontan.gomoku_gui.game.Move
 import kotlinx.coroutines.Dispatchers
 
-class MainViewModel : ViewModel(), InterfaceMain {
+class MainViewModel(application: Application) : AndroidViewModel(application), InterfaceMain {
     private val game = Game(BOARD_SIZE)
 
     private val _isDirty = MutableLiveData<Boolean>()
@@ -43,6 +45,7 @@ class MainViewModel : ViewModel(), InterfaceMain {
         get() = _dataFromBrain
 
     init {
+        loadGame()
         setIdleStatus()
     }
 
@@ -123,4 +126,29 @@ class MainViewModel : ViewModel(), InterfaceMain {
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        Log.i("MainVM", "onCleared")
+        saveGame()
+    }
+
+    fun saveGame() {
+        val sharedPreference =
+            getApplication<Application>().applicationContext.getSharedPreferences(
+                "PREFERENCE_NAME",
+                Context.MODE_PRIVATE
+            )
+        val editor = sharedPreference.edit()
+        editor.putString("Moves", game.toStream())
+        editor.apply()
+    }
+
+    private fun loadGame() {
+        val sharedPreference =
+            getApplication<Application>().applicationContext.getSharedPreferences(
+                "PREFERENCE_NAME",
+                Context.MODE_PRIVATE
+            )
+        game.fromStream(sharedPreference.getString("Moves", ""))
+    }
 }
