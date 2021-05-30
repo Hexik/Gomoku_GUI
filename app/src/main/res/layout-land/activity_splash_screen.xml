@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:contentDescription="@string/splash_image"
-        android:padding="32dp"
-        android:scaleType="fitXY"
+        android:padding="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/gomoku_logo" />
@@ -26,12 +25,11 @@
         android:fontFamily="serif"
         android:gravity="center"
         android:text="@string/loading"
-        android:textSize="48sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/loading" />
 
 
