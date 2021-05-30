@@ -30,7 +30,7 @@
     </PreferenceCategory>
     <PreferenceCategory android2:title="@string/board">
         <CheckBoxPreference
-            android2:defaultValue="false"
+            android2:defaultValue="true"
             android2:key="check_box_preference_coordinates"
             android2:summaryOff="@string/coordinates_off"
             android2:summaryOn="@string/coordinates_on"
