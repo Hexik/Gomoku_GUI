@@ -4,7 +4,7 @@ import android.util.Log
 
 private const val TAG = "Game"
 
-class Game(private val dim: Int) {
+class Game(val dim: Int) {
     private val moveList = MoveList()
     private val desk = Array(dim * dim) { EnumMove.Empty }
     var playerToMove: EnumMove = EnumMove.Black

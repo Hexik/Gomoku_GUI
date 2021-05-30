@@ -80,6 +80,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     fun newGame() {
         game.newGame()
+        NativeInterface.writeToBrain("start ${game.dim}")
         setIdleStatus()
     }
 
