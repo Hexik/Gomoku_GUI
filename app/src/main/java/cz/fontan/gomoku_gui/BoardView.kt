@@ -10,7 +10,6 @@ import android.graphics.PointF
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import androidx.core.view.doOnPreDraw
 import androidx.preference.PreferenceManager
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
@@ -19,7 +18,10 @@ import cz.fontan.gomoku_gui.game.Move
 
 private const val TAG: String = "BoardView"
 
-class BoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+class BoardView(context: Context?, attrs: AttributeSet?) :
+    androidx.appcompat.widget.AppCompatImageView(
+        context!!, attrs
+    ) {
 
     private val kStepCount = BOARD_SIZE - 1
     private val paint = Paint()
