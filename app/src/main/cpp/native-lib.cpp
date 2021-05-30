@@ -31,7 +31,11 @@ Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_readFromBrain( JNIEnv*
                                                                          jobject /* this */,
                                                                          jint timeoutMillis ) {
     assert( instance != nullptr );
-    auto str = instance->ReadFromOutputQueue( timeoutMillis );
+    if( timeoutMillis == 0 && instance->IsEmptyOutputQueue()) {
+        return env->NewStringUTF( "" );
+    }
+
+    const auto str = instance->ReadFromOutputQueue( timeoutMillis + 1 );
     if( !str.empty()) {
         __android_log_write( ANDROID_LOG_DEBUG, "JNI read", str.c_str());
     }

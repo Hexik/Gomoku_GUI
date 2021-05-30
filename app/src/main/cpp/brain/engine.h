@@ -55,6 +55,7 @@ public:
 
     std::string ReadFromOutputQueue( int timeOutMs );
 
+    bool IsEmptyOutputQueue();
 private:
 
     static eCommand ParseCmd( const std::string& s, std::string& rest );

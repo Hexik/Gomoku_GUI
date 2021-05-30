@@ -11,9 +11,9 @@ class AnswersRepository {
      */
     fun fetchStrings(): Flow<ConsumableValue<String>> = flow {
         while (true) {
-            val s = NativeInterface.readFromBrain(1)
+            val s = NativeInterface.readFromBrain(0)
             when (s.isEmpty()) {
-                true -> delay(1)
+                true -> delay(5)
                 else -> emit(ConsumableValue(s))
             }
         }

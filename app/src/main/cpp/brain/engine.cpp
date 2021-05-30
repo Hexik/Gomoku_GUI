@@ -154,6 +154,10 @@ bool Engine::CmdExecute( const std::string& cmd ) {
     return bLoop;
 }
 
+bool Engine::IsEmptyOutputQueue() {
+    return m_queueOut.is_empty();
+}
+
 std::string Engine::ReadFromOutputQueue( int timeOutMs ) {
     return m_queueOut.pop( timeOutMs );
 }
