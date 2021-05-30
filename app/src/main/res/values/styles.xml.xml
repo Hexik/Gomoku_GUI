@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme.Splash" parent="@style/Theme.AppCompat.NoActionBar">
-        <item name="android:background">#00E5FF</item>
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:background">@color/turquoise_a400</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
