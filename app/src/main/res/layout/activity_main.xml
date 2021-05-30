@@ -130,6 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableBottom="@drawable/ic_baseline_search_24"
                 android:singleLine="true"
                 android:text="@string/button_play"
                 android:textAllCaps="false" />
@@ -139,15 +140,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableBottom="@drawable/ic_baseline_cancel_24"
                 android:singleLine="true"
                 android:text="@string/button_stop"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:iconSize="40dp" />
 
             <Button
                 android:id="@+id/button_undo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableBottom="@drawable/ic_baseline_undo_24"
                 android:singleLine="true"
                 android:text="@string/button_undo"
                 android:textAllCaps="false" />
@@ -157,6 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableBottom="@drawable/ic_baseline_redo_24"
                 android:singleLine="true"
                 android:text="@string/button_redo"
                 android:textAllCaps="false" />
@@ -166,6 +171,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableBottom="@drawable/ic_baseline_delete_forever_24"
                 android:singleLine="true"
                 android:text="@string/button_new"
                 android:textAllCaps="false" />
