@@ -8,7 +8,7 @@
     tools:context=".SplashScreenActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewGomokuLogo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
@@ -19,17 +19,28 @@
         app:srcCompat="@drawable/gomoku_logo" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewGui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gomoku_gui"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewLoading"
+        app:layout_constraintStart_toEndOf="@+id/imageViewGomokuLogo"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/gomoku_gui" />
+
+    <TextView
+        android:id="@+id/textViewLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
         android:gravity="center"
         android:text="@string/loading"
-        android:textSize="34sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewGomokuLogo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGui"
         tools:text="@string/loading" />
 
 
