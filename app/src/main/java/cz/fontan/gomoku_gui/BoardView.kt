@@ -75,9 +75,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
 
-        if (zoom) {
-            canvas.setMatrix(if (working) workingMatrix else originalMatrix)
-        }
+        canvas.setMatrix(if (zoom && working) workingMatrix else originalMatrix)
 
         recalcLimits()
         drawBoard(canvas)
@@ -176,16 +174,32 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                 if (zoom && !working) {
                     working = true
                     workingMatrix.set(originalMatrix)
-                    workingMatrix.setScale(1.0f, 1.0f, width / 2f, width / 2f)
+                    workingMatrix.setScale(1.6f, 1.6f, event.x, event.y)
                     invalidate()
                 } else {
                     working = false
-                    Log.v(TAG, "Down ${event.x},${event.y}")
-                    // Clip event coordinates to be max step/2 from board edges
-                    if (event.x <= limitLow || event.x >= limitHigh) return false
-                    if (event.y <= limitLow || event.y >= limitHigh) return false
+                    Log.v(TAG, "Orig ${event.x},${event.y}")
+
                     if (gameDelegate?.isSearching()!!) return false
-                    lastMove = coordinates2Move(event.x, event.y)
+
+                    // Initialize the array with our Coordinate
+                    val pts: FloatArray = floatArrayOf(event.x, event.y)
+
+                    if (zoom) {
+                        // Use the Matrix to map the points
+                        val inverseCopy = Matrix()
+                        if (workingMatrix.invert(inverseCopy)) {
+                            inverseCopy.mapPoints(pts)
+                            //Now transformedPoint is reverted to original state.
+                        }
+                    }
+
+                    // Clip event coordinates to be max step/2 from board edges
+                    if (pts[0] <= limitLow || pts[0] >= limitHigh) return false
+                    if (pts[1] <= limitLow || pts[1] >= limitHigh) return false
+
+                    lastMove = coordinates2Move(pts[0], pts[1])
+
                     if (!(gameDelegate!!.canMakeMove(lastMove))) return false
                     Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
                 }
