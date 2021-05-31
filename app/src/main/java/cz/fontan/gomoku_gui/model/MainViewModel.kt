@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 class MainViewModel(application: Application) : AndroidViewModel(application), InterfaceMain {
     private val game = Game(BOARD_SIZE)
 
+    // LiveData variables
     private val _isDirty = MutableLiveData<Boolean>()
     val isDirty: LiveData<Boolean>
         get() = _isDirty
@@ -29,6 +30,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     private val _canUndo = MutableLiveData<Boolean>()
     val canUndo: LiveData<Boolean>
         get() = _canUndo
+
+    private val _msgDepth = MutableLiveData<String>()
+    val msgDepth: LiveData<String>
+        get() = _msgDepth
+
+    private val _msgEval = MutableLiveData<String>()
+    val msgEval: LiveData<String>
+        get() = _msgEval
+
+    private val _msgNodes = MutableLiveData<String>()
+    val msgNodes: LiveData<String>
+        get() = _msgNodes
+
+    private val _msgSpeed = MutableLiveData<String>()
+    val msgSpeed: LiveData<String>
+        get() = _msgSpeed
 
     private val answersRepository = AnswersRepository()
 
@@ -110,11 +127,31 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         when {
             upper.startsWith("DEBUG") -> return
             upper.startsWith("ERROR") -> return
-            upper.startsWith("MESSAGE") -> return
+            upper.startsWith("MESSAGE") -> parseMessage(upper)
             upper.startsWith("OK") -> return
             upper.startsWith("SUGGEST") -> return
             upper.startsWith("UNKNOWN") -> return
             else -> parseMoveResponse(upper)
+        }
+    }
+
+    private fun parseMessage(response: String) {
+        when {
+            response.startsWith("MESSAGE DEPTH") -> parseStatus(response)
+            else -> return
+        }
+    }
+
+    private fun parseStatus(response: String) {
+        val splitted = response.split(" ")
+        val it = splitted.iterator()
+        while (it.hasNext()) {
+            when (it.next()) {
+                "DEPTH" -> _msgDepth.value = it.next()
+                "EV" -> _msgEval.value = it.next()
+                "N" -> _msgNodes.value = it.next()
+                "N/MS" -> _msgSpeed.value = it.next()
+            }
         }
     }
 

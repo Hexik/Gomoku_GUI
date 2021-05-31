@@ -100,6 +100,11 @@ class MainActivity : AppCompatActivity() {
             binding.buttonUndo.isEnabled = it
             binding.buttonNew.isEnabled = it || binding.buttonRedo.isEnabled
         })
+
+        viewModel.msgDepth.observe(this, { binding.textViewDataDepth.text = it })
+        viewModel.msgEval.observe(this, { binding.textViewDataEval.text = it })
+        viewModel.msgNodes.observe(this, { binding.textViewDataNodes.text = it })
+        viewModel.msgSpeed.observe(this, { binding.textViewDataSpeed.text = it })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
