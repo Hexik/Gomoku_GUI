@@ -43,6 +43,12 @@
             android2:title="@string/numbered_moves" />
         <CheckBoxPreference
             android2:defaultValue="false"
+            android2:key="check_box_preference_zoom"
+            android2:summaryOff="@string/zoom_off"
+            android2:summaryOn="@string/zoom_on"
+            android2:title="@string/zoom" />
+        <CheckBoxPreference
+            android2:defaultValue="false"
             android2:key="check_box_preference_forbidden"
             android2:summaryOff="@string/forbidden_moves_off"
             android2:summaryOn="@string/forbidden_moves_on"

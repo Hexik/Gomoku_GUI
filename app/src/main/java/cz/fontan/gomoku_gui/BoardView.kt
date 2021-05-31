@@ -2,10 +2,7 @@ package cz.fontan.gomoku_gui
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.PointF
+import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -28,16 +25,23 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private var step = 0f
     private var limitLow = 0f
     private var limitHigh = 0f
-    private var showNumbers = false
-    private var showCoordinates = false
     var gameDelegate: InterfaceMain? = null
     private val sharedPreferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
+    private var showNumbers = false
+    private var showCoordinates = false
+    private var zoom = false
+    private var working = false
+
+    private val originalMatrix = Matrix()
+    private val workingMatrix = Matrix()
 
     private fun recalcLimits() {
         Log.d(TAG, "Reca")
         showNumbers = sharedPreferences.getBoolean("check_box_preference_numbers", true)
         showCoordinates = sharedPreferences.getBoolean("check_box_preference_coordinates", true)
+        zoom = sharedPreferences.getBoolean("check_box_preference_zoom", false)
+
         if (showCoordinates) {
             offset = 0.08f * width
             step = (width - 1.6f * offset) / kStepCount
@@ -70,6 +74,10 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
+
+        if (zoom) {
+            canvas.setMatrix(if (working) workingMatrix else originalMatrix)
+        }
 
         recalcLimits()
         drawBoard(canvas)
@@ -148,17 +156,28 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                Log.v(TAG, "Down ${event.x},${event.y}")
-                // Clip event coordinates to be max step/2 from board edges
-                if (event.x <= limitLow || event.x >= limitHigh) return false
-                if (event.y <= limitLow || event.y >= limitHigh) return false
-                if (gameDelegate?.isSearching()!!) return false
-                lastMove = coordinates2Move(event.x, event.y)
-                if (!(gameDelegate!!.canMakeMove(lastMove))) return false
-                Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
+                if (zoom && !working) {
+                    working = true
+                    workingMatrix.set(originalMatrix)
+                    workingMatrix.setScale(1.0f, 1.0f, width / 2f, width / 2f)
+                    invalidate()
+                } else {
+                    working = false
+                    Log.v(TAG, "Down ${event.x},${event.y}")
+                    // Clip event coordinates to be max step/2 from board edges
+                    if (event.x <= limitLow || event.x >= limitHigh) return false
+                    if (event.y <= limitLow || event.y >= limitHigh) return false
+                    if (gameDelegate?.isSearching()!!) return false
+                    lastMove = coordinates2Move(event.x, event.y)
+                    if (!(gameDelegate!!.canMakeMove(lastMove))) return false
+                    Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
+                }
             }
             MotionEvent.ACTION_UP -> {
-                gameDelegate!!.makeMove(lastMove)
+                if (!zoom || !working) {
+                    gameDelegate!!.makeMove(lastMove)
+                    performClick()
+                }
             }
         }
         return true
