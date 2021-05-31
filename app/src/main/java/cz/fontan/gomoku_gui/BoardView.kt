@@ -13,7 +13,6 @@ import android.view.MotionEvent
 import androidx.core.view.doOnPreDraw
 import androidx.preference.PreferenceManager
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
-import cz.fontan.gomoku_gui.game.EnumMove
 import cz.fontan.gomoku_gui.game.Move
 
 private const val TAG: String = "BoardView"
@@ -136,7 +135,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private fun coordinates2Move(x: Float, y: Float): Move {
         return Move(
             ((x - offset + step / 2) / step).toInt(),
-            kStepCount - ((y - offset + step / 2) / step).toInt(), EnumMove.Wall
+            kStepCount - ((y - offset + step / 2) / step).toInt()
         )
     }
 
