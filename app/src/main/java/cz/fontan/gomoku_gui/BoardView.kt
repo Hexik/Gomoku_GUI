@@ -137,6 +137,23 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                 )
             }
         }
+
+        // draw handicap points
+        if (BOARD_SIZE >= 11) {
+            var p = move2Point(Move(3, 3))
+            canvas.drawCircle(p.x, p.y, step * 0.07f, paint)
+            p = move2Point(Move(BOARD_SIZE - 4, 3))
+            canvas.drawCircle(p.x, p.y, step * 0.07f, paint)
+            p = move2Point(Move(3, BOARD_SIZE - 4))
+            canvas.drawCircle(p.x, p.y, step * 0.07f, paint)
+            p = move2Point(Move(BOARD_SIZE - 4, BOARD_SIZE - 4))
+            canvas.drawCircle(p.x, p.y, step * 0.07f, paint)
+            if (BOARD_SIZE % 2 != 0) {
+                p = move2Point(Move(BOARD_SIZE / 2, BOARD_SIZE / 2))
+                canvas.drawCircle(p.x, p.y, step * 0.07f, paint)
+            }
+        }
+
     }
 
     private fun coordinates2Move(x: Float, y: Float): Move {
