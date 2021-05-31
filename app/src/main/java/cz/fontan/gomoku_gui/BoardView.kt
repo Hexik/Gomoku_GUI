@@ -1,6 +1,5 @@
 package cz.fontan.gomoku_gui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Canvas
@@ -143,7 +142,6 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         return PointF(offset + move.x * step, offset + (kStepCount - move.y) * step)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
         gameDelegate ?: return false
@@ -164,5 +162,10 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             }
         }
         return true
+    }
+
+    override fun performClick(): Boolean {
+        { } // to silent checker
+        return super.performClick()
     }
 }
