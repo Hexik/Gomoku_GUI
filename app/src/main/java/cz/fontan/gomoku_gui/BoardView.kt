@@ -111,12 +111,17 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                     }
 
                     // Clip event coordinates to be max step/2 from board edges
-                    if (pts[0] <= limitLow || pts[0] >= limitHigh) return false
-                    if (pts[1] <= limitLow || pts[1] >= limitHigh) return false
+                    if (pts[0] <= limitLow || pts[0] >= limitHigh || pts[1] <= limitLow || pts[1] >= limitHigh) {
+                        invalidate()
+                        return false
+                    }
 
                     lastMove = coordinates2Move(pts[0], pts[1])
 
-                    if (!(gameDelegate!!.canMakeMove(lastMove))) return false
+                    if (!(gameDelegate!!.canMakeMove(lastMove))) {
+                        invalidate()
+                        return false
+                    }
                     Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
                 }
             }
@@ -249,7 +254,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     }
 
     override fun performClick(): Boolean {
-        run{ } // to silent checker
+        run { } // to silent checker
         return super.performClick()
     }
 }
