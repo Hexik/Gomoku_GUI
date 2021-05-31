@@ -18,41 +18,37 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         context!!, attrs
     ) {
 
-    private val kStepCount = BOARD_SIZE - 1
+    // constants
+    companion object {
+        private const val kHandicapDrawCoef = 0.07f
+        private const val kHandicapOffset = 3
+        private const val kMatrixScaleFactor = 1.6f
+        private const val kStepCount = BOARD_SIZE - 1
+        private const val kStoneCoef = 0.44f
+    }
+
+    var gameDelegate: InterfaceMain? = null
+
+    // draw related
     private val paint = Paint()
     private var lastMove = Move()
-    private var offset = 0f
-    private var step = 0f
     private var limitLow = 0f
     private var limitHigh = 0f
-    var gameDelegate: InterfaceMain? = null
+    private var offset = 0f
+    private var step = 0f
+
+    // setting preferences
     private val sharedPreferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
+
     private var showNumbers = false
     private var showCoordinates = false
     private var zoom = false
     private var working = false
 
+    // transformation matrix
     private val originalMatrix = Matrix()
     private val workingMatrix = Matrix()
-
-    private fun recalcLimits() {
-        Log.d(TAG, "Reca")
-        showNumbers = sharedPreferences.getBoolean("check_box_preference_numbers", true)
-        showCoordinates = sharedPreferences.getBoolean("check_box_preference_coordinates", true)
-        zoom = sharedPreferences.getBoolean("check_box_preference_zoom", false)
-
-        if (showCoordinates) {
-            offset = 0.08f * width
-            step = (width - 1.6f * offset) / kStepCount
-        } else {
-            offset = 0.05f * width
-            step = (width - 2.0f * offset) / kStepCount
-        }
-        limitLow = offset - step * 0.5f
-        limitHigh = offset + kStepCount * step + step * 0.5f
-        paint.textSize = step * 0.5f
-    }
 
     init {
         paint.textAlign = Paint.Align.CENTER
@@ -61,16 +57,19 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         // Make one time pre-calculation at correct time,
         // if you ask for width, height too early, the value is 0
         doOnPreDraw {
-            Log.d(TAG, "Pre $width,$height,$offset")
+            Log.v(TAG, "Pre $width,$height,$offset")
             recalcLimits()
         }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        // be sure the view has square shape
         val smaller = kotlin.math.min(widthMeasureSpec, heightMeasureSpec)
         setMeasuredDimension(smaller, smaller)
     }
+
 
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
@@ -82,89 +81,6 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         drawStones(canvas)
     }
 
-    private fun drawStones(canvas: Canvas) {
-        val safeDelegate = gameDelegate ?: return
-        val oldColor = paint.color
-
-        for (i in 0 until (safeDelegate.moveCount())) {
-            val p = move2Point(safeDelegate.getIthMove(i))
-            paint.color = if (i % 2 != 0) Color.WHITE else Color.DKGRAY
-            canvas.drawCircle(p.x, p.y, step * 0.44f, paint)
-            if (showNumbers) {
-                paint.color = when {
-                    i == safeDelegate.moveCount() - 1 -> Color.RED
-                    i % 2 == 0 -> Color.WHITE
-                    else -> Color.DKGRAY
-                }
-                canvas.drawText((i + 1).toString(), p.x, p.y + paint.textSize * 0.33f, paint)
-            }
-        }
-        paint.color = oldColor
-    }
-
-    private fun drawBoard(canvas: Canvas) {
-        for (i in 0..kStepCount) {
-            canvas.drawLine(
-                offset + i * step,
-                offset,
-                offset + i * step,
-                offset + kStepCount * step,
-                paint
-            )
-
-            canvas.drawLine(
-                offset,
-                offset + i * step,
-                offset + kStepCount * step,
-                offset + i * step,
-                paint
-            )
-
-            if (showCoordinates) {
-                canvas.drawText(
-                    (i + 'A'.code).toChar().toString(),
-                    offset + i * step,
-                    offset * 0.5f,
-                    paint
-                )
-                canvas.drawText(
-                    (BOARD_SIZE - i).toString(),
-                    offset * 0.33f,
-                    offset + i * step + paint.textSize * 0.33f,
-                    paint
-                )
-            }
-        }
-
-        // draw handicap points
-        if (BOARD_SIZE >= 11) {
-            var p = move2Point(Move(3, 3))
-            canvas.drawCircle(p.x, p.y, step * 0.07f, paint)
-            p = move2Point(Move(BOARD_SIZE - 4, 3))
-            canvas.drawCircle(p.x, p.y, step * 0.07f, paint)
-            p = move2Point(Move(3, BOARD_SIZE - 4))
-            canvas.drawCircle(p.x, p.y, step * 0.07f, paint)
-            p = move2Point(Move(BOARD_SIZE - 4, BOARD_SIZE - 4))
-            canvas.drawCircle(p.x, p.y, step * 0.07f, paint)
-            if (BOARD_SIZE % 2 != 0) {
-                p = move2Point(Move(BOARD_SIZE / 2, BOARD_SIZE / 2))
-                canvas.drawCircle(p.x, p.y, step * 0.07f, paint)
-            }
-        }
-
-    }
-
-    private fun coordinates2Move(x: Float, y: Float): Move {
-        return Move(
-            ((x - offset + step / 2) / step).toInt(),
-            kStepCount - ((y - offset + step / 2) / step).toInt()
-        )
-    }
-
-    private fun move2Point(move: Move): PointF {
-        return PointF(offset + move.x * step, offset + (kStepCount - move.y) * step)
-    }
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
         gameDelegate ?: return false
@@ -174,7 +90,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                 if (zoom && !working) {
                     working = true
                     workingMatrix.set(originalMatrix)
-                    workingMatrix.setScale(1.6f, 1.6f, event.x, event.y)
+                    workingMatrix.setScale(kMatrixScaleFactor, kMatrixScaleFactor, event.x, event.y)
                     invalidate()
                 } else {
                     working = false
@@ -212,6 +128,124 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             }
         }
         return true
+    }
+
+    private fun drawStones(canvas: Canvas) {
+        val safeDelegate = gameDelegate ?: return
+        val oldColor = paint.color
+
+        for (i in 0 until (safeDelegate.moveCount())) {
+            val p = move2Point(safeDelegate.getIthMove(i))
+            paint.color = if (i % 2 != 0) Color.WHITE else Color.DKGRAY
+            canvas.drawCircle(p.x, p.y, step * kStoneCoef, paint)
+            if (showNumbers) {
+                paint.color = when {
+                    i == safeDelegate.moveCount() - 1 -> Color.RED
+                    i % 2 == 0 -> Color.WHITE
+                    else -> Color.DKGRAY
+                }
+                canvas.drawText((i + 1).toString(), p.x, p.y + paint.textSize * 0.33f, paint)
+            }
+        }
+        paint.color = oldColor
+    }
+
+    private fun drawBoard(canvas: Canvas) {
+        drawHorizontalLines(canvas)
+        drawVerticalLines(canvas)
+
+        if (showCoordinates) {
+            drawCoordinates(canvas)
+        }
+
+        drawHandicapPoints(canvas)
+    }
+
+    private fun drawHorizontalLines(canvas: Canvas) {
+        for (i in 0..kStepCount) {
+            canvas.drawLine(
+                offset,
+                offset + i * step,
+                offset + kStepCount * step,
+                offset + i * step,
+                paint
+            )
+        }
+    }
+
+    private fun drawVerticalLines(canvas: Canvas) {
+        for (i in 0..kStepCount) {
+            canvas.drawLine(
+                offset + i * step,
+                offset,
+                offset + i * step,
+                offset + kStepCount * step,
+                paint
+            )
+        }
+    }
+
+    private fun drawCoordinates(canvas: Canvas) {
+        for (i in 0..kStepCount) {
+            canvas.drawText(
+                (i + 'A'.code).toChar().toString(),
+                offset + i * step,
+                offset * 0.5f,
+                paint
+            )
+            canvas.drawText(
+                (BOARD_SIZE - i).toString(),
+                offset * 0.33f,
+                offset + i * step + paint.textSize * 0.33f,
+                paint
+            )
+        }
+    }
+
+    private fun drawHandicapPoints(canvas: Canvas) {
+        if (BOARD_SIZE >= 11) {
+            var p = move2Point(Move(kHandicapOffset, kHandicapOffset))
+            canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef, paint)
+            p = move2Point(Move(BOARD_SIZE - kHandicapOffset - 1, kHandicapOffset))
+            canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef, paint)
+            p = move2Point(Move(kHandicapOffset, BOARD_SIZE - kHandicapOffset - 1))
+            canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef, paint)
+            p = move2Point(Move(BOARD_SIZE - kHandicapOffset - 1, BOARD_SIZE - kHandicapOffset - 1))
+            canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef, paint)
+            if (BOARD_SIZE % 2 != 0) {
+                p = move2Point(Move(BOARD_SIZE / 2, BOARD_SIZE / 2))
+                canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef, paint)
+            }
+        }
+    }
+
+    private fun coordinates2Move(x: Float, y: Float): Move {
+        return Move(
+            ((x - offset + step / 2) / step).toInt(),
+            kStepCount - ((y - offset + step / 2) / step).toInt()
+        )
+    }
+
+    private fun move2Point(move: Move): PointF {
+        return PointF(offset + move.x * step, offset + (kStepCount - move.y) * step)
+    }
+
+    private fun recalcLimits() {
+        Log.v(TAG, "Reca")
+        showNumbers = sharedPreferences.getBoolean("check_box_preference_numbers", true)
+        showCoordinates = sharedPreferences.getBoolean("check_box_preference_coordinates", true)
+        zoom = sharedPreferences.getBoolean("check_box_preference_zoom", false)
+
+        if (showCoordinates) {
+            offset = 0.08f * width
+            step = (width - 1.6f * offset) / kStepCount
+        } else {
+            offset = 0.05f * width
+            step = (width - 2.0f * offset) / kStepCount
+        }
+        limitLow = offset - step * 0.5f
+        limitHigh = offset + kStepCount * step + step * 0.5f
+        paint.textSize = step * 0.5f
     }
 
     override fun performClick(): Boolean {
