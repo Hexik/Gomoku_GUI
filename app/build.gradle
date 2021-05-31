@@ -18,7 +18,7 @@ android {
     buildToolsVersion "30.0.3"
     signingConfigs {
         release {
-            storeFile file('C:/Users/fontan/AndroidStudioProjects/Gomoku_GUI/keystore/keystore-release.jks')
+            storeFile file('../keystore/keystore-release.jks')
             storePassword 'android'
             keyAlias 'developmentkey'
             keyPassword 'android'
