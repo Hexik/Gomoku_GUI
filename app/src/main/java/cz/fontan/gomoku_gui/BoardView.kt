@@ -249,7 +249,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     }
 
     override fun performClick(): Boolean {
-        { } // to silent checker
+        run{ } // to silent checker
         return super.performClick()
     }
 }
