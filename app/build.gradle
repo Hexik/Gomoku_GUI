@@ -14,16 +14,16 @@ ext {
 }
 
 android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\fontan\\AndroidStudioProjects\\Gomoku_GUI\\keystore\\keystore-release.jks')
+            storeFile file('C:/Users/fontan/AndroidStudioProjects/Gomoku_GUI/keystore/keystore-release.jks')
             storePassword 'android'
             keyAlias 'developmentkey'
             keyPassword 'android'
         }
     }
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "cz.fontan.gomoku_gui"
