@@ -74,7 +74,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
 
-        canvas.setMatrix(if (zoom && working) workingMatrix else originalMatrix)
+        canvas.concat(if (zoom && working) workingMatrix else originalMatrix)
 
         recalcLimits()
         drawBoard(canvas)

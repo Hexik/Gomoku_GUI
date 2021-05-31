@@ -27,7 +27,7 @@ android {
 
     defaultConfig {
         applicationId "cz.fontan.gomoku_gui"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode gitVersionCode
         versionName gitVersionName
