@@ -125,26 +125,44 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     fun processResponse(response: String) {
         val upper = response.uppercase()
         when {
-            upper.startsWith("DEBUG") -> return
-            upper.startsWith("ERROR") -> return
-            upper.startsWith("MESSAGE") -> parseMessage(upper)
+            upper.startsWith("DEBUG ") -> return
+            upper.startsWith("ERROR ") -> return
+            upper.startsWith("MESSAGE ") -> parseMessage(upper.removePrefix("MESSAGE "))
             upper.startsWith("OK") -> return
-            upper.startsWith("SUGGEST") -> return
+            upper.startsWith("SUGGEST ") -> return
             upper.startsWith("UNKNOWN") -> return
+            upper.contains("NAME") -> return // ABOUT response
             else -> parseMoveResponse(upper)
         }
     }
 
     private fun parseMessage(response: String) {
+        // MESSAGE ...
         when {
-            response.startsWith("MESSAGE DEPTH") -> parseStatus(response)
+            response.startsWith("DEPTH ") -> parseStatus(response)
+            response.startsWith("REALTIME  ") -> parseRealTime(response.removePrefix("REALTIME "))
             else -> return
         }
     }
 
+    private fun parseRealTime(response: String) {
+        // MESSAGE REALTIME ...
+        when {
+            response.startsWith("BEST ") -> return
+            response.startsWith("LOSE  ") -> return
+            response.startsWith("POS  ") -> return
+            response.startsWith("PV  ") -> return
+            response.startsWith("REFRESH") -> return
+            else -> return
+        }
+
+    }
+
     private fun parseStatus(response: String) {
+        // MESSAGE [DEPTH] ...
         val splitted = response.split(" ")
         val it = splitted.iterator()
+        // Caution: the message should be well-formed
         while (it.hasNext()) {
             when (it.next()) {
                 "DEPTH" -> _msgDepth.value = it.next()
@@ -156,6 +174,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     }
 
     private fun parseMoveResponse(response: String) {
+        // x,y
         Log.d("Res", response)
         val splitted = response.split(",")
         if (splitted.size == 2) {
