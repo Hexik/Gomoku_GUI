@@ -192,7 +192,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     fun saveGame() {
         val sharedPreference =
             getApplication<Application>().applicationContext.getSharedPreferences(
-                "PREFERENCE_NAME",
+                "GAME_DATA",
                 Context.MODE_PRIVATE
             )
         val editor = sharedPreference.edit()
@@ -203,9 +203,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     private fun loadGame() {
         val sharedPreference =
             getApplication<Application>().applicationContext.getSharedPreferences(
-                "PREFERENCE_NAME",
+                "GAME_DATA",
                 Context.MODE_PRIVATE
             )
-        game.fromStream(sharedPreference.getString("Moves", ""))
+        try {
+            game.fromStream(sharedPreference.getString("Moves", ""))
+        } catch (e: IllegalArgumentException) {
+            game.reset()
+        }
     }
 }

@@ -11,7 +11,7 @@ class Game(val dim: Int) {
 
     init {
         Log.d(TAG, "Init")
-        reset()
+        newGame()
     }
 
     fun newGame() {
@@ -113,20 +113,30 @@ class Game(val dim: Int) {
         require(moveList.isValid())
 
         val sb = StringBuilder()
+        sb.appendLine(BOARD_SIZE)
+        sb.appendLine(BOARD_SIZE)
+        sb.appendLine("1")
         moveList.rewind()
         for (it in moveList) {
-            sb.append("${it.x} ${it.y} ")
+            sb.appendLine("${it.x} ${it.y}")
         }
         return sb.toString()
     }
 
     fun fromStream(data: String?) {
         data ?: return
-        val numbers = data.split(" ")
+
+        val lines = data.reader().readLines()
+        require(lines.size >= 3)
+        require(lines[0].toInt() == BOARD_SIZE)
+        require(lines[1].toInt() == BOARD_SIZE)
+        require(lines[2].toInt() == 1)
 
         reset()
-        for (i in 0..numbers.size - 2 step 2) {
-            makeMove(Move(numbers[i].toInt(), numbers[i + 1].toInt()))
+        for (i in 3..lines.size - 1) {
+            val numbers = lines[i].split(" ")
+            require(numbers.size == 2)
+            makeMove(Move(numbers[0].toInt(), numbers[1].toInt()))
         }
     }
 }

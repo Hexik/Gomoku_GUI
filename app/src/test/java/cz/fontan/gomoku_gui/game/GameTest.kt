@@ -140,16 +140,90 @@ class GameTest {
     }
 
     @Test
-    fun to_board_BWBW_undo() {
+    fun to_stream_empty() {
+        val game = Game(BOARD_SIZE)
+        assert(game.toStream() == "$BOARD_SIZE\n$BOARD_SIZE\n1\n")
+    }
+
+    @Test
+    fun to_stream_moves() {
         val game = Game(BOARD_SIZE)
         game.makeMove(Move(1, 1, EnumMove.Black))
         game.makeMove(Move(2, 2, EnumMove.White))
         game.makeMove(Move(3, 3, EnumMove.Black))
         game.makeMove(Move(4, 4, EnumMove.White))
-        game.undoMove()
-        assert(game.toBoard(true) == "board\n1,1,2\n2,2,1\n3,3,2\ndone")
-        game.redoMove()
+        assert(
+            game.toStream() == """
+            |$BOARD_SIZE
+            |$BOARD_SIZE
+            |1
+            |1 1
+            |2 2
+            |3 3
+            |4 4
+            |""".trimMargin()
+        )
+    }
+
+    @Test
+    fun from_stream_moves() {
+        val game = Game(BOARD_SIZE)
+        game.fromStream(
+            """
+            |$BOARD_SIZE
+            |$BOARD_SIZE
+            |1
+            |1 1
+            |2 2
+            |3 3
+            |4 4
+            |""".trimMargin()
+        )
         assert(game.toBoard(true) == "board\n1,1,1\n2,2,2\n3,3,1\n4,4,2\ndone")
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun from_stream_empty() {
+        val game = Game(BOARD_SIZE)
+        game.fromStream("")
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun from_stream_bad_move() {
+        val game = Game(BOARD_SIZE)
+        game.fromStream(
+            """
+            |$BOARD_SIZE
+            |$BOARD_SIZE
+            |1
+            |1
+            |""".trimMargin()
+        )
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun from_stream_bad_number() {
+        val game = Game(BOARD_SIZE)
+        game.fromStream(
+            """
+            |$BOARD_SIZE
+            |$BOARD_SIZE
+            |1
+            |1 w
+            |""".trimMargin()
+        )
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun from_stream_bad_dimension() {
+        val game = Game(BOARD_SIZE)
+        game.fromStream(
+            """
+            |$BOARD_SIZE
+            |$BOARD_SIZE - 1
+            |1
+            |""".trimMargin()
+        )
     }
 
 }
