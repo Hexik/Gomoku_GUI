@@ -34,11 +34,14 @@
     <string name="multithreading_on">Run at full strength</string>
     <string name="multithreading_off">Single core Basic version</string>
     <string name="nodes">Nodes</string>
-    <string name="none">---</string>
+    <string name="none">---\n</string>
     <string name="numbered_moves">Numbered moves</string>
     <string name="numbered_moves_off">Unordered moves</string>
     <string name="numbered_moves_on">Show moves order</string>
     <string name="quit">Quit</string>
+    <string name="result_black">Black wins</string>
+    <string name="result_draw">Game is draw</string>
+    <string name="result_white">White wins</string>
     <string name="speed">N/s</string>
     <string name="splash_image">Starting screen picture</string>
     <string name="status">Status</string>

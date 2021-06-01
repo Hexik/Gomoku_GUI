@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.msgEval.observe(this, { binding.textViewDataEval.text = it })
         viewModel.msgNodes.observe(this, { binding.textViewDataNodes.text = it })
         viewModel.msgSpeed.observe(this, { binding.textViewDataSpeed.text = it })
+        viewModel.msgResult.observe(this, { binding.textViewDataStatus.text = it })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import cz.fontan.gomoku_gui.InterfaceMain
 import cz.fontan.gomoku_gui.NativeInterface
+import cz.fontan.gomoku_gui.R
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
 import cz.fontan.gomoku_gui.game.Game
 import cz.fontan.gomoku_gui.game.Move
@@ -46,6 +47,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     private val _msgSpeed = MutableLiveData<String>()
     val msgSpeed: LiveData<String>
         get() = _msgSpeed
+
+    private val _msgResult = MutableLiveData<String>()
+    val msgResult: LiveData<String>
+        get() = _msgResult
 
     private val answersRepository = AnswersRepository()
 
@@ -140,9 +145,24 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         // MESSAGE ...
         when {
             response.startsWith("DEPTH ") -> parseStatus(response)
-            response.startsWith("REALTIME  ") -> parseRealTime(response.removePrefix("REALTIME "))
+            response.startsWith("REALTIME ") -> parseRealTime(response.removePrefix("REALTIME "))
+            response.startsWith("RESULT ") -> parseResult(response.removePrefix("RESULT "))
             else -> return
         }
+    }
+
+    private fun parseResult(response: String) {
+        // MESSAGE RESULT ...
+        when {
+            response == "BLACK" -> _msgResult.value = getResourceString(R.string.result_black)
+            response == "WHITE" -> _msgResult.value = getResourceString(R.string.result_white)
+            response == "DRAW" -> _msgResult.value = getResourceString(R.string.result_draw)
+            else -> _msgResult.value = getResourceString(R.string.none)
+        }
+    }
+
+    private fun getResourceString(resID: Int): String {
+        return getApplication<Application>().applicationContext.resources.getString(resID)
     }
 
     private fun parseRealTime(response: String) {
@@ -155,7 +175,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
             response.startsWith("REFRESH") -> return
             else -> return
         }
-
     }
 
     private fun parseStatus(response: String) {
