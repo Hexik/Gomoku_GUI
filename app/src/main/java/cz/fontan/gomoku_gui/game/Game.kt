@@ -14,21 +14,21 @@ class Game(val dim: Int) {
         newGame()
     }
 
-    fun newGame() {
+    fun newGame(): Game {
         Log.d(TAG, "New Game")
-        reset()
+        return reset()
     }
 
-    fun makeMove(move: Move) {
+    fun makeMove(move: Move): Game {
         val localMove = Move(move.x, move.y, playerToMove)
         require(canMakeMove(localMove))
         desk[deskIndex(localMove)] = localMove.type
         moveList.add(localMove)
-        switchPlayerToMove()
         check(!canMakeMove(localMove))
+        return switchPlayerToMove()
     }
 
-    fun undoMove() {
+    fun undoMove(): Game {
         Log.d(TAG, "Undo")
         require(moveCount() > 0)
         require(canUndo())
@@ -40,11 +40,11 @@ class Game(val dim: Int) {
         desk[deskIndex(lastMove)] = EnumMove.Empty
         moveList.undo()
 
-        switchPlayerToMove()
         check(canMakeMove(lastMove))
+        return switchPlayerToMove()
     }
 
-    fun redoMove() {
+    fun redoMove(): Game {
         Log.d(TAG, "Redo")
         require(canRedo())
 
@@ -54,14 +54,15 @@ class Game(val dim: Int) {
 
         desk[deskIndex(lastMove)] = lastMove.type
 
-        switchPlayerToMove()
         check(!canMakeMove(lastMove))
+        return switchPlayerToMove()
     }
 
-    fun reset() {
+    fun reset(): Game {
         moveList.reset()
         playerToMove = EnumMove.Black
         desk.fill(EnumMove.Empty)
+        return this
     }
 
     fun canMakeMove(m: Move): Boolean {
@@ -97,25 +98,22 @@ class Game(val dim: Int) {
             player = 1 + player % 2
         }
 
-        sb.append("done")
-        return sb.toString()
+        return sb.append("done").toString()
     }
 
     private fun deskIndex(m: Move): Int {
         return m.x + m.y * dim
     }
 
-    private fun switchPlayerToMove() {
+    private fun switchPlayerToMove(): Game {
         playerToMove = if (playerToMove == EnumMove.Black) EnumMove.White else EnumMove.Black
+        return this
     }
 
     fun toStream(): String {
         require(moveList.isValid())
 
-        val sb = StringBuilder()
-        sb.appendLine(BOARD_SIZE)
-        sb.appendLine(BOARD_SIZE)
-        sb.appendLine("1")
+        val sb = StringBuilder().appendLine(BOARD_SIZE).appendLine(BOARD_SIZE).appendLine("1")
         moveList.rewind()
         for (it in moveList) {
             sb.appendLine("${it.x} ${it.y}")
@@ -123,8 +121,8 @@ class Game(val dim: Int) {
         return sb.toString()
     }
 
-    fun fromStream(data: String?) {
-        data ?: return
+    fun fromStream(data: String?): Game {
+        data ?: return this
 
         val lines = data.reader().readLines()
         require(lines.size >= 3)
@@ -138,5 +136,6 @@ class Game(val dim: Int) {
             require(numbers.size == 2)
             makeMove(Move(numbers[0].toInt(), numbers[1].toInt()))
         }
+        return this
     }
 }
