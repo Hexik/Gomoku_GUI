@@ -152,20 +152,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     private fun parseResult(response: String) {
         // MESSAGE RESULT ...
-        when {
-            response == "BLACK" -> {
+        when (response) {
+            "BLACK" -> {
                 _msgResult.value = getResourceString(R.string.result_black)
                 game.gameOver = true
             }
-            response == "WHITE" -> {
+            "WHITE" -> {
                 _msgResult.value = getResourceString(R.string.result_white)
                 game.gameOver = true
             }
-            response == "DRAW" -> {
+            "DRAW" -> {
                 _msgResult.value = getResourceString(R.string.result_draw)
                 game.gameOver = true
             }
-            else -> _msgResult.value = getResourceString(R.string.none)
+            else -> {
+                _msgResult.value = getResourceString(R.string.none)
+                game.gameOver = false
+            }
         }
     }
 
@@ -202,12 +205,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     private fun parseMoveResponse(response: String) {
         // x,y
-        Log.d("Res", response)
+        Log.v("Res", response)
         val splitted = response.split(",")
         if (splitted.size == 2) {
-            makeMove(Move(splitted[0].toInt(), splitted[1].toInt()))
-            setIdleStatus()
+            try {
+                makeMove(Move(splitted[0].toInt(), splitted[1].toInt()))
+            } catch (e: IllegalArgumentException) {
+                Log.wtf("Res", response)
+            }
         }
+        setIdleStatus()
     }
 
     override fun onCleared() {

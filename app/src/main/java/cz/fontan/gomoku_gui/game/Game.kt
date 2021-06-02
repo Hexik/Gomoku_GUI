@@ -8,7 +8,7 @@ class Game(val dim: Int) {
     private val moveList = MoveList()
     private val desk = Array(dim * dim) { EnumMove.Empty }
     var playerToMove: EnumMove = EnumMove.Black
-    var gameOver:Boolean = false
+    var gameOver: Boolean = false
 
     init {
         Log.d(TAG, "Init")
@@ -133,7 +133,7 @@ class Game(val dim: Int) {
         require(lines[2].toInt() == 1)
 
         reset()
-        for (i in 3..lines.size - 1) {
+        for (i in 3 until lines.size) {
             val numbers = lines[i].split(" ")
             require(numbers.size == 2)
             makeMove(Move(numbers[0].toInt(), numbers[1].toInt()))
