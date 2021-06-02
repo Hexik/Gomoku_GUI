@@ -34,7 +34,7 @@
     <string name="multithreading_on">Run at full strength</string>
     <string name="multithreading_off">Single core Basic version</string>
     <string name="nodes">Nodes</string>
-    <string name="none">---\n</string>
+    <string name="none">---</string>
     <string name="numbered_moves">Numbered moves</string>
     <string name="numbered_moves_off">Unordered moves</string>
     <string name="numbered_moves_on">Show moves order</string>

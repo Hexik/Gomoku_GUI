@@ -52,9 +52,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     val msgResult: LiveData<String>
         get() = _msgResult
 
-    private val answersRepository = AnswersRepository()
-
-    private val _dataFromBrain = answersRepository
+    private val _dataFromBrain = AnswersRepository()
         .fetchStrings()
         .asLiveData(
             // Use Default dispatcher for CPU intensive work and
