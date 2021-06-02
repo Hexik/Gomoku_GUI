@@ -2,12 +2,15 @@ package cz.fontan.gomoku_gui.model
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.preference.PreferenceManager
 import cz.fontan.gomoku_gui.InterfaceMain
 import cz.fontan.gomoku_gui.NativeInterface
 import cz.fontan.gomoku_gui.R
 import cz.fontan.gomoku_gui.game.BOARD_SIZE
+import cz.fontan.gomoku_gui.game.EnumMove
 import cz.fontan.gomoku_gui.game.Game
 import cz.fontan.gomoku_gui.game.Move
 import kotlinx.coroutines.Dispatchers
@@ -61,47 +64,66 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
             Dispatchers.Default + viewModelScope.coroutineContext
         )
 
+    // Settings variables
+
+    private val sharedPreferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(getApplication<Application>().applicationContext)
+    private var autoBlack: Boolean = false
+    private var autoWhite: Boolean = false
+
     val dataFromBrain: LiveData<ConsumableValue<String>>
         get() = _dataFromBrain
 
     init {
         loadGame()
         setIdleStatus()
+        afterAction()
     }
 
     private fun setIdleStatus() {
-        _isDirty.value = true
         _isSearching.value = false
         _canUndo.value = game.canUndo()
         _canRedo.value = game.canRedo()
+        autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
+        autoWhite = sharedPreferences.getBoolean("check_box_preference_AI_white", false)
+        _isDirty.value = true
     }
 
     fun startSearch() {
-        _isSearching.value = true
-        _canUndo.value = false
-        _canRedo.value = false
-        NativeInterface.writeToBrain(game.toBoard(true))
-        NativeInterface.writeToBrain("YXRESULT")
+        if (!game.gameOver) {
+            _isSearching.value = true
+            _canUndo.value = false
+            _canRedo.value = false
+            _isDirty.value = true
+            NativeInterface.writeToBrain(game.toBoard(true))
+        }
     }
 
     fun stopSearch() {
         NativeInterface.writeToBrain("YXSTOP")
+        NativeInterface.writeToBrain("YXRESULT")
         setIdleStatus()
     }
 
     fun undoMove() {
         game.undoMove()
-        setIdleStatus()
+        afterAction()
     }
 
     fun redoMove() {
         game.redoMove()
-        setIdleStatus()
+        afterAction()
     }
 
     fun newGame() {
         game.newGame()
         NativeInterface.writeToBrain("start ${game.dim}")
+        afterAction()
+    }
+
+    private fun afterAction() {
+        NativeInterface.writeToBrain(game.toBoard(false))
+        NativeInterface.writeToBrain("YXRESULT")
         setIdleStatus()
     }
 
@@ -112,6 +134,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     override fun makeMove(move: Move) {
         game.makeMove(move)
         setIdleStatus()
+        NativeInterface.writeToBrain("YXRESULT")
+        if (autoBlack && game.playerToMove == EnumMove.Black) {
+            startSearch()
+        }
+        if (autoWhite && game.playerToMove == EnumMove.White) {
+            startSearch()
+        }
     }
 
     override fun moveCount(): Int {
