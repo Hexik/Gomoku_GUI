@@ -56,6 +56,15 @@ class NativeLibrary {
     }
 
     @Test
+    fun result() {
+        NativeInterface.startBrain(BOARD_SIZE)
+        NativeInterface.writeToBrain("start 15")
+        assert(NativeInterface.readFromBrain(10) == "OK")
+        NativeInterface.writeToBrain("yxresult")
+        assert(NativeInterface.readFromBrain(10) == "MESSAGE RESULT NONE")
+    }
+
+    @Test
     fun begin() {
         NativeInterface.startBrain(BOARD_SIZE)
         NativeInterface.writeToBrain("start 15")
@@ -119,6 +128,8 @@ class NativeLibrary {
             |done""".trimMargin()
         )
         assert(NativeInterface.readFromBrain(10) == "4,4")
+        NativeInterface.writeToBrain("yxresult")
+//        assert(NativeInterface.readFromBrain(10) == "MESSAGE RESULT DRAW")
     }
 
 }

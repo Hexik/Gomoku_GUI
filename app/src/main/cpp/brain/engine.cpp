@@ -70,6 +70,7 @@ Engine::eCommand Engine::ParseCmd( const std::string& s, std::string& rest ) {
                                          { "RESTART",      eCommand::eRestart },
                                          { "INFO",         eCommand::eInfo },
                                          { "YXBOARD",      eCommand::eYxBoard },
+                                         { "YXRESULT",     eCommand::eAnResult },
                                          { "YXSHOWFORBID", eCommand::eYxShowForbid },
                                          { "YXSTOP",       eCommand::eYxStop }};
 
@@ -108,6 +109,9 @@ bool Engine::CmdExecute( const std::string& cmd ) {
     switch( eCmd ) {
         case eCommand::eAbout:
             CmdAbout();
+            break;
+        case eCommand::eAnResult:
+            CmdResult();
             break;
         case eCommand::eBegin:
             CmdTurn();
@@ -184,6 +188,14 @@ void Engine::CmdTurn() {
         pipeOut( GetX( m ), ",", GetY( m ));
     } else {
         pipeOut( "ERROR Full board" );
+    }
+}
+
+void Engine::CmdResult() const {
+    if( m_board->IsFull()) {
+        pipeOutMessage("RESULT DRAW");
+    } else {
+        pipeOutMessage("RESULT NONE");
     }
 }
 

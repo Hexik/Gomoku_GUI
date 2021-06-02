@@ -38,9 +38,10 @@ public:
         eTakeback,           // standard Gomocup protocol
         eTurn,               // standard Gomocup protocol
         eUnknown,            // standard Gomocup protocol
+        eAnResult,           // Android GUI extension
         eYxBoard,            // Yixin protocol enhancement
         eYxShowForbid,       // Yixin protocol enhancement
-        eYxStop,             // Yixin protocol enhancement
+        eYxStop              // Yixin protocol enhancement
     };
 
     /**
@@ -80,6 +81,8 @@ private:
     *@brief Send about info
     */
     void CmdAbout() const;
+
+    void CmdResult() const;
 
     void StartLoop();
 
