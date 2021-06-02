@@ -83,6 +83,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         _canUndo.value = false
         _canRedo.value = false
         NativeInterface.writeToBrain(game.toBoard(true))
+        NativeInterface.writeToBrain("YXRESULT")
     }
 
     fun stopSearch() {
@@ -154,9 +155,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     private fun parseResult(response: String) {
         // MESSAGE RESULT ...
         when {
-            response == "BLACK" -> _msgResult.value = getResourceString(R.string.result_black)
-            response == "WHITE" -> _msgResult.value = getResourceString(R.string.result_white)
-            response == "DRAW" -> _msgResult.value = getResourceString(R.string.result_draw)
+            response == "BLACK" -> {
+                _msgResult.value = getResourceString(R.string.result_black)
+                game.gameOver = true
+            }
+            response == "WHITE" -> {
+                _msgResult.value = getResourceString(R.string.result_white)
+                game.gameOver = true
+            }
+            response == "DRAW" -> {
+                _msgResult.value = getResourceString(R.string.result_draw)
+                game.gameOver = true
+            }
             else -> _msgResult.value = getResourceString(R.string.none)
         }
     }

@@ -185,8 +185,10 @@ void Engine::CmdAbout() const {
 void Engine::CmdTurn() {
     if( !m_board->IsFull()) {
         const auto m = m_board->GenerateRandomMove<eMove_t::eXX>();
+        CmdPutMyMove(GetX( m ), GetY( m ));
         pipeOut( GetX( m ), ",", GetY( m ));
     } else {
+        pipeOutMessage("RESULT DRAW");
         pipeOut( "ERROR Full board" );
     }
 }

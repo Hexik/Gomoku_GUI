@@ -8,6 +8,7 @@ class Game(val dim: Int) {
     private val moveList = MoveList()
     private val desk = Array(dim * dim) { EnumMove.Empty }
     var playerToMove: EnumMove = EnumMove.Black
+    var gameOver:Boolean = false
 
     init {
         Log.d(TAG, "Init")
@@ -61,6 +62,7 @@ class Game(val dim: Int) {
     fun reset(): Game {
         moveList.reset()
         playerToMove = EnumMove.Black
+        gameOver = false
         desk.fill(EnumMove.Empty)
         return this
     }
