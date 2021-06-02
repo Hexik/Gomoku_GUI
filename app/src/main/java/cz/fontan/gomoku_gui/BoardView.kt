@@ -91,8 +91,9 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                     working = true
                     workingMatrix.set(originalMatrix)
                     // Shift the zoomed area near the center
-                    val diffX = (event.x - width / 2) * kMatrixScaleFactor
-                    val diffY = (event.y - width / 2) * kMatrixScaleFactor
+                    // TODO MF: check UX
+                    val diffX = (event.x - width / 2) * 1f
+                    val diffY = (event.y - width / 2) * 1f
                     val newX = (width / 2 + diffX).coerceIn(offset, width - offset)
                     val newY = (width / 2 + diffY).coerceIn(offset, width - offset)
                     workingMatrix.setScale(kMatrixScaleFactor, kMatrixScaleFactor, newX, newY)
