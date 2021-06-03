@@ -69,7 +69,7 @@ class GameTest {
 
     @Test(expected = IllegalArgumentException::class)
     fun undo2Move() {
-        val game = Game(BOARD_SIZE).makeMove(Move(1, 1, EnumMove.Black)).undoMove().undoMove()
+        Game(BOARD_SIZE).makeMove(Move(1, 1, EnumMove.Black)).undoMove().undoMove()
     }
 
     @Test(expected = IllegalArgumentException::class)

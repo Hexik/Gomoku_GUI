@@ -94,7 +94,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     fun stopSearch() {
         NativeInterface.writeToBrain("YXSTOP")
-        QueryGameResult()
+        queryGameResult()
         setIdleStatus()
         stopWasPressed = true
     }
@@ -119,7 +119,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     private fun afterAction() {
         NativeInterface.writeToBrain(game.toBoard(false))
-        QueryGameResult()
+        queryGameResult()
         setIdleStatus()
     }
 
@@ -144,7 +144,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     override fun makeMove(move: Move) {
         game.makeMove(move)
         readAutoSettings()
-        QueryGameResult()
+        queryGameResult()
         when {
             autoBlack && game.playerToMove == EnumMove.Black -> startSearch(false)
             autoWhite && game.playerToMove == EnumMove.White -> startSearch(false)
@@ -153,7 +153,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         stopWasPressed = false
     }
 
-    private fun QueryGameResult() {
+    private fun queryGameResult() {
         NativeInterface.writeToBrain("YXRESULT")
     }
 
