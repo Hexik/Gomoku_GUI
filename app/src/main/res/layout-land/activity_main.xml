@@ -22,7 +22,8 @@
             android:drawableEnd="@drawable/ic_baseline_search_24"
             android:singleLine="true"
             android:text="@string/button_play"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size" />
 
         <Button
             android:id="@+id/button_stop"
@@ -32,7 +33,8 @@
             android:drawableEnd="@drawable/ic_baseline_cancel_24"
             android:singleLine="true"
             android:text="@string/button_stop"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size" />
 
         <Button
             android:id="@+id/button_undo"
@@ -42,7 +44,8 @@
             android:drawableEnd="@drawable/ic_baseline_undo_24"
             android:singleLine="true"
             android:text="@string/button_undo"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size" />
 
         <Button
             android:id="@+id/button_redo"
@@ -52,7 +55,8 @@
             android:drawableEnd="@drawable/ic_baseline_redo_24"
             android:singleLine="true"
             android:text="@string/button_redo"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size" />
 
         <Button
             android:id="@+id/button_new"
@@ -62,7 +66,8 @@
             android:drawableEnd="@drawable/ic_baseline_delete_forever_24"
             android:singleLine="true"
             android:text="@string/button_new"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size" />
 
     </LinearLayout>
 
@@ -90,6 +95,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical|end"
             android:text="@string/depth"
+            android:textSize="@dimen/text_size"
             tools:text="@string/depth" />
 
         <TextView
@@ -99,6 +105,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical|end"
             android:text="@string/eval"
+            android:textSize="@dimen/text_size"
             tools:text="@string/eval" />
 
         <TextView
@@ -108,6 +115,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical|end"
             android:text="@string/nodes"
+            android:textSize="@dimen/text_size"
             tools:text="@string/nodes" />
 
         <TextView
@@ -117,6 +125,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical|end"
             android:text="@string/speed"
+            android:textSize="@dimen/text_size"
             tools:text="@string/speed" />
 
         <TextView
@@ -126,6 +135,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical|end"
             android:text="@string/status"
+            android:textSize="@dimen/text_size"
             tools:text="@string/status" />
 
     </LinearLayout>
@@ -143,6 +153,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/none"
+            android:textSize="@dimen/text_size"
             tools:text="@string/none" />
 
         <TextView
@@ -152,6 +163,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/none"
+            android:textSize="@dimen/text_size"
             tools:text="@string/none" />
 
         <TextView
@@ -161,6 +173,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/none"
+            android:textSize="@dimen/text_size"
             tools:text="@string/none" />
 
         <TextView
@@ -170,6 +183,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/none"
+            android:textSize="@dimen/text_size"
             tools:text="@string/none" />
 
         <TextView
@@ -179,6 +193,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/none"
+            android:textSize="@dimen/text_size"
             tools:text="@string/none" />
 
     </LinearLayout>

@@ -36,6 +36,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="@string/depth"
+            android:textSize="@dimen/text_size"
             tools:text="@string/depth" />
 
         <TextView
@@ -45,6 +46,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="@string/eval"
+            android:textSize="@dimen/text_size"
             tools:text="@string/eval" />
 
         <TextView
@@ -54,6 +56,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="@string/nodes"
+            android:textSize="@dimen/text_size"
             tools:text="@string/nodes" />
 
         <TextView
@@ -63,6 +66,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="@string/speed"
+            android:textSize="@dimen/text_size"
             tools:text="@string/speed" />
 
         <TextView
@@ -72,6 +76,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="@string/status"
+            android:textSize="@dimen/text_size"
             tools:text="@string/status" />
     </LinearLayout>
 
@@ -79,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:orientation="horizontal">
 
@@ -89,7 +94,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
+            android:singleLine="true"
             android:text="@string/none"
+            android:textSize="@dimen/text_size"
             tools:text="@string/none" />
 
         <TextView
@@ -98,7 +105,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
+            android:singleLine="true"
             android:text="@string/none"
+            android:textSize="@dimen/text_size"
             tools:text="@string/none" />
 
         <TextView
@@ -107,7 +116,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
+            android:singleLine="true"
             android:text="@string/none"
+            android:textSize="@dimen/text_size"
             tools:text="@string/none" />
 
         <TextView
@@ -116,7 +127,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
+            android:singleLine="true"
             android:text="@string/none"
+            android:textSize="@dimen/text_size"
             tools:text="@string/none" />
 
         <TextView
@@ -125,7 +138,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
+            android:singleLine="true"
             android:text="@string/none"
+            android:textSize="@dimen/text_size"
             tools:text="@string/none" />
 
     </LinearLayout>
@@ -134,7 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
         android:orientation="horizontal">
 
@@ -146,7 +161,8 @@
             android:drawableBottom="@drawable/ic_baseline_search_24"
             android:singleLine="true"
             android:text="@string/button_play"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size" />
 
         <Button
             android:id="@+id/button_stop"
@@ -157,6 +173,7 @@
             android:singleLine="true"
             android:text="@string/button_stop"
             android:textAllCaps="false"
+            android:textSize="@dimen/text_size"
             app:iconSize="40dp" />
 
         <Button
@@ -167,7 +184,8 @@
             android:drawableBottom="@drawable/ic_baseline_undo_24"
             android:singleLine="true"
             android:text="@string/button_undo"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size" />
 
         <Button
             android:id="@+id/button_redo"
@@ -177,7 +195,8 @@
             android:drawableBottom="@drawable/ic_baseline_redo_24"
             android:singleLine="true"
             android:text="@string/button_redo"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size" />
 
         <Button
             android:id="@+id/button_new"
@@ -187,7 +206,8 @@
             android:drawableBottom="@drawable/ic_baseline_delete_forever_24"
             android:singleLine="true"
             android:text="@string/button_new"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 
 </LinearLayout>
