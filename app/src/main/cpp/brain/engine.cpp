@@ -10,6 +10,7 @@
 #include "engine.h"
 #include "board.h"
 #include "config.h"
+#include "safecast.h"
 
 #include <android/log.h>
 
@@ -340,7 +341,64 @@ void Engine::CmdParseBoard( bool flipSides ) {
 void Engine::CmdShowForbid() {
 }
 
-void Engine::CmdParseInfo( const std::string&/*params*/) {
+std::string Engine::ParseInfo( const std::string& s, std::string& rest ) {
+    rest                    = "";
+    const auto infoKeywords =
+                       std::vector<std::string>{ "TIMEOUT_MATCH", "TIMEOUT_TURN", "TIME_LEFT",
+                                                 "TIME_INCREMENT", "GAME_TYPE", "RULE", "FOLDER",
+                                                 "MAX_MEMORY", "MAX_DEPTH", "MAX_NODE",
+                                                 "THREAD_NUM", "USEDATABASE" };
+
+    const auto it = std::find_if( std::begin( infoKeywords ), std::end( infoKeywords ),
+                                  [s]( const auto& a ) {
+                                      auto nPos = size_t{ 0 };
+                                      return (( nPos = s.find( a )) != std::string::npos ) &&
+                                             ( nPos == 0 );
+                                  } );
+
+    if( it != std::end( infoKeywords )) {
+        rest = Util::Trim( s.substr( it->length()));
+        return *it;
+    }
+    return "";
+}
+
+void Engine::CmdParseInfo( const std::string& params ) {
+    std::string rest;
+    const auto&& ii = ParseInfo( params, rest );
+    if( ii.empty()) {
+        return;
+    }
+    const auto&& v = Util::ParseNumbers( rest, " " );
+    if( v.empty()) {
+        return;
+    }
+
+    if( ii == "TIMEOUT_MATCH" ) {
+        m_info->SetTimeoutMatch( safe_cast<uint32_t>( v[0] ));
+    } else if( ii == "TIMEOUT_TURN" ) {
+        m_info->SetTimeoutTurn( safe_cast<uint32_t>( v[0] ));
+    } else if( ii == "TIME_LEFT" ) {
+        m_info->SetTimeLeft( safe_cast<uint32_t>( v[0] ));
+    } else if( ii == "TIME_INCREMENT" ) {
+        m_info->SetTimeInc( safe_cast<uint32_t>( v[0] ));
+    } else if( ii == "GAME_TYPE" ) {
+        m_info->SetGameType( safe_cast<int>( v[0] ));
+    } else if( ii == "RULE" ) {
+    } else if( ii == "FOLDER" ) {
+    } else if( ii == "MAX_MEMORY" ) {
+        if( v[0] >= 0 ) {
+            m_info->SetMaxMemory( safe_cast<uint64_t>( v[0] ));
+        }
+    } else if( ii == "MAX_DEPTH" ) {
+        m_info->SetLimitDepth( safe_cast<uint32_t>( v[0] ));
+    } else if( ii == "MAX_NODE" ) {
+        m_info->SetLimitNodes( safe_cast<uint64_t>( v[0] ));
+    } else if( ii == "USEDATABASE" ) {
+    } else if( ii == "THREAD_NUM" ) {
+    } else {
+    }
+
 }
 
 std::optional<std::vector<int64_t>> Engine::CmdParseCoords( const std::string& params ) {

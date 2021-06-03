@@ -15,6 +15,7 @@
 #include <optional>
 
 class Board;
+
 class Config;
 
 /**
@@ -61,6 +62,14 @@ public:
 private:
 
     static eCommand ParseCmd( const std::string& s, std::string& rest );
+
+    /**
+    * @brief Parse info command data
+    * @param s string to parse
+    * @param rest data after command keyword
+    * @return info data
+    */
+    [[nodiscard]] static std::string ParseInfo( const std::string& s, std::string& rest );
 
     /**
     *@brief Main engine loop
@@ -174,8 +183,9 @@ private:
     template<typename... Args>
     void pipeOutMessage( Args&& ... args ) const { pipeOut( "MESSAGE ", args... ); }
 
-    std::unique_ptr<Board>           m_board{nullptr}; /**< pointer to main board representation */
-    std::unique_ptr<Config>          m_info{nullptr};  /**< pointer to Config Info object */
+    std::unique_ptr<Board>           m_board{
+            nullptr }; /**< pointer to main board representation */
+    std::unique_ptr<Config>          m_info{ nullptr };  /**< pointer to Config Info object */
     mutable LockedQueue<std::string> m_queueIn;        /**< input data  */
     mutable LockedQueue<std::string> m_queueOut;       /**< output data  */
     std::thread                      m_runner;
