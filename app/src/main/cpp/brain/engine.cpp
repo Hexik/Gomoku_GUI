@@ -1,6 +1,10 @@
 /**
  * @file engine.cpp
- * @brief Game brain implementation
+ * @brief Game brain protocol implementation
+ *
+ * to make the whole GUI framework running
+ * implement those two methods Engine::CalculateMove() and Engine::CmdResult()
+ * the rest of the code can be used as is
  **/
 
 #include "engine.h"
@@ -18,6 +22,30 @@ Engine::~Engine() {
     StopLoop();
     if( m_runner.joinable()) {
         m_runner.join();
+    }
+}
+
+/******************************
+ * Implement this function
+ * @return best possible move
+ */
+Move Engine::CalculateMove() {
+    return m_board->GenerateRandomMove<eMove_t::eXX>();
+}
+
+/******************************
+ * Implement this function
+ * Possible answers:
+ * "RESULT NONE"
+ * "RESULT BLACK"
+ * "RESULT WHITE"
+ * "RESULT DRAW"
+ */
+void Engine::CmdResult() const {
+    if( m_board->IsFull()) {
+        pipeOutMessage( "RESULT DRAW" );
+    } else {
+        pipeOutMessage( "RESULT NONE" );
     }
 }
 
@@ -190,14 +218,6 @@ void Engine::CmdTurn() {
     } else {
         pipeOutMessage("RESULT DRAW");
         pipeOut( "ERROR Full board" );
-    }
-}
-
-void Engine::CmdResult() const {
-    if( m_board->IsFull()) {
-        pipeOutMessage("RESULT DRAW");
-    } else {
-        pipeOutMessage("RESULT NONE");
     }
 }
 
