@@ -64,37 +64,29 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
             Dispatchers.Default + viewModelScope.coroutineContext
         )
 
-    // Settings variables
+    val dataFromBrain: LiveData<ConsumableValue<String>>
+        get() = _dataFromBrain
 
+    // Settings variables
     private val sharedPreferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(getApplication<Application>().applicationContext)
     private var autoBlack: Boolean = false
     private var autoWhite: Boolean = false
 
-    val dataFromBrain: LiveData<ConsumableValue<String>>
-        get() = _dataFromBrain
+    private var stopWasPressed = false
 
     init {
         loadGame()
-        setIdleStatus()
         afterAction()
     }
 
-    private fun setIdleStatus() {
-        _isSearching.value = false
-        _canUndo.value = game.canUndo()
-        _canRedo.value = game.canRedo()
-        autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
-        autoWhite = sharedPreferences.getBoolean("check_box_preference_AI_white", false)
-        _isDirty.value = true
-    }
-
-    fun startSearch() {
-        if (!game.gameOver) {
+    fun startSearch(forceSearch: Boolean) {
+        if (!game.gameOver && (!stopWasPressed || forceSearch)) {
             _isSearching.value = true
             _canUndo.value = false
             _canRedo.value = false
             _isDirty.value = true
+            stopWasPressed = false
             NativeInterface.writeToBrain(game.toBoard(true))
         }
     }
@@ -103,6 +95,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         NativeInterface.writeToBrain("YXSTOP")
         NativeInterface.writeToBrain("YXRESULT")
         setIdleStatus()
+        stopWasPressed = true
     }
 
     fun undoMove() {
@@ -127,19 +120,27 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         setIdleStatus()
     }
 
+    private fun setIdleStatus() {
+        _isSearching.value = false
+        _canUndo.value = game.canUndo()
+        _canRedo.value = game.canRedo()
+        autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
+        autoWhite = sharedPreferences.getBoolean("check_box_preference_AI_white", false)
+        _isDirty.value = true
+    }
+
+    // InterfaceMain overrides
     override fun canMakeMove(move: Move): Boolean {
         return game.canMakeMove(move)
     }
 
     override fun makeMove(move: Move) {
         game.makeMove(move)
-        setIdleStatus()
         NativeInterface.writeToBrain("YXRESULT")
-        if (autoBlack && game.playerToMove == EnumMove.Black) {
-            startSearch()
-        }
-        if (autoWhite && game.playerToMove == EnumMove.White) {
-            startSearch()
+        when {
+            autoBlack && game.playerToMove == EnumMove.Black -> startSearch(false)
+            autoWhite && game.playerToMove == EnumMove.White -> startSearch(false)
+            else -> setIdleStatus()
         }
     }
 
@@ -155,6 +156,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         return isSearching.value == true
     }
 
+    // Parse incoming data from brain
     fun processResponse(response: String) {
         val upper = response.uppercase()
         when {
@@ -236,14 +238,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         // x,y
         Log.v("Res", response)
         val splitted = response.split(",")
-        if (splitted.size == 2) {
-            try {
-                makeMove(Move(splitted[0].toInt(), splitted[1].toInt()))
-            } catch (e: IllegalArgumentException) {
-                Log.wtf("Res", response)
-            }
+        try {
+            require(splitted.size == 2)
+            makeMove(Move(splitted[0].toInt(), splitted[1].toInt()))
+        } catch (e: IllegalArgumentException) {
+            Log.wtf("Res", response)
         }
-        setIdleStatus()
     }
 
     override fun onCleared() {

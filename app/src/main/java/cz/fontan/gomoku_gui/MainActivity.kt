@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         // Game controlling buttons
         // work delegated to the ViewModel class
         binding.buttonPlay.setOnClickListener {
-            viewModel.startSearch()
+            viewModel.startSearch(true)
         }
         binding.buttonStop.setOnClickListener {
             viewModel.stopSearch()
