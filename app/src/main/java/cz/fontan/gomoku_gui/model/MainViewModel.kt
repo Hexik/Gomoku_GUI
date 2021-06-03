@@ -85,6 +85,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
             _isSearching.value = true
             _canUndo.value = false
             _canRedo.value = false
+            readAutoSettings()
             _isDirty.value = true
             stopWasPressed = false
             NativeInterface.writeToBrain(game.toBoard(true))
@@ -93,13 +94,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     fun stopSearch() {
         NativeInterface.writeToBrain("YXSTOP")
-        NativeInterface.writeToBrain("YXRESULT")
+        QueryGameResult()
         setIdleStatus()
         stopWasPressed = true
     }
 
     fun undoMove() {
         game.undoMove()
+        stopWasPressed = false
         afterAction()
     }
 
@@ -110,13 +112,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     fun newGame() {
         game.newGame()
+        stopWasPressed = false
         NativeInterface.writeToBrain("start ${game.dim}")
         afterAction()
     }
 
     private fun afterAction() {
         NativeInterface.writeToBrain(game.toBoard(false))
-        NativeInterface.writeToBrain("YXRESULT")
+        QueryGameResult()
         setIdleStatus()
     }
 
@@ -124,9 +127,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         _isSearching.value = false
         _canUndo.value = game.canUndo()
         _canRedo.value = game.canRedo()
+        readAutoSettings()
+        _isDirty.value = true
+    }
+
+    private fun readAutoSettings() {
         autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
         autoWhite = sharedPreferences.getBoolean("check_box_preference_AI_white", false)
-        _isDirty.value = true
     }
 
     // InterfaceMain overrides
@@ -136,12 +143,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     override fun makeMove(move: Move) {
         game.makeMove(move)
-        NativeInterface.writeToBrain("YXRESULT")
+        readAutoSettings()
+        QueryGameResult()
         when {
             autoBlack && game.playerToMove == EnumMove.Black -> startSearch(false)
             autoWhite && game.playerToMove == EnumMove.White -> startSearch(false)
             else -> setIdleStatus()
         }
+        stopWasPressed = false
+    }
+
+    private fun QueryGameResult() {
+        NativeInterface.writeToBrain("YXRESULT")
     }
 
     override fun moveCount(): Int {
