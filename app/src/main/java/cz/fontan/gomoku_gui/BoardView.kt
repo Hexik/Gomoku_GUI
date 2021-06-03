@@ -73,8 +73,9 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
-
-        canvas.concat(if (zoom && working) workingMatrix else originalMatrix)
+        if (zoom) {
+            canvas.concat(if (working) workingMatrix else originalMatrix)
+        }
 
         recalcLimits()
         drawBoard(canvas)
@@ -90,13 +91,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                 if (zoom && !working) {
                     working = true
                     workingMatrix.set(originalMatrix)
-                    // Shift the zoomed area near the center
-                    // TODO MF: check UX
-                    val diffX = (event.x - width / 2) * 1f
-                    val diffY = (event.y - width / 2) * 1f
-                    val newX = (width / 2 + diffX).coerceIn(offset, width - offset)
-                    val newY = (width / 2 + diffY).coerceIn(offset, width - offset)
-                    workingMatrix.setScale(kMatrixScaleFactor, kMatrixScaleFactor, newX, newY)
+                    workingMatrix.setScale(kMatrixScaleFactor, kMatrixScaleFactor, event.x, event.y)
                     invalidate()
                 } else {
                     working = false
