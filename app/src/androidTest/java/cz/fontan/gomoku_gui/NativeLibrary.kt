@@ -38,7 +38,7 @@ class NativeLibrary {
     fun about() {
         NativeInterface.startBrain(BOARD_SIZE)
         NativeInterface.writeToBrain("about")
-        assert(NativeInterface.readFromBrain(10) == "Generic Engine")
+        assert(NativeInterface.readFromBrain(10).contains("Generic Engine"))
     }
 
     @Test

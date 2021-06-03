@@ -207,7 +207,7 @@ void Engine::StopLoop() {
 }
 
 void Engine::CmdAbout() const {
-    pipeOut( R"(Generic Engine)" );
+    pipeOut( R"(name="Generic Engine", version="0.0.0", author="Mira Fontan", country="CZ")" );
 }
 
 void Engine::CmdTurn() {
@@ -216,7 +216,7 @@ void Engine::CmdTurn() {
         CmdPutMyMove(GetX( m ), GetY( m ));
         pipeOut( GetX( m ), ",", GetY( m ));
     } else {
-        pipeOutMessage("RESULT DRAW");
+        pipeOutMessage( "RESULT DRAW" );
         pipeOut( "ERROR Full board" );
     }
 }
