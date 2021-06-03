@@ -12,7 +12,7 @@ find_library( # Sets the name of the path variable.
         # you want CMake to locate.
         log)
 
-add_library(brain board.cpp engine.cpp)
+add_library(brain board.cpp config.cpp engine.cpp)
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this

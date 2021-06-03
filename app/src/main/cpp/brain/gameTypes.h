@@ -7,6 +7,7 @@
  */
 
 #include <algorithm>
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -26,7 +27,8 @@ namespace Util {
         return tmp;
     }
 
-    inline std::vector<int64_t> ParseNumbers( const std::string& s, const std::string& delimiters ) {
+    inline std::vector<int64_t>
+    ParseNumbers( const std::string& s, const std::string& delimiters ) {
         auto res     = std::vector<int64_t>{};
         auto numbers = std::vector<std::string>{}; // we'll put all of the tokens in here
         const auto& numbers_str = s;
@@ -50,7 +52,8 @@ namespace Util {
                 break;
             }
             res.push_back( static_cast<int64_t>( value ));
-            __android_log_write( ANDROID_LOG_VERBOSE, "parse token ", std::to_string( res.back()).c_str());
+            __android_log_write( ANDROID_LOG_VERBOSE, "parse token ",
+                                 std::to_string( res.back()).c_str());
         }
 
         return res;
@@ -109,11 +112,12 @@ using coords_t = unsigned int; /**< coords type */
 
 constexpr uint32_t kWallSize = 4U; /**< uses 4/5 wall pieces on every side as sentinel */
 
-constexpr uint32_t kBoardSize = 32U;                        /**< first power of 2 above kPlaySize */
-constexpr uint32_t kMaxBoard  =
+constexpr uint32_t kBoardSize    = 32U;                        /**< first power of 2 above kPlaySize */
+constexpr uint32_t kMaxBoard     =
                            kBoardSize -
                            2 * kWallSize; /**< max board size is 24 for FreeStyle, 22 otherwise */
-constexpr uint32_t kPlaySize  = 20U;                        /**< default board size is 20 */
+constexpr uint32_t kPlaySize     = 20U;                      /**< default board size is 20 */
+constexpr uint64_t kTTMemorySize = 5ULL * 1024ULL * 1024ULL; /**< default cache size is 5MB */
 
 static_assert( kWallSize == 4 || kWallSize == 5, "kWallSize" );
 static_assert( kBoardSize >= kMaxBoard + 2 * kWallSize, "No room for wall pieces" );

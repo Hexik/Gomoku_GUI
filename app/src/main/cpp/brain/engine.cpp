@@ -9,11 +9,13 @@
 
 #include "engine.h"
 #include "board.h"
+#include "config.h"
 
 #include <android/log.h>
 
 Engine::Engine( const uint32_t boardSize ) :
-        m_queueIn(), m_queueOut(), m_infoWidth( boardSize ), m_infoHeight( boardSize ) {
+        m_info( std::make_unique<Config>()), m_queueIn(), m_queueOut(), m_infoWidth( boardSize ),
+        m_infoHeight( boardSize ) {
     Util::rand_xor128_seed();
     StartLoop();
 }
@@ -212,8 +214,8 @@ void Engine::CmdAbout() const {
 
 void Engine::CmdTurn() {
     if( !m_board->IsFull()) {
-        const auto m = m_board->GenerateRandomMove<eMove_t::eXX>();
-        CmdPutMyMove(GetX( m ), GetY( m ));
+        const auto m = CalculateMove();
+        CmdPutMyMove( GetX( m ), GetY( m ));
         pipeOut( GetX( m ), ",", GetY( m ));
     } else {
         pipeOutMessage( "RESULT DRAW" );

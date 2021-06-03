@@ -15,6 +15,7 @@
 #include <optional>
 
 class Board;
+class Config;
 
 /**
  * @class Engine
@@ -174,6 +175,7 @@ private:
     void pipeOutMessage( Args&& ... args ) const { pipeOut( "MESSAGE ", args... ); }
 
     std::unique_ptr<Board>           m_board{nullptr}; /**< pointer to main board representation */
+    std::unique_ptr<Config>          m_info{nullptr};  /**< pointer to Config Info object */
     mutable LockedQueue<std::string> m_queueIn;        /**< input data  */
     mutable LockedQueue<std::string> m_queueOut;       /**< output data  */
     std::thread                      m_runner;
@@ -182,6 +184,7 @@ private:
     uint32_t                         m_infoHeight;
     bool                             m_bInSearch     = false;
 
+    Move CalculateMove();
 };
 
 #endif // ENGINE_H
