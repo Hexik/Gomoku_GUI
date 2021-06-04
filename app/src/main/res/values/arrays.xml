@@ -32,4 +32,15 @@
         <item>128</item>
         <item>256</item>
     </string-array>
+
+    <!-- Board size -->
+    <string-array name="board_size_entries">
+        <item>15x15 points</item>
+        <item>20x20 points</item>
+    </string-array>
+
+    <string-array name="board_size_values">
+        <item>15</item>
+        <item>20</item>
+    </string-array>
 </resources>

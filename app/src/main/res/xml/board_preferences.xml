@@ -1,5 +1,12 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ListPreference
+        app:defaultValue="@string/default_board"
+        app:entries="@array/board_size_entries"
+        app:entryValues="@array/board_size_values"
+        app:key="list_preference_board_size"
+        app:summary="%s"
+        app:title="Board size" />
     <CheckBoxPreference
         app:defaultValue="true"
         app:key="check_box_preference_coordinates"

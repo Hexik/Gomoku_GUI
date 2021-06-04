@@ -16,6 +16,9 @@
     <string name="coordinates">Coordinates</string>
     <string name="coordinates_off">Hidden coordinates</string>
     <string name="coordinates_on">Visible coordinates</string>
+    <string name="default_board">15</string>
+    <string name="default_cache">64</string>
+    <string name="default_time">1000</string>
     <string name="depth">Depth</string>
     <string name="email">Email</string>
     <string name="email_address">mira.fontan@gmail.com</string>
