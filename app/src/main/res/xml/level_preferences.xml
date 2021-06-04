@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <ListPreference
-        android:defaultValue="true"
-        android:entries="@array/level_entries"
-        android:entryValues="@array/level_values"
-        android:key="list_preference_time"
-        android:summary="%s"
-        android:title="Time per move" />
+        app:defaultValue="@string/default_time"
+        app:entries="@array/level_entries"
+        app:entryValues="@array/level_values"
+        app:key="list_preference_time"
+        app:summary="%s"
+        app:title="Time per move" />
     <ListPreference
-        android:defaultValue="true"
-        android:entries="@array/cache_entries"
-        android:entryValues="@array/cache_values"
-        android:key="list_preference_cache"
-        android:summary="%s"
-        android:title="Transposition table" />
+        app:defaultValue="@string/default_cache"
+        app:entries="@array/cache_entries"
+        app:entryValues="@array/cache_values"
+        app:key="list_preference_cache"
+        app:summary="%s"
+        app:title="Transposition table" />
 </PreferenceScreen>

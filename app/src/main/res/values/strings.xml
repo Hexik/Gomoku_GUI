@@ -1,11 +1,9 @@
 <resources>
     <string name="about_dialog">About</string>
     <string name="ai_black">AI plays Black</string>
-    <string name="ai_settings">AI settings</string>
     <string name="ai_white">AI plays White</string>
     <string name="app_name">Gomoku GUI</string>
     <string name="author">Author</string>
-    <string name="board">Board</string>
     <string name="board_view">Board</string>
     <string name="build_date">Build date</string>
     <string name="button_new">New</string>
@@ -58,10 +56,10 @@
     <string name="zoom">Zoom in by click</string>
     <string name="zoom_off">First tap selects move</string>
     <string name="zoom_on">Tap to magnify the board</string>
-    <string name="title_activity_settings2">SettingsActivity2</string>
+    <string name="title_activity_settings">GUI Settings</string>
 
     <!-- Preference Titles -->
-    <string name="board_header">Board</string>
+    <string name="board_header">Board settings</string>
     <string name="ai_settings_header">AI settings</string>
 
 
