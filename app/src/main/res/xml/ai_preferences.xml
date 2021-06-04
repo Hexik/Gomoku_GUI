@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <CheckBoxPreference
+        app:defaultValue="false"
+        app:key="check_box_preference_AI_black"
+        app:title="@string/ai_black" />
+    <CheckBoxPreference
+        app:defaultValue="false"
+        app:key="check_box_preference_AI_white"
+        app:title="@string/ai_white" />
+    <CheckBoxPreference
+        app:defaultValue="false"
+        app:enabled="false"
+        app:key="check_box_preference_database"
+        app:summaryOff="@string/use_database_off"
+        app:summaryOn="@string/use_database_on"
+        app:title="@string/use_database" />
+    <CheckBoxPreference
+        app:defaultValue="false"
+        app:enabled="false"
+        app:key="check_box_preference_multicore"
+        app:summaryOff="@string/multithreading_off"
+        app:summaryOn="@string/multithreading_on"
+        app:title="@string/multithreading" />
+
+</PreferenceScreen>

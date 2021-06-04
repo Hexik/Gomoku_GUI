@@ -1,0 +1,16 @@
+<resources>
+    <!-- Level Preference -->
+    <string-array name="level_entries">
+        <item>0,1s per move</item>
+        <item>1s per move</item>
+        <item>10s per move</item>
+        <item>unlimited</item>
+    </string-array>
+
+    <string-array name="level_values">
+        <item>100</item>
+        <item>1000</item>
+        <item>10000</item>
+        <item>-1</item>
+    </string-array>
+</resources>

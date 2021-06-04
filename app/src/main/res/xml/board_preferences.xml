@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <CheckBoxPreference
+        app:defaultValue="true"
+        app:key="check_box_preference_coordinates"
+        app:summaryOff="@string/coordinates_off"
+        app:summaryOn="@string/coordinates_on"
+        app:title="@string/coordinates" />
+    <CheckBoxPreference
+        app:defaultValue="true"
+        app:key="check_box_preference_numbers"
+        app:summaryOff="@string/numbered_moves_off"
+        app:summaryOn="@string/numbered_moves_on"
+        app:title="@string/numbered_moves" />
+    <CheckBoxPreference
+        app:defaultValue="false"
+        app:key="check_box_preference_zoom"
+        app:summaryOff="@string/zoom_off"
+        app:summaryOn="@string/zoom_on"
+        app:title="@string/zoom" />
+    <CheckBoxPreference
+        app:defaultValue="false"
+        app:key="check_box_preference_forbidden"
+        app:summaryOff="@string/forbidden_moves_off"
+        app:summaryOn="@string/forbidden_moves_on"
+        app:title="@string/forbidden_moves" />
+
+</PreferenceScreen>

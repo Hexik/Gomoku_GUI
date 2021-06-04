@@ -55,4 +55,12 @@
     <string name="zoom">Zoom in by click</string>
     <string name="zoom_off">First tap selects move</string>
     <string name="zoom_on">Tap to magnify the board</string>
+    <string name="title_activity_settings2">SettingsActivity2</string>
+
+    <!-- Preference Titles -->
+    <string name="board_header">Board</string>
+    <string name="ai_settings_header">AI settings</string>
+
+
+    <string name="level">Level</string>
 </resources>
