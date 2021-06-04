@@ -129,7 +129,7 @@ class NativeLibrary {
         )
         assert(NativeInterface.readFromBrain(10) == "4,4")
         NativeInterface.writeToBrain("yxresult")
-//        assert(NativeInterface.readFromBrain(10) == "MESSAGE RESULT DRAW")
+        assert(NativeInterface.readFromBrain(10) == "MESSAGE RESULT DRAW")
     }
 
 }

@@ -82,13 +82,12 @@ class MainActivity : AppCompatActivity() {
             this, { binding.boardView.invalidate() }
         )
 
-        viewModel.isSearching.observe(this, {
-            binding.buttonPlay.isEnabled = !it
+        viewModel.canSearch.observe(this, {
+            binding.buttonPlay.isEnabled = it
+        })
+
+        viewModel.canStop.observe(this, {
             binding.buttonStop.isEnabled = it
-            if (it) {
-                binding.buttonRedo.isEnabled = false
-                binding.buttonUndo.isEnabled = false
-            }
         })
 
         viewModel.canRedo.observe(this, {

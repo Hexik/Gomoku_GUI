@@ -23,9 +23,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     val isDirty: LiveData<Boolean>
         get() = _isDirty
 
-    private val _isSearching = MutableLiveData<Boolean>()
-    val isSearching: LiveData<Boolean>
-        get() = _isSearching
+    private val _canSearch = MutableLiveData<Boolean>()
+    val canSearch: LiveData<Boolean>
+        get() = _canSearch
+
+    private val _canStop = MutableLiveData<Boolean>()
+    val canStop: LiveData<Boolean>
+        get() = _canStop
 
     private val _canRedo = MutableLiveData<Boolean>()
     val canRedo: LiveData<Boolean>
@@ -74,6 +78,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     private var autoWhite: Boolean = false
 
     private var stopWasPressed = false
+    private var inSearch: Boolean = false
 
     init {
         loadGame()
@@ -81,14 +86,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     }
 
     fun startSearch(forceSearch: Boolean) {
-        if (!game.gameOver && (!stopWasPressed || forceSearch)) {
-            _isSearching.value = true
+        if (_canSearch.value == true && (!stopWasPressed || forceSearch)) {
+            inSearch = true
+            _canSearch.value = false
+            _canStop.value = true
             _canUndo.value = false
             _canRedo.value = false
             readAutoSettings()
-            _isDirty.value = true
             stopWasPressed = false
-            NativeInterface.writeToBrain(game.toBoard(true))
+            NativeInterface.writeToBrain(game.toBoard(false))
+            NativeInterface.writeToBrain("begin")
+            _isDirty.value = true
+        } else {
+            setIdleStatus()
         }
     }
 
@@ -124,7 +134,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     }
 
     private fun setIdleStatus() {
-        _isSearching.value = false
+        inSearch = false
+        _canStop.value = false
         _canUndo.value = game.canUndo()
         _canRedo.value = game.canRedo()
         readAutoSettings()
@@ -151,10 +162,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
             else -> setIdleStatus()
         }
         stopWasPressed = false
+        _isDirty.value = true
     }
 
     private fun queryGameResult() {
         NativeInterface.writeToBrain("YXRESULT")
+        val resp = NativeInterface.readFromBrain(10)
+        processResponse(resp)
     }
 
     override fun moveCount(): Int {
@@ -166,7 +180,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     }
 
     override fun isSearching(): Boolean {
-        return isSearching.value == true
+        return inSearch
     }
 
     // Parse incoming data from brain
@@ -175,6 +189,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         when {
             upper.startsWith("DEBUG ") -> return
             upper.startsWith("ERROR ") -> return
+            upper.startsWith("FORBID ") -> return
             upper.startsWith("MESSAGE ") -> parseMessage(upper.removePrefix("MESSAGE "))
             upper.startsWith("OK") -> return
             upper.startsWith("SUGGEST ") -> return
@@ -196,24 +211,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     private fun parseResult(response: String) {
         // MESSAGE RESULT ...
+        var gameOver = true
         when (response) {
-            "BLACK" -> {
-                _msgResult.value = getResourceString(R.string.result_black)
-                game.gameOver = true
-            }
-            "WHITE" -> {
-                _msgResult.value = getResourceString(R.string.result_white)
-                game.gameOver = true
-            }
-            "DRAW" -> {
-                _msgResult.value = getResourceString(R.string.result_draw)
-                game.gameOver = true
-            }
+            "BLACK" -> _msgResult.value = getResourceString(R.string.result_black)
+            "WHITE" -> _msgResult.value = getResourceString(R.string.result_white)
+            "DRAW" -> _msgResult.value = getResourceString(R.string.result_draw)
             else -> {
                 _msgResult.value = getResourceString(R.string.none)
-                game.gameOver = false
+                gameOver = false
             }
         }
+        _canSearch.value = !gameOver
     }
 
     private fun getResourceString(resID: Int): String {
