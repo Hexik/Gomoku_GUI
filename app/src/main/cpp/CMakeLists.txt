@@ -25,6 +25,9 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         native-lib.cpp)
 
+#target_compile_options(native-lib PUBLIC -g -O0 -fsanitize=address -fno-omit-frame-pointer)
+#set_target_properties(native-lib PROPERTIES LINK_FLAGS -fsanitize=address)
+
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
 # default, you only need to specify the name of the public NDK library
