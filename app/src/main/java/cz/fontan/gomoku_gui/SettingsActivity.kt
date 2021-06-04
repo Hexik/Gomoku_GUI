@@ -7,7 +7,7 @@ import androidx.preference.PreferenceFragmentCompat
 
 private const val TITLE_TAG = "settingsActivityTitle"
 
-class SettingsActivity2 : AppCompatActivity(),
+class SettingsActivity : AppCompatActivity(),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
