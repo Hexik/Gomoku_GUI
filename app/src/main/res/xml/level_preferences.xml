@@ -7,4 +7,11 @@
         android:key="list_preference_time"
         android:summary="%s"
         android:title="Time per move" />
+    <ListPreference
+        android:defaultValue="true"
+        android:entries="@array/cache_entries"
+        android:entryValues="@array/cache_values"
+        android:key="list_preference_cache"
+        android:summary="%s"
+        android:title="Transposition table" />
 </PreferenceScreen>
