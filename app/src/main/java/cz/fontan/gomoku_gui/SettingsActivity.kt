@@ -1,6 +1,7 @@
 package cz.fontan.gomoku_gui
 
 import android.os.Bundle
+import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -70,18 +71,21 @@ class SettingsActivity : AppCompatActivity(),
         }
     }
 
+    @Keep
     class AISettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.ai_preferences, rootKey)
         }
     }
 
+    @Keep
     class BoardFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.board_preferences, rootKey)
         }
     }
 
+    @Keep
     class LevelFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.level_preferences, rootKey)
