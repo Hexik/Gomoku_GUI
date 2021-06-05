@@ -4,7 +4,7 @@ import android.util.Log
 
 private const val TAG = "Game"
 
-class Game(val dim: Int) {
+class Game(var dim: Int) {
     private val moveList = MoveList()
     private val desk = Array(dim * dim) { EnumMove.Empty }
     var playerToMove: EnumMove = EnumMove.Black
@@ -102,6 +102,8 @@ class Game(val dim: Int) {
     }
 
     private fun deskIndex(m: Move): Int {
+        require(m.x < dim)
+        require(m.y < dim)
         return m.x + m.y * dim
     }
 
@@ -113,7 +115,8 @@ class Game(val dim: Int) {
     fun toStream(): String {
         require(moveList.isValid())
 
-        val sb = StringBuilder().appendLine(BOARD_SIZE).appendLine(BOARD_SIZE).appendLine("1")
+        val sb =
+            StringBuilder().appendLine(dim).appendLine(dim).appendLine("1")
         moveList.rewind()
         for (it in moveList) {
             sb.appendLine("${it.x} ${it.y}")
@@ -126,8 +129,11 @@ class Game(val dim: Int) {
 
         val lines = data.reader().readLines()
         require(lines.size >= 3)
-        require(lines[0].toInt() == BOARD_SIZE)
-        require(lines[1].toInt() == BOARD_SIZE)
+        require(lines[0].toInt() <= BOARD_SIZE_MAX)
+        require(lines[1].toInt() <= BOARD_SIZE_MAX)
+        require(lines[0].toInt() == dim)
+        require(lines[1].toInt() == dim)
+        require(lines[0].toInt() == lines[1].toInt())
         require(lines[2].toInt() == 1)
 
         reset()

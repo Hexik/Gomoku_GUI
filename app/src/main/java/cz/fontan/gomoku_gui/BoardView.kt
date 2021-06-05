@@ -8,7 +8,7 @@ import android.util.Log
 import android.view.MotionEvent
 import androidx.core.view.doOnPreDraw
 import androidx.preference.PreferenceManager
-import cz.fontan.gomoku_gui.game.BOARD_SIZE
+import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_gui.game.Move
 
 private const val TAG: String = "BoardView"
@@ -23,7 +23,6 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         private const val kHandicapDrawCoef = 0.07f
         private const val kHandicapOffset = 3
         private const val kMatrixScaleFactor = 1.6f
-        private const val kStepCount = BOARD_SIZE - 1
         private const val kStoneCoef = 0.44f
     }
 
@@ -43,6 +42,8 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
     private var showNumbers = false
     private var showCoordinates = false
+    private var kBoardSize = BOARD_SIZE_MAX
+    private var kStepCount = kBoardSize - 1
     private var zoom = false
     private var working = false
 
@@ -200,7 +201,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                 paint
             )
             canvas.drawText(
-                (BOARD_SIZE - i).toString(),
+                (kBoardSize - i).toString(),
                 offset * 0.33f,
                 offset + i * step + paint.textSize * 0.33f,
                 paint
@@ -209,17 +210,17 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     }
 
     private fun drawHandicapPoints(canvas: Canvas) {
-        if (BOARD_SIZE >= 11) {
+        if (kBoardSize >= 11) {
             var p = move2Point(Move(kHandicapOffset, kHandicapOffset))
             canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef, paint)
-            p = move2Point(Move(BOARD_SIZE - kHandicapOffset - 1, kHandicapOffset))
+            p = move2Point(Move(kBoardSize - kHandicapOffset - 1, kHandicapOffset))
             canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef, paint)
-            p = move2Point(Move(kHandicapOffset, BOARD_SIZE - kHandicapOffset - 1))
+            p = move2Point(Move(kHandicapOffset, kBoardSize - kHandicapOffset - 1))
             canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef, paint)
-            p = move2Point(Move(BOARD_SIZE - kHandicapOffset - 1, BOARD_SIZE - kHandicapOffset - 1))
+            p = move2Point(Move(kBoardSize - kHandicapOffset - 1, kBoardSize - kHandicapOffset - 1))
             canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef, paint)
-            if (BOARD_SIZE % 2 != 0) {
-                p = move2Point(Move(BOARD_SIZE / 2, BOARD_SIZE / 2))
+            if (kBoardSize % 2 != 0) {
+                p = move2Point(Move(kBoardSize / 2, kBoardSize / 2))
                 canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef, paint)
             }
         }
@@ -238,6 +239,10 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
     private fun recalcLimits() {
         Log.v(TAG, "Reca")
+        kBoardSize =
+            sharedPreferences.getString("list_preference_board_size", "$BOARD_SIZE_MAX")?.toInt()
+                ?: BOARD_SIZE_MAX
+        kStepCount = kBoardSize - 1
         showNumbers = sharedPreferences.getBoolean("check_box_preference_numbers", true)
         showCoordinates = sharedPreferences.getBoolean("check_box_preference_coordinates", true)
         zoom = sharedPreferences.getBoolean("check_box_preference_zoom", false)

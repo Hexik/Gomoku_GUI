@@ -12,7 +12,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
-import cz.fontan.gomoku_gui.game.BOARD_SIZE
+import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_gui.model.MainViewModel
 import kotlin.system.exitProcess
 
@@ -150,6 +150,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.refresh()
+        binding.boardView.invalidate()
         Log.v(TAG, "onResume")
     }
 
@@ -172,7 +174,7 @@ class MainActivity : AppCompatActivity() {
         // Used to load the 'native-lib' library on application startup.
         init {
             System.loadLibrary("native-lib")
-            NativeInterface.startBrain(BOARD_SIZE)
+            NativeInterface.startBrain(BOARD_SIZE_MAX)
         }
     }
 }

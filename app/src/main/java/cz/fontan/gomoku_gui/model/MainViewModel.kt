@@ -9,14 +9,14 @@ import androidx.preference.PreferenceManager
 import cz.fontan.gomoku_gui.InterfaceMain
 import cz.fontan.gomoku_gui.NativeInterface
 import cz.fontan.gomoku_gui.R
-import cz.fontan.gomoku_gui.game.BOARD_SIZE
+import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_gui.game.EnumMove
 import cz.fontan.gomoku_gui.game.Game
 import cz.fontan.gomoku_gui.game.Move
 import kotlinx.coroutines.Dispatchers
 
 class MainViewModel(application: Application) : AndroidViewModel(application), InterfaceMain {
-    private val game = Game(BOARD_SIZE)
+    private val game = Game(BOARD_SIZE_MAX)
 
     // LiveData variables
     private val _isDirty = MutableLiveData<Boolean>()
@@ -145,6 +145,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     private fun readAutoSettings() {
         autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
         autoWhite = sharedPreferences.getBoolean("check_box_preference_AI_white", false)
+        val tmpDim =
+            sharedPreferences.getString("list_preference_board_size", "${BOARD_SIZE_MAX}")?.toInt()
+                ?: BOARD_SIZE_MAX
+        if (tmpDim != game.dim) {
+            game.dim = tmpDim
+            newGame()
+        }
     }
 
     // InterfaceMain overrides
@@ -163,6 +170,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         }
         stopWasPressed = false
         _isDirty.value = true
+    }
+
+    override fun refresh() {
+        readAutoSettings()
     }
 
     private fun queryGameResult() {
@@ -291,7 +302,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
                 Context.MODE_PRIVATE
             )
         try {
-            game.fromStream(sharedPreference.getString("Moves", ""))
+            game.dim = sharedPreferences.getString("list_preference_board_size", "$BOARD_SIZE_MAX")
+                ?.toInt() ?: BOARD_SIZE_MAX
+            NativeInterface.writeToBrain("start ${game.dim}")
+            game.fromStream(sharedPreference.getString("Moves", "")?.trimMargin())
         } catch (e: IllegalArgumentException) {
             game.reset()
         }

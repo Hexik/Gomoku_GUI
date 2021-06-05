@@ -8,4 +8,5 @@ interface InterfaceMain {
     fun isSearching(): Boolean
     fun makeMove(move: Move)
     fun moveCount(): Int
+    fun refresh()
 }

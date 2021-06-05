@@ -1,6 +1,6 @@
 package cz.fontan.gomoku_gui.game
 
-const val BOARD_SIZE: Int = 15
+const val BOARD_SIZE_MAX: Int = 20
 
 enum class EnumMove {
     Empty, Black, White, Wall
@@ -11,8 +11,8 @@ class Move(val x: Int = 0, val y: Int = 0, val type: EnumMove = EnumMove.Empty) 
     init {
         require(x >= 0)
         require(y >= 0)
-        require(x < BOARD_SIZE)
-        require(y < BOARD_SIZE)
+        require(x < BOARD_SIZE_MAX)
+        require(y < BOARD_SIZE_MAX)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -22,6 +22,6 @@ class Move(val x: Int = 0, val y: Int = 0, val type: EnumMove = EnumMove.Empty) 
     }
 
     override fun hashCode(): Int {
-        return (x * BOARD_SIZE + y) * EnumMove.values().size + type.ordinal
+        return (x * BOARD_SIZE_MAX + y) * EnumMove.values().size + type.ordinal
     }
 }
