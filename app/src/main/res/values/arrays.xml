@@ -35,12 +35,18 @@
 
     <!-- Board size -->
     <string-array name="board_size_entries">
+        <item>11x11 points</item>
+        <item>13x13 points</item>
         <item>15x15 points</item>
+        <item>17x17 points</item>
         <item>20x20 points</item>
     </string-array>
 
     <string-array name="board_size_values">
+        <item>11</item>
+        <item>13</item>
         <item>15</item>
+        <item>17</item>
         <item>20</item>
     </string-array>
 </resources>
