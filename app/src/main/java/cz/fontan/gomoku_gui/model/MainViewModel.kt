@@ -86,7 +86,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     }
 
     fun startSearch(forceSearch: Boolean) {
-        if (_canSearch.value == true && (!stopWasPressed || forceSearch)) {
+        if (!inSearch && (!stopWasPressed || forceSearch)) {
             inSearch = true
             _canSearch.value = false
             _canStop.value = true
@@ -272,6 +272,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         val splitted = response.split(",")
         try {
             require(splitted.size == 2)
+            inSearch = false
             makeMove(Move(splitted[0].toInt(), splitted[1].toInt()))
         } catch (e: IllegalArgumentException) {
             Log.wtf("Res", response)
