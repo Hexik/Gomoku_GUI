@@ -37,6 +37,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags '-std=c++17'
+                arguments "-DANDROID_TOOLCHAIN=clang"
 //                arguments "-DANDROID_ARM_MODE=arm", "-DANDROID_STL=c++_shared"
             }
         }
@@ -47,10 +48,23 @@ android {
     }
 
     buildTypes {
+        debug{
+            minifyEnabled false
+            externalNativeBuild {
+                cmake {
+                    arguments "-DCMAKE_CXX_FLAGS_DEBUG=-O0"                }
+            }
+
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            externalNativeBuild {
+                cmake {
+                    arguments "-DCMAKE_CXX_FLAGS_RELEASE=-Ofast"
+                }
+            }
         }
     }
     compileOptions {
