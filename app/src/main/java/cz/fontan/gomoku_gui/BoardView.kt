@@ -160,6 +160,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private fun drawBoard(canvas: Canvas) {
         drawHorizontalLines(canvas)
         drawVerticalLines(canvas)
+        drawFrame(canvas)
 
         if (showCoordinates) {
             drawCoordinates(canvas)
@@ -190,6 +191,29 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                 paint
             )
         }
+    }
+
+    private fun drawFrame(canvas: Canvas) {
+        canvas.drawLine(
+            offset - 1, offset - 1, offset + 1 + kStepCount * step, offset - 1, paint
+        )
+        canvas.drawLine(
+            offset - 1, offset - 1, offset - 1, offset + 1 + kStepCount * step, paint
+        )
+        canvas.drawLine(
+            offset - 1,
+            offset + 1 + kStepCount * step,
+            offset + 1 + kStepCount * step,
+            offset + 1 + kStepCount * step,
+            paint
+        )
+        canvas.drawLine(
+            offset + 1 + kStepCount * step,
+            offset - 1,
+            offset + 1 + kStepCount * step,
+            offset + 1 + kStepCount * step,
+            paint
+        )
     }
 
     private fun drawCoordinates(canvas: Canvas) {
