@@ -13,4 +13,12 @@
         app:key="list_preference_cache"
         app:summary="%s"
         app:title="Transposition table" />
+    <CheckBoxPreference
+        app:defaultValue="@string/default_false"
+        app:enabled="false"
+        app:key="check_box_preference_multicore"
+        app:summaryOff="@string/multithreading_off"
+        app:summaryOn="@string/multithreading_on"
+        app:title="@string/multithreading" />
+
 </PreferenceScreen>

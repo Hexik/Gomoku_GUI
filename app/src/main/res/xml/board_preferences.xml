@@ -8,25 +8,25 @@
         app:summary="%s"
         app:title="Board size" />
     <CheckBoxPreference
-        app:defaultValue="true"
+        app:defaultValue="@string/default_true"
         app:key="check_box_preference_coordinates"
         app:summaryOff="@string/coordinates_off"
         app:summaryOn="@string/coordinates_on"
         app:title="@string/coordinates" />
     <CheckBoxPreference
-        app:defaultValue="true"
+        app:defaultValue="@string/default_true"
         app:key="check_box_preference_numbers"
         app:summaryOff="@string/numbered_moves_off"
         app:summaryOn="@string/numbered_moves_on"
         app:title="@string/numbered_moves" />
     <CheckBoxPreference
-        app:defaultValue="false"
+        app:defaultValue="@string/default_false"
         app:key="check_box_preference_zoom"
         app:summaryOff="@string/zoom_off"
         app:summaryOn="@string/zoom_on"
         app:title="@string/zoom" />
     <CheckBoxPreference
-        app:defaultValue="false"
+        app:defaultValue="@string/default_false"
         app:key="check_box_preference_forbidden"
         app:summaryOff="@string/forbidden_moves_off"
         app:summaryOn="@string/forbidden_moves_on"

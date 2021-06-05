@@ -16,7 +16,9 @@
     <string name="coordinates_on">Visible coordinates</string>
     <string name="default_board">15</string>
     <string name="default_cache">64</string>
+    <string name="default_false">false</string>
     <string name="default_time">1000</string>
+    <string name="default_true">true</string>
     <string name="depth">Depth</string>
     <string name="email">Email</string>
     <string name="email_address">mira.fontan@gmail.com</string>
@@ -28,6 +30,7 @@
     <string name="forbidden_moves_off">Forbidden moves are not displayed</string>
     <string name="forbidden_moves_on">Show forbidden moves</string>
     <string name="gomoku_gui">Gomoku GUI</string>
+    <string name="level">Playing Level</string>
     <string name="loading">Loading…</string>
     <string name="menu_settings">Settings</string>
     <string name="miroslav_fontan">Miroslav Fontan</string>
@@ -62,6 +65,4 @@
     <string name="board_header">Board settings</string>
     <string name="ai_settings_header">AI settings</string>
 
-
-    <string name="level">Level</string>
 </resources>
