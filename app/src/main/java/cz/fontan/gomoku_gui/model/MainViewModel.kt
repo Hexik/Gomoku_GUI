@@ -93,8 +93,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
             _canUndo.value = false
             _canRedo.value = false
             stopWasPressed = false
-            NativeInterface.writeToBrain(game.toBoard(false))
-            NativeInterface.writeToBrain("begin")
+            NativeInterface.writeToBrain(game.toBoard(true))
             _isDirty.value = true
         } else {
             setIdleStatus()
