@@ -48,11 +48,12 @@ android {
     }
 
     buildTypes {
-        debug{
+        debug {
             minifyEnabled false
             externalNativeBuild {
                 cmake {
-                    arguments "-DCMAKE_CXX_FLAGS_DEBUG=-O0"                }
+                    arguments "-DCMAKE_CXX_FLAGS_DEBUG=-O0"
+                }
             }
 
         }
