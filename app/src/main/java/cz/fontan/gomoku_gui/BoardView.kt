@@ -40,16 +40,16 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private val sharedPreferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
 
-    private var showNumbers = false
-    private var showCoordinates = false
     private var kBoardSize = BOARD_SIZE_MAX
     private var kStepCount = kBoardSize - 1
-    private var zoom = false
-    private var working = false
+    private var showCoordinates = false
+    private var showNumbers = false
+    private var zoomAllowed = false
+    private var zoomMode = false
 
     // transformation matrix
     private val originalMatrix = Matrix()
-    private val workingMatrix = Matrix()
+    private val zoomingMatrix = Matrix()
 
     init {
         paint.textAlign = Paint.Align.CENTER
@@ -74,11 +74,10 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
-        if (zoom) {
-            canvas.concat(if (working) workingMatrix else originalMatrix)
+        if (zoomAllowed) {
+            canvas.concat(if (zoomMode) zoomingMatrix else originalMatrix)
         }
 
-        recalcLimits()
         drawBoard(canvas)
         drawStones(canvas)
     }
@@ -89,13 +88,13 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                if (zoom && !working) {
-                    working = true
-                    workingMatrix.set(originalMatrix)
-                    workingMatrix.setScale(kMatrixScaleFactor, kMatrixScaleFactor, event.x, event.y)
+                if (zoomAllowed && !zoomMode) {
+                    zoomMode = true
+                    zoomingMatrix.set(originalMatrix)
+                    zoomingMatrix.setScale(kMatrixScaleFactor, kMatrixScaleFactor, event.x, event.y)
                     invalidate()
                 } else {
-                    working = false
+                    zoomMode = false
                     Log.v(TAG, "Orig ${event.x},${event.y}")
 
                     if (gameDelegate?.isSearching()!!) return false
@@ -103,10 +102,10 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                     // Initialize the array with our Coordinate
                     val pts: FloatArray = floatArrayOf(event.x, event.y)
 
-                    if (zoom) {
+                    if (zoomAllowed) {
                         // Use the Matrix to map the points
                         val inverseCopy = Matrix()
-                        if (workingMatrix.invert(inverseCopy)) {
+                        if (zoomingMatrix.invert(inverseCopy)) {
                             inverseCopy.mapPoints(pts)
                             //Now transformedPoint is reverted to original state.
                         }
@@ -128,7 +127,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                 }
             }
             MotionEvent.ACTION_UP -> {
-                if (!zoom || !working) {
+                if (!zoomAllowed || !zoomMode) {
                     gameDelegate!!.makeMove(lastMove)
                     performClick()
                 }
@@ -267,9 +266,9 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                 ?.toInt()
                 ?: defaultDimension
         kStepCount = kBoardSize - 1
-        showNumbers = sharedPreferences.getBoolean("check_box_preference_numbers", true)
         showCoordinates = sharedPreferences.getBoolean("check_box_preference_coordinates", true)
-        zoom = sharedPreferences.getBoolean("check_box_preference_zoom", false)
+        showNumbers = sharedPreferences.getBoolean("check_box_preference_numbers", true)
+        zoomAllowed = sharedPreferences.getBoolean("check_box_preference_zoom", false)
 
         if (showCoordinates) {
             offset = 0.08f * width
