@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.refresh()
-        binding.boardView.invalidate()
+        binding.boardView.recalcLimits()
         Log.v(TAG, "onResume")
     }
 

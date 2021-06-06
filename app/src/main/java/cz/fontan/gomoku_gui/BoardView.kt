@@ -261,7 +261,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         return PointF(offset + move.x * step, offset + (kStepCount - move.y) * step)
     }
 
-    private fun recalcLimits() {
+    fun recalcLimits() {
         Log.v(TAG, "Reca")
         val defaultDimension = context.getString(R.string.default_board).toInt()
         kBoardSize =
