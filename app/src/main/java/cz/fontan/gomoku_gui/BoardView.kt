@@ -77,7 +77,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         if (zoomAllowed) {
             canvas.concat(if (zoomMode) zoomingMatrix else originalMatrix)
         }
-
+        recalcLimits()
         drawBoard(canvas)
         drawStones(canvas)
     }
@@ -189,26 +189,12 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     }
 
     private fun drawFrame(canvas: Canvas) {
-        canvas.drawLine(
-            offset - 1, offset - 1, offset + 1 + kStepCount * step, offset - 1, paint
-        )
-        canvas.drawLine(
-            offset - 1, offset - 1, offset - 1, offset + 1 + kStepCount * step, paint
-        )
-        canvas.drawLine(
-            offset - 1,
-            offset + 1 + kStepCount * step,
-            offset + 1 + kStepCount * step,
-            offset + 1 + kStepCount * step,
-            paint
-        )
-        canvas.drawLine(
-            offset + 1 + kStepCount * step,
-            offset - 1,
-            offset + 1 + kStepCount * step,
-            offset + 1 + kStepCount * step,
-            paint
-        )
+        val minCoord = offset - 1
+        val maxCoord = offset + 1 + kStepCount * step
+        canvas.drawLine(minCoord, minCoord, maxCoord, minCoord, paint) // top
+        canvas.drawLine(minCoord, minCoord, minCoord, maxCoord, paint) // left
+        canvas.drawLine(minCoord, maxCoord, maxCoord, maxCoord, paint) // bottom
+        canvas.drawLine(maxCoord, minCoord, maxCoord, maxCoord, paint) // right
     }
 
     private fun drawCoordinates(canvas: Canvas) {
