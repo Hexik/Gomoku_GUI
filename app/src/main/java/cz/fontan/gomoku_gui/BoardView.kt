@@ -161,11 +161,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         drawHorizontalLines(canvas)
         drawVerticalLines(canvas)
         drawFrame(canvas)
-
-        if (showCoordinates) {
-            drawCoordinates(canvas)
-        }
-
+        drawCoordinates(canvas)
         drawHandicapPoints(canvas)
     }
 
@@ -217,19 +213,21 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     }
 
     private fun drawCoordinates(canvas: Canvas) {
-        for (i in 0..kStepCount) {
-            canvas.drawText(
-                (i + 'A'.code).toChar().toString(),
-                offset + i * step,
-                offset * 0.5f,
-                paint
-            )
-            canvas.drawText(
-                (kBoardSize - i).toString(),
-                offset * 0.33f,
-                offset + i * step + paint.textSize * 0.33f,
-                paint
-            )
+        if (showCoordinates) {
+            for (i in 0..kStepCount) {
+                canvas.drawText(
+                    (i + 'A'.code).toChar().toString(),
+                    offset + i * step,
+                    offset * 0.5f,
+                    paint
+                )
+                canvas.drawText(
+                    (kBoardSize - i).toString(),
+                    offset * 0.33f,
+                    offset + i * step + paint.textSize * 0.33f,
+                    paint
+                )
+            }
         }
     }
 
