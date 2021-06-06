@@ -1,9 +1,7 @@
 package cz.fontan.gomoku_gui
 
 import android.content.Intent
-import android.os.Build
-import android.os.Bundle
-import android.os.StrictMode
+import android.os.*
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import android.util.Log
@@ -49,6 +47,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        prepareBindings()
+        prepareButtons()
+        prepareObservers()
+    }
+
+    private fun prepareBindings() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -56,9 +60,11 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
         binding.boardView.gameDelegate = viewModel
+    }
 
-        // Game controlling buttons
-        // work delegated to the ViewModel class
+    // Game controlling buttons
+    // work delegated to the ViewModel class
+    private fun prepareButtons() {
         binding.buttonPlay.setOnClickListener {
             viewModel.startSearch(true)
         }
@@ -74,8 +80,10 @@ class MainActivity : AppCompatActivity() {
         binding.buttonNew.setOnClickListener {
             viewModel.newGame()
         }
+    }
 
-        // Observers
+    // Observers
+    private fun prepareObservers() {
         // Observe data stream from brain
         viewModel.dataFromBrain.observe(this, { it ->
             it?.consume { viewModel.processResponse(it) }
