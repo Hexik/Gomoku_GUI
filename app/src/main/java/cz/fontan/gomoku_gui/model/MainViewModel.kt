@@ -92,7 +92,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
             _canStop.value = true
             _canUndo.value = false
             _canRedo.value = false
-            readAutoSettings()
             stopWasPressed = false
             NativeInterface.writeToBrain(game.toBoard(false))
             NativeInterface.writeToBrain("begin")
@@ -138,11 +137,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
         _canStop.value = false
         _canUndo.value = game.canUndo()
         _canRedo.value = game.canRedo()
-        readAutoSettings()
         _isDirty.value = true
     }
 
-    private fun readAutoSettings() {
+    private fun readSettings() {
         autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
         autoWhite = sharedPreferences.getBoolean("check_box_preference_AI_white", false)
         val tmpDim = getDimension()
@@ -159,7 +157,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     override fun makeMove(move: Move) {
         game.makeMove(move)
-        readAutoSettings()
         queryGameResult()
         when {
             autoBlack && game.playerToMove == EnumMove.Black -> startSearch(false)
@@ -171,7 +168,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     }
 
     override fun refresh() {
-        readAutoSettings()
+        readSettings()
     }
 
     private fun queryGameResult() {
