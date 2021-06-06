@@ -263,9 +263,11 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
     private fun recalcLimits() {
         Log.v(TAG, "Reca")
+        val defaultDimension = context.getString(R.string.default_board).toInt()
         kBoardSize =
-            sharedPreferences.getString("list_preference_board_size", "$BOARD_SIZE_MAX")?.toInt()
-                ?: BOARD_SIZE_MAX
+            sharedPreferences.getString("list_preference_board_size", defaultDimension.toString())
+                ?.toInt()
+                ?: defaultDimension
         kStepCount = kBoardSize - 1
         showNumbers = sharedPreferences.getBoolean("check_box_preference_numbers", true)
         showCoordinates = sharedPreferences.getBoolean("check_box_preference_coordinates", true)

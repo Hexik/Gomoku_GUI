@@ -145,9 +145,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     private fun readAutoSettings() {
         autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
         autoWhite = sharedPreferences.getBoolean("check_box_preference_AI_white", false)
-        val tmpDim =
-            sharedPreferences.getString("list_preference_board_size", "${BOARD_SIZE_MAX}")?.toInt()
-                ?: BOARD_SIZE_MAX
+        val tmpDim = getDimension()
         if (tmpDim != game.dim) {
             game.dim = tmpDim
             newGame()
@@ -236,7 +234,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
     }
 
     private fun getResourceString(resID: Int): String {
-        return getApplication<Application>().applicationContext.resources.getString(resID)
+        return getApplication<Application>().applicationContext.getString(resID)
     }
 
     private fun parseRealTime(response: String) {
@@ -303,12 +301,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
                 Context.MODE_PRIVATE
             )
         try {
-            game.dim = sharedPreferences.getString("list_preference_board_size", "$BOARD_SIZE_MAX")
-                ?.toInt() ?: BOARD_SIZE_MAX
+            game.dim = getDimension()
             NativeInterface.writeToBrain("start ${game.dim}")
             game.fromStream(sharedPreference.getString("Moves", "")?.trimMargin())
         } catch (e: IllegalArgumentException) {
             game.reset()
         }
+    }
+
+    private fun getDimension(): Int {
+        val defaultDimension = getResourceString(R.string.default_board).toInt()
+        return sharedPreferences.getString(
+            "list_preference_board_size",
+            defaultDimension.toString()
+        )?.toInt() ?: defaultDimension
     }
 }
