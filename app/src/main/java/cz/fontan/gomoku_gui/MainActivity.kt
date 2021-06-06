@@ -27,23 +27,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(
-                ThreadPolicy.Builder()
-                    .detectDiskReads()
-                    .detectDiskWrites()
-                    .detectNetwork() // or .detectAll() for all detectable problems
-                    .penaltyLog()
-                    .build()
-            )
-            StrictMode.setVmPolicy(
-                VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects()
-                    .detectLeakedClosableObjects()
-                    .penaltyLog()
-                    .penaltyLog()
-                    .build()
-            )
+        Handler(Looper.getMainLooper()).postAtFrontOfQueue {
+            if (BuildConfig.DEBUG) {
+                StrictMode.setThreadPolicy(
+                    ThreadPolicy.Builder()
+                        .detectDiskReads()
+                        .detectDiskWrites()
+                        .detectNetwork() // or .detectAll() for all detectable problems
+                        .detectAll()
+                        .penaltyLog()
+                        .build()
+                )
+                StrictMode.setVmPolicy(
+                    VmPolicy.Builder()
+                        .detectLeakedSqlLiteObjects()
+                        .detectLeakedClosableObjects()
+                        .detectAll()
+                        .penaltyLog()
+                        .build()
+                )
+            }
         }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
