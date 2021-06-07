@@ -1,5 +1,8 @@
 package cz.fontan.gomoku_gui
 
+/**
+ * JNI interface to C++
+ */
 class NativeInterface {
     /**
      * A native methods that are implemented by the 'native-lib' native library,

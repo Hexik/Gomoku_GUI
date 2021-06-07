@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id("com.github.spotbugs") version "4.7.1"
     id 'com.adarshr.test-logger' version '3.0.0'
+    id("org.jetbrains.dokka") version "1.4.32"
 }
 
 import org.ajoberstar.grgit.Grgit

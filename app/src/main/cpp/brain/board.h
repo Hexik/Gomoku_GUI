@@ -140,7 +140,7 @@ public:
     */
     constexpr Move
     operator[]( size_t ply ) const { return m_playedMoves[ply]; } /* const subscript operator */
-    Move& operator[]( size_t ply ) { return m_playedMoves[ply]; }       /* subscript operator */
+    Move& operator[]( size_t ply ) { return m_playedMoves[ply]; } /* subscript operator */
     /**@} */
 
 private:
@@ -150,7 +150,7 @@ private:
     mutable bool  sideToMove;                        /**< player to move */
 
     eMove_t m_desk[kBoardSize * kMaxBoard];          /**< main board */
-    Move    m_playedMoves[kBoardSize * kPlaySize];   /**< already played move in correct order */
+    Move    m_playedMoves[kBoardSize * kPlaySize];   /**< already played moves in correct order */
 
 };
 
