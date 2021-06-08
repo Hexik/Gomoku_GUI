@@ -46,13 +46,13 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_writeToBrain( JNIEnv* env,
                                                                         jobject /* this */,
-                                                                        jstring s ) {
-    const auto str = env->GetStringUTFChars( s, nullptr );
+                                                                        jstring command ) {
+    const auto str = env->GetStringUTFChars( command, nullptr );
     __android_log_write( ANDROID_LOG_DEBUG, "JNI write", str );
 
     if( str != nullptr ) {
         assert( instance != nullptr );
         instance->AddCommandsToInputQueue( str );
-        env->ReleaseStringUTFChars( s, str );
+        env->ReleaseStringUTFChars( command, str );
     }
 }

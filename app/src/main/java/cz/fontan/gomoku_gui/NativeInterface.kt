@@ -9,9 +9,28 @@ class NativeInterface {
      * Interface to the C++ world
      */
     companion object {
+        /**
+         *  C++ engine is started
+         *  @param dimension Board size
+         */
         external fun startBrain(dimension: Int)
+
+        /**
+         * Stops and destroys brain
+         */
         external fun stopBrain()
+
+        /**
+         * Reads responses from brain, empty string if no data
+         * @param timeoutMillis read timeout, 0 works as peek()
+         * @return
+         */
         external fun readFromBrain(timeoutMillis: Int): String
-        external fun writeToBrain(s: String)
+
+        /**
+         * Sends command(s), Gomocup protocol is used
+         * @param command data for brain
+         */
+        external fun writeToBrain(command: String)
     }
 }
