@@ -4,8 +4,14 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
+/**
+ * Info about application
+ */
 class AboutActivity : AppCompatActivity(R.layout.activity_about) {
 
+    /**
+     * onCreate initializes some textViews
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

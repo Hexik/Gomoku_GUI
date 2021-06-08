@@ -91,7 +91,7 @@ struct uac_type {
 
 /**
  * @class do_conv
- * @brief wokrhorse template to make conversion check by specialization
+ * @brief workhorse template to make conversion check by specialization
  */
 template<typename To, typename From, bool to_signed = std::is_signed<To>::value,
         bool from_signed = std::is_signed<From>::value,

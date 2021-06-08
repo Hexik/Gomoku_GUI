@@ -5,6 +5,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+/**
+ * Read all data from C++ brain as flow
+ */
 class AnswersRepository {
     /**
      * This method is used to get data from brain in pseudo real time
