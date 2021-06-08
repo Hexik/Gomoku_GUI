@@ -26,7 +26,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         private const val kStoneCoef = 0.44f
     }
 
-    var gameDelegate: InterfaceMain? = null
+    var gameDelegate: InterfaceMainViewModel? = null
 
     // draw related
     private val paint = Paint()

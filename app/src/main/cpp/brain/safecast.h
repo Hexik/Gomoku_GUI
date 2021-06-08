@@ -35,7 +35,7 @@ template <typename To, typename From> To safe_cast( From f ) { return static_cas
 /* full template with overflow checks and logs */
 
 /** @cond C1 */
-/* usual arith. conversions for ints (pre-condition: A, B differ) */
+/* usual arithmetical conversions for ints (pre-condition: A, B differ) */
 
 /* helper template to find an underlying type in case of enum */
 template<typename T, typename = typename std::is_enum<T>::type>

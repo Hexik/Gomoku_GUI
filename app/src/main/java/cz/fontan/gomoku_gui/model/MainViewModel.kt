@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
-import cz.fontan.gomoku_gui.InterfaceMain
+import cz.fontan.gomoku_gui.InterfaceMainViewModel
 import cz.fontan.gomoku_gui.NativeInterface
 import cz.fontan.gomoku_gui.R
 import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
@@ -15,7 +15,8 @@ import cz.fontan.gomoku_gui.game.Game
 import cz.fontan.gomoku_gui.game.Move
 import kotlinx.coroutines.Dispatchers
 
-class MainViewModel(application: Application) : AndroidViewModel(application), InterfaceMain {
+class MainViewModel(application: Application) : AndroidViewModel(application),
+    InterfaceMainViewModel {
     private val game = Game(BOARD_SIZE_MAX)
 
     // LiveData variables
