@@ -62,13 +62,11 @@ class SettingsActivity : AppCompatActivity(),
         pref: Preference
     ): Boolean {
         // Instantiate the new Fragment
-        val args = pref.extras
         val fragment = supportFragmentManager.fragmentFactory.instantiate(
             classLoader,
             pref.fragment
         ).apply {
-            arguments = args
-            setTargetFragment(caller, 0)
+            arguments = pref.extras
         }
         // Replace the existing Fragment with the new Fragment
         supportFragmentManager.beginTransaction()
