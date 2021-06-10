@@ -15,48 +15,91 @@ import cz.fontan.gomoku_gui.game.Game
 import cz.fontan.gomoku_gui.game.Move
 import kotlinx.coroutines.Dispatchers
 
+/**
+ * ViewModel, current game status, can be saved and restored
+ */
 class MainViewModel(application: Application) : AndroidViewModel(application),
     InterfaceMainViewModel {
     private val game = Game(BOARD_SIZE_MAX)
 
     // LiveData variables
     private val _isDirty = MutableLiveData<Boolean>()
+
+    /**
+     * Model was changed
+     */
     val isDirty: LiveData<Boolean>
         get() = _isDirty
 
     private val _canSearch = MutableLiveData<Boolean>()
+
+    /**
+     * canSearch status
+     */
     val canSearch: LiveData<Boolean>
         get() = _canSearch
 
     private val _canStop = MutableLiveData<Boolean>()
+
+    /**
+     * canStop status
+     */
     val canStop: LiveData<Boolean>
         get() = _canStop
 
     private val _canRedo = MutableLiveData<Boolean>()
+
+    /**
+     * canRedo status
+     */
     val canRedo: LiveData<Boolean>
         get() = _canRedo
 
     private val _canUndo = MutableLiveData<Boolean>()
+
+    /**
+     * canUndo status
+     */
     val canUndo: LiveData<Boolean>
         get() = _canUndo
 
     private val _msgDepth = MutableLiveData<String>()
+
+    /**
+     * Current search depth parsed from message
+     */
     val msgDepth: LiveData<String>
         get() = _msgDepth
 
     private val _msgEval = MutableLiveData<String>()
+
+    /**
+     * Current search evaluation parsed from message
+     */
     val msgEval: LiveData<String>
         get() = _msgEval
 
     private val _msgNodes = MutableLiveData<String>()
+
+    /**
+     * Current node count parsed from message
+     */
     val msgNodes: LiveData<String>
         get() = _msgNodes
 
     private val _msgSpeed = MutableLiveData<String>()
+
+    /**
+     * Current search speed in N/ms parsed from message
+     */
     val msgSpeed: LiveData<String>
         get() = _msgSpeed
 
     private val _msgResult = MutableLiveData<String>()
+
+    /**
+     * Game result as answer from brain
+     */
     val msgResult: LiveData<String>
         get() = _msgResult
 
@@ -69,6 +112,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             Dispatchers.Default + viewModelScope.coroutineContext
         )
 
+    /**
+     * LiveData from C++ brain, messages sent from brain
+     */
     val dataFromBrain: LiveData<ConsumableValue<String>>
         get() = _dataFromBrain
 
@@ -86,6 +132,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         afterAction()
     }
 
+    /**
+     * Start search if possible, current position is sent to brain
+     */
     fun startSearch(forceSearch: Boolean) {
         if (!inSearch && (!stopWasPressed || forceSearch)) {
             inSearch = true
@@ -101,6 +150,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         }
     }
 
+    /**
+     * Stop running search, the brain should understand the YXSTOP command
+     */
     fun stopSearch() {
         NativeInterface.writeToBrain("YXSTOP")
         queryGameResult()
@@ -108,17 +160,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         stopWasPressed = true
     }
 
+    /**
+     * @see Game.undoMove
+     */
     fun undoMove() {
         game.undoMove()
         stopWasPressed = false
         afterAction()
     }
 
+    /**
+     * @see Game.redoMove
+     */
     fun redoMove() {
         game.redoMove()
         afterAction()
     }
 
+    /**
+     * Start new game, init C++ brain
+     */
     fun newGame() {
         game.newGame()
         stopWasPressed = false
@@ -189,7 +250,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         return inSearch
     }
 
-    // Parse incoming data from brain
+    /**
+     * Parse incoming data from brain
+     * @param response incoming data
+     */
     fun processResponse(response: String) {
         val upper = response.uppercase()
         when {
@@ -274,12 +338,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         }
     }
 
+    /**
+     * When the instance is cleared, the game is saved
+     */
     override fun onCleared() {
         super.onCleared()
         Log.i("MainVM", "onCleared")
         saveGame()
     }
 
+    /**
+     * Save current position as shared preference
+     */
     fun saveGame() {
         val sharedPreference =
             getApplication<Application>().applicationContext.getSharedPreferences(

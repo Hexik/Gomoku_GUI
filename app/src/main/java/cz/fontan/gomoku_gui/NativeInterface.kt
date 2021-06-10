@@ -23,7 +23,7 @@ class NativeInterface {
         /**
          * Reads responses from brain, empty string if no data
          * @param timeoutMillis read timeout, 0 works as peek()
-         * @return
+         * @return Answers from C++ brain, can be empty
          */
         external fun readFromBrain(timeoutMillis: Int): String
 

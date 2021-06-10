@@ -1,12 +1,55 @@
 package cz.fontan.gomoku_gui.game
 
+/**
+ * LimitBoard dimension
+ */
 const val BOARD_SIZE_MAX: Int = 20
 
+/**
+ * Move types
+ */
 enum class EnumMove {
-    Empty, Black, White, Wall
+    /**
+     * No Move
+     */
+    Empty,
+
+    /**
+     * Black player
+     */
+    Black,
+
+    /**
+     * White player
+     */
+    White,
+
+    /**
+     * Wall/Edge of the board
+     */
+    Wall
 }
 
-class Move(val x: Int = 0, val y: Int = 0, val type: EnumMove = EnumMove.Empty) {
+/**
+ * Move structure
+ * @throws IllegalArgumentException
+ */
+class Move(
+    /**
+     * x-coordinate, 0 <= x < Game.dim
+     */
+    val x: Int = 0,
+
+    /**
+     * y-coordinate, 0 <= x < Game.dim
+     */
+    val y: Int = 0,
+
+    /**
+     * Move type one of EnumMove
+     */
+    val type: EnumMove = EnumMove.Empty
+) {
 
     init {
         require(x >= 0)

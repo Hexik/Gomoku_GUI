@@ -2,11 +2,25 @@ package cz.fontan.gomoku_gui.game
 
 import android.util.Log
 
+// TODO MF add game type to fromStream(), toStream(), now is fixed line(2) = 1
+
 private const val TAG = "Game"
 
-class Game(var dim: Int) {
+/**
+ * Information about current game, position, dimension, moveList, serialize position
+ */
+class Game(
+    /**
+     * Board dimension
+     */
+    var dim: Int
+) {
     private val moveList = MoveList()
     private val desk = Array(dim * dim) { EnumMove.Empty }
+
+    /**
+     * side to move
+     */
     var playerToMove: EnumMove = EnumMove.Black
 
     init {
@@ -14,11 +28,19 @@ class Game(var dim: Int) {
         newGame()
     }
 
+    /**
+     * Prepare new game
+     */
     fun newGame(): Game {
         Log.d(TAG, "New Game")
         return reset()
     }
 
+    /**
+     * Put move on desk with all safety checks
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     */
     fun makeMove(move: Move): Game {
         val localMove = Move(move.x, move.y, playerToMove)
         require(canMakeMove(localMove))
@@ -28,6 +50,11 @@ class Game(var dim: Int) {
         return switchPlayerToMove()
     }
 
+    /**
+     * Remove last move from desk with all safety checks
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     */
     fun undoMove(): Game {
         Log.d(TAG, "Undo")
         require(moveCount() > 0)
@@ -44,6 +71,11 @@ class Game(var dim: Int) {
         return switchPlayerToMove()
     }
 
+    /**
+     * Add move back after previous undoMove() action(s)
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     */
     fun redoMove(): Game {
         Log.d(TAG, "Redo")
         require(canRedo())
@@ -58,6 +90,9 @@ class Game(var dim: Int) {
         return switchPlayerToMove()
     }
 
+    /**
+     * Game at clean starting phase
+     */
     fun reset(): Game {
         moveList.reset()
         playerToMove = EnumMove.Black
@@ -65,24 +100,44 @@ class Game(var dim: Int) {
         return this
     }
 
+    /**
+     * Tests if move can be done
+     */
     fun canMakeMove(m: Move): Boolean {
         return desk[deskIndex(m)] == EnumMove.Empty
     }
 
+    /**
+     * Checks if can backward one move
+     */
     fun canUndo(): Boolean {
         return moveList.canUndo()
     }
 
+    /**
+     * Checks if can forward one move
+     */
     fun canRedo(): Boolean {
         return moveList.canRedo()
     }
 
+    /**
+     * How many moves is on board
+     */
     fun moveCount(): Int {
         return 1 + moveList.getIndex()
     }
 
+    /**
+     * @see MoveList.get
+     */
     operator fun get(index: Int): Move = moveList.get(index)
 
+    /**
+     * Serialize position to String
+     * Gomocup BOARD command is constructed
+     * @throws IllegalArgumentException
+     */
     fun toBoard(commonBoardCommand: Boolean): String {
         require(moveList.isValid())
 
@@ -112,6 +167,10 @@ class Game(var dim: Int) {
         return this
     }
 
+    /**
+     * Serialize game to String, Yixin game format is used from compatibility reason
+     * @throws IllegalArgumentException
+     */
     fun toStream(): String {
         require(moveList.isValid())
 
@@ -124,6 +183,12 @@ class Game(var dim: Int) {
         return sb.toString()
     }
 
+    /**
+     * Set game positions from String
+     * Yixin format is expected
+     * @param data serialized Game
+     * @throws IllegalArgumentException
+     */
     fun fromStream(data: String?): Game {
         data ?: return this
 

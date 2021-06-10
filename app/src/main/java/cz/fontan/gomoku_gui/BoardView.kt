@@ -13,6 +13,9 @@ import cz.fontan.gomoku_gui.game.Move
 
 private const val TAG: String = "BoardView"
 
+/**
+ * Draws board, stones, coordinates, interacts with user
+ */
 class BoardView(context: Context?, attrs: AttributeSet?) :
     androidx.appcompat.widget.AppCompatImageView(
         context!!, attrs
@@ -26,6 +29,9 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         private const val kStoneCoef = 0.44f
     }
 
+    /**
+     * ViewModel delegate
+     */
     var gameDelegate: InterfaceMainViewModel? = null
 
     // draw related
@@ -63,6 +69,9 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         }
     }
 
+    /**
+     * Set the view as square shape
+     */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
@@ -72,6 +81,9 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     }
 
 
+    /**
+     * Draw the view, playing board and stones
+     */
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
         if (zoomAllowed) {
@@ -82,6 +94,9 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         drawStones(canvas)
     }
 
+    /**
+     * Catches touch events, implements zoom mode if set
+     */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
         gameDelegate ?: return false
@@ -244,7 +259,10 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         return PointF(offset + move.x * step, offset + (kStepCount - move.y) * step)
     }
 
-    fun recalcLimits() {
+    /**
+     * Recalculate coordinates along the preferences, size, coordinates
+     */
+    private fun recalcLimits() {
         Log.v(TAG, "Reca")
         val defaultDimension = context.getString(R.string.default_board).toInt()
         kBoardSize =
@@ -268,6 +286,9 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         paint.textSize = step * 0.5f
     }
 
+    /**
+     * Override this to silent some availability check
+     */
     override fun performClick(): Boolean {
         run { } // to silent checker
         return super.performClick()

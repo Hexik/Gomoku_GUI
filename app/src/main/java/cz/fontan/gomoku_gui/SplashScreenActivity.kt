@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 private const val SPLASH_DELAY: Long = 2000L
 
 /**
- * Postopone start of MainActivity, showa invitation screen
+ * Postpone start of MainActivity, shows invitation screen
  */
 class SplashScreenActivity : AppCompatActivity() {
 

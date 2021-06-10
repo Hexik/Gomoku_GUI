@@ -8,9 +8,15 @@ import androidx.preference.PreferenceFragmentCompat
 
 private const val TITLE_TAG = "settingsActivityTitle"
 
+/**
+ * Settings (configuration) activity
+ */
 class SettingsActivity : AppCompatActivity(),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
+    /**
+     * Create Activity, setup FragmentManager
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
@@ -30,12 +36,17 @@ class SettingsActivity : AppCompatActivity(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    /**
+     * Save current activity title so we can set it again after a configuration change
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        // Save current activity title so we can set it again after a configuration change
         outState.putCharSequence(TITLE_TAG, title)
     }
 
+    /**
+     * Back navigation
+     */
     override fun onSupportNavigateUp(): Boolean {
         if (supportFragmentManager.popBackStackImmediate()) {
             return true
@@ -43,6 +54,9 @@ class SettingsActivity : AppCompatActivity(),
         return super.onSupportNavigateUp()
     }
 
+    /**
+     * Fragment Start
+     */
     override fun onPreferenceStartFragment(
         caller: PreferenceFragmentCompat,
         pref: Preference
@@ -65,28 +79,52 @@ class SettingsActivity : AppCompatActivity(),
         return true
     }
 
+    /**
+     * Main (header) fragment
+     */
     class HeaderFragment : PreferenceFragmentCompat() {
+        /**
+         * Create main settings fragment
+         */
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.header_preferences, rootKey)
         }
     }
 
+    /**
+     * AI fragment
+     */
     @Keep
     class AISettingsFragment : PreferenceFragmentCompat() {
+        /**
+         * Create AI settings fragment
+         */
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.ai_preferences, rootKey)
         }
     }
 
+    /**
+     * Board fragment
+     */
     @Keep
     class BoardFragment : PreferenceFragmentCompat() {
+        /**
+         * Create board settings fragment
+         */
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.board_preferences, rootKey)
         }
     }
 
+    /**
+     * Level fragment
+     */
     @Keep
     class LevelFragment : PreferenceFragmentCompat() {
+        /**
+         * Create level settings fragment
+         */
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.level_preferences, rootKey)
         }

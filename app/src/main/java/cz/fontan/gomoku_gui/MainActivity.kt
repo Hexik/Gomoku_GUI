@@ -17,11 +17,17 @@ import kotlin.system.exitProcess
 
 private const val TAG = "MainActivity"
 
+/**
+ * Main App Activity, setup bindings and observers
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
 
+    /**
+     * Prepare bindings, buttons, observers
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -118,11 +124,17 @@ class MainActivity : AppCompatActivity() {
         viewModel.msgResult.observe(this, { binding.textViewDataStatus.text = it })
     }
 
+    /**
+     * Create main App menu from resources
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * Start action after the menu item was selected
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_settings) {
             Log.d(TAG, "Settings selected")
@@ -149,33 +161,52 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * @see AppCompatActivity.onStart
+     */
     override fun onStart() {
         super.onStart()
         Log.v(TAG, "onStart")
     }
 
+    /**
+     * @see AppCompatActivity.onRestart
+     */
     override fun onRestart() {
         super.onRestart()
         Log.v(TAG, "onRestart")
     }
 
+    /**
+     * Refresh Board an ViewModel
+     * @see AppCompatActivity.onResume
+     */
     override fun onResume() {
         super.onResume()
         viewModel.refresh()
-        binding.boardView.recalcLimits()
+        binding.boardView.invalidate()
         Log.v(TAG, "onResume")
     }
 
+    /**
+     * @see AppCompatActivity.onPause
+     */
     override fun onPause() {
         super.onPause()
         Log.v(TAG, "onPause")
     }
 
+    /**
+     * @see AppCompatActivity.onStop
+     */
     override fun onStop() {
         super.onStop()
         Log.v(TAG, "onStop")
     }
 
+    /**
+     * @see AppCompatActivity.onDestroy
+     */
     override fun onDestroy() {
         super.onDestroy()
         Log.v(TAG, "onDestroy")
