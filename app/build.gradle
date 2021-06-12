@@ -50,25 +50,90 @@ android {
 
     buildTypes {
         debug {
+            versionNameSuffix ".Debug"
+            debuggable true
+            jniDebuggable true
             minifyEnabled false
+            signingConfig signingConfigs.debug
             externalNativeBuild {
                 cmake {
-                    arguments "-DCMAKE_CXX_FLAGS_DEBUG=-O0"
+                    arguments "-DCMAKE_CXX_FLAGS_DEBUG=-O0 -DCMAKE_BUILD_TYPE=Debug"
                 }
             }
 
         }
         release {
+            versionNameSuffix ".Release"
+            debuggable false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            renderscriptOptimLevel 3
             externalNativeBuild {
                 cmake {
-                    arguments "-DCMAKE_CXX_FLAGS_RELEASE=-Ofast"
+                    arguments "-DCMAKE_CXX_FLAGS_RELEASE=-O1 -DCMAKE_BUILD_TYPE=Release"
+                }
+            }
+        }
+        speedy {
+            initWith(getByName("release"))
+            versionNameSuffix ".Speedy"
+            externalNativeBuild {
+                cmake {
+                    arguments "-DCMAKE_CXX_FLAGS_SPEEDY=-Ofast -DCMAKE_BUILD_TYPE=Speedy"
                 }
             }
         }
     }
+
+    flavorDimensions "version", "gametype"
+    productFlavors {
+        free {
+            dimension "version"
+            versionNameSuffix ".Free"
+        }
+        profi {
+            dimension "version"
+            versionNameSuffix ".Profi"
+        }
+        caro {
+            dimension 'gametype'
+            versionNameSuffix ".Caro"
+            externalNativeBuild {
+                cmake {
+                    arguments "-DGAME_TYPE=Caro"
+                }
+            }
+        }
+        freestyle {
+            dimension 'gametype'
+            versionNameSuffix ".FreeStyle"
+            externalNativeBuild {
+                cmake {
+                    arguments "-DGAME_TYPE=FreeStyle"
+                }
+            }
+        }
+        renju {
+            dimension 'gametype'
+            versionNameSuffix ".Renju"
+            externalNativeBuild {
+                cmake {
+                    arguments "-DGAME_TYPE=Renju"
+                }
+            }
+        }
+        standard {
+            dimension 'gametype'
+            versionNameSuffix ".Standard"
+            externalNativeBuild {
+                cmake {
+                    arguments "-DGAME_TYPE=Standard"
+                }
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility "1.8"
         targetCompatibility "1.8"
@@ -85,6 +150,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    ndkVersion '22.1.7171670'
 }
 
 dependencies {
@@ -99,5 +165,5 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0'
 }

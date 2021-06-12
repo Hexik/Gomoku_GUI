@@ -17,5 +17,6 @@ class AboutActivity : AppCompatActivity(R.layout.activity_about) {
 
         // Build date from BuildConfig
         findViewById<TextView>(R.id.textViewAboutBuildDateValue).text = BuildConfig.BUILD_TIME
+        findViewById<TextView>(R.id.textViewAboutEngineVersionValue).text = BuildConfig.VERSION_NAME
     }
 }
