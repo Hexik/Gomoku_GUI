@@ -32,5 +32,11 @@ class NativeInterface {
          * @param command data for brain
          */
         external fun writeToBrain(command: String)
+
+        /**
+         * Start test(s)
+         * @param name can be empty for all tests
+         */
+        external fun runTest(name: String): Int
     }
 }

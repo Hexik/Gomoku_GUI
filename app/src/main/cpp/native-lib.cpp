@@ -3,6 +3,12 @@
 #include <android/log.h>
 #include <jni.h>
 
+#define CATCH_CONFIG_MAIN
+
+#include "test/catch.hpp"
+
+#include "test/AndroidBuffer.h"
+
 Engine* instance = nullptr;
 
 extern "C"
@@ -55,4 +61,25 @@ Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_writeToBrain( JNIEnv* 
         instance->AddCommandsToInputQueue( str );
         env->ReleaseStringUTFChars( command, str );
     }
+}
+
+extern "C"
+JNIEXPORT jint JNICALL
+Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_runTest( JNIEnv* env,
+                                                                   jobject /* this */,
+                                                                   jstring name ) {
+    // Redirect std::cout to logcat
+    AndroidBuffer buf;
+    std::cout.rdbuf( &buf );
+
+    const auto str = env->GetStringUTFChars( name, nullptr );
+
+    // Prepare test run with fake executable name
+    const char* arguments[] = { "runTest.exe", str };
+    const auto argc   = 2;
+    const auto argv   = const_cast<char**>(arguments);
+    const auto result = Catch::Session().run( argc, argv );
+    // reset buffer to prevent double free at destruction
+    std::cout.rdbuf( nullptr );
+    return result;
 }
