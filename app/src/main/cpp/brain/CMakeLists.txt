@@ -4,6 +4,14 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 project(brain)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra -pedantic -Werror ")
 
+# define the sources of the self test
+# Please keep these ordered alphabetically
+set(SOURCES
+        board.cpp
+        config.cpp
+        engine.cpp
+        safecast.cpp)
+
 find_library( # Sets the name of the path variable.
         log-lib
 
@@ -11,7 +19,7 @@ find_library( # Sets the name of the path variable.
         # you want CMake to locate.
         log)
 
-add_library(brain board.cpp config.cpp engine.cpp safecast.cpp)
+add_library(brain ${SOURCES})
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
@@ -22,7 +30,6 @@ add_library(brain board.cpp config.cpp engine.cpp safecast.cpp)
 
 target_link_libraries( # Specifies the target library.
         brain
-
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
