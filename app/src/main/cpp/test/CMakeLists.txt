@@ -3,6 +3,7 @@
 set(TEST_SOURCES ${TEST_SOURCES}
         AndroidBuffer.cpp
         test_basic.cpp
+        test_config.cpp
         )
 
 CHECK_CXX_COMPILER_FLAG("-Wreserved-identifier" COMPILER_SUPPORTS_RESERVED_IDENTIFIER)

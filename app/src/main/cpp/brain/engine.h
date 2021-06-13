@@ -7,6 +7,7 @@
  **/
 
 #include "gameTypes.h"
+#include "config.h"
 #include "lockedQueue.h"
 #include <string>
 #include <thread>
@@ -77,10 +78,22 @@ private:
     bool Loop();
 
     /**
-    * @brief One iteration action in a main engine loop
-    * @param cmd string command
-    * @return false by END command, true otherwise
-    */
+     * @brief Returns Board representation
+     */
+    [[nodiscard]] Board* GetBoard() const { return m_board.get(); }
+
+    /**
+     * @brief Reference to info data
+     */
+    [[nodiscard]] Config& GetInfo() { return m_info; }
+
+    void CmdParseInfo( const std::string& params );
+
+    /**
+     * @brief One iteration action in a main engine loop
+     * @param cmd string command
+     * @return false by END command, true otherwise
+     */
     [[nodiscard]] bool CmdExecute( const std::string& cmd );
 
     std::string ReadInputLine();
@@ -183,9 +196,9 @@ private:
     template<typename... Args>
     void pipeOutMessage( Args&& ... args ) const { pipeOut( "MESSAGE ", args... ); }
 
+    Config                           m_info;                     /**< configuration data */
     std::unique_ptr<Board>           m_board{
             nullptr }; /**< pointer to main board representation */
-    std::unique_ptr<Config>          m_info{ nullptr };  /**< pointer to Config Info object */
     mutable LockedQueue<std::string> m_queueIn;        /**< input data  */
     mutable LockedQueue<std::string> m_queueOut;       /**< output data  */
     std::thread                      m_runner;

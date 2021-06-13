@@ -20,4 +20,9 @@ class NativeCatch2 {
     fun basic() {
         assert(0 == NativeInterface.runTest(""))
     }
+
+    @Test
+    fun config() {
+        assert(0 == NativeInterface.runTest("Config*"))
+    }
 }

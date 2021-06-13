@@ -9,13 +9,12 @@
 
 #include "engine.h"
 #include "board.h"
-#include "config.h"
 #include "safecast.h"
 
 #include <android/log.h>
 
 Engine::Engine( const uint32_t boardSize ) :
-        m_info( std::make_unique<Config>()), m_queueIn(), m_queueOut(), m_infoWidth( boardSize ),
+        m_info(), m_queueIn(), m_queueOut(), m_infoWidth( boardSize ),
         m_infoHeight( boardSize ) {
     Util::rand_xor128_seed();
     StartLoop();
@@ -375,25 +374,25 @@ void Engine::CmdParseInfo( const std::string& params ) {
     }
 
     if( ii == "TIMEOUT_MATCH" ) {
-        m_info->SetTimeoutMatch( safe_cast<uint32_t>( v[0] ));
+        m_info.SetTimeoutMatch( safe_cast<uint32_t>( v[0] ));
     } else if( ii == "TIMEOUT_TURN" ) {
-        m_info->SetTimeoutTurn( safe_cast<uint32_t>( v[0] ));
+        m_info.SetTimeoutTurn( safe_cast<uint32_t>( v[0] ));
     } else if( ii == "TIME_LEFT" ) {
-        m_info->SetTimeLeft( safe_cast<uint32_t>( v[0] ));
+        m_info.SetTimeLeft( safe_cast<uint32_t>( v[0] ));
     } else if( ii == "TIME_INCREMENT" ) {
-        m_info->SetTimeInc( safe_cast<uint32_t>( v[0] ));
+        m_info.SetTimeInc( safe_cast<uint32_t>( v[0] ));
     } else if( ii == "GAME_TYPE" ) {
-        m_info->SetGameType( safe_cast<int>( v[0] ));
+        m_info.SetGameType( safe_cast<int>( v[0] ));
     } else if( ii == "RULE" ) {
     } else if( ii == "FOLDER" ) {
     } else if( ii == "MAX_MEMORY" ) {
         if( v[0] >= 0 ) {
-            m_info->SetMaxMemory( safe_cast<uint64_t>( v[0] ));
+            m_info.SetMaxMemory( safe_cast<uint64_t>( v[0] ));
         }
     } else if( ii == "MAX_DEPTH" ) {
-        m_info->SetLimitDepth( safe_cast<uint32_t>( v[0] ));
+        m_info.SetLimitDepth( safe_cast<uint32_t>( v[0] ));
     } else if( ii == "MAX_NODE" ) {
-        m_info->SetLimitNodes( safe_cast<uint64_t>( v[0] ));
+        m_info.SetLimitNodes( safe_cast<uint64_t>( v[0] ));
     } else if( ii == "USEDATABASE" ) {
     } else if( ii == "THREAD_NUM" ) {
     } else {
