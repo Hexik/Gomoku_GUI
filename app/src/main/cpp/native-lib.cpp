@@ -76,10 +76,21 @@ Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_runTest( JNIEnv* env,
     const auto str = env->GetStringUTFChars( name, nullptr );
 
     // Prepare test run with fake executable name
-    const char* arguments[] = { "runTest.exe", str };
-    const auto argc   = 2;
+    const char* arguments[] = { "runTest.exe" };
+    const auto argc   = 1;
     const auto argv   = const_cast<char**>(arguments);
-    const auto result = Catch::Session().run( argc, argv );
+
+    static Catch::Session catchSession;
+
+    // Start each session with new fresh configuration
+    // without this there is a crash at 2nd session invocation
+    Catch::ConfigData cfg;
+    cfg.testsOrTags.push_back(str);
+    catchSession.useConfigData(cfg);
+
+    const int result = catchSession.run(argc, argv);
+
+    env->ReleaseStringUTFChars( name, str );
     // reset buffer to prevent double free at destruction
     std::cout.rdbuf( nullptr );
     return result;
