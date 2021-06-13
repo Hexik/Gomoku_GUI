@@ -203,7 +203,7 @@ void Engine::StartLoop() {
 
 void Engine::StopLoop() {
     if( m_loopIsRunning ) {
-        m_queueOut.push( "end" );
+        m_queueIn.push( "end" );
     }
 }
 
