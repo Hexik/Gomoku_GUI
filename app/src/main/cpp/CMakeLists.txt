@@ -7,9 +7,12 @@ cmake_minimum_required(VERSION 3.10.2)
 
 # Declares and names the project.
 
-project("cpp_native")
+project("cpp_native" CXX)
+
+include(CheckCXXCompilerFlag)
 
 add_subdirectory(brain)
+add_subdirectory(test)
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -23,7 +26,7 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        native-lib.cpp)
+        native-lib.cpp )
 
 #target_compile_options(native-lib PUBLIC -g -O0 -fsanitize=address -fno-omit-frame-pointer)
 #set_target_properties(native-lib PROPERTIES LINK_FLAGS -fsanitize=address)
@@ -48,6 +51,7 @@ find_library( # Sets the name of the path variable.
 target_link_libraries( # Specifies the target library.
         native-lib
         brain
+        $<TARGET_OBJECTS:test_main>
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
