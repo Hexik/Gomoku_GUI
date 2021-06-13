@@ -18,6 +18,7 @@ Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_startBrain( JNIEnv* /*
                                                                       jint dimension ) {
     assert( instance == nullptr );
     instance = new Engine( static_cast<const uint32_t>(dimension));
+    instance->StartLoop();
     assert( instance != nullptr );
 }
 
