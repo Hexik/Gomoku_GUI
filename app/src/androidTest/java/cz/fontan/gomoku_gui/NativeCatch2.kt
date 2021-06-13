@@ -21,11 +21,16 @@ class NativeCatch2 {
 
     @Test
     fun basic() {
-        assert(0 == NativeInterface.runTest(""))
+        assert(0 == NativeInterface.runTest("Basic*"))
     }
 
     @Test
     fun config() {
         assert(0 == NativeInterface.runTest("Config*"))
+    }
+
+    @Test
+    fun engine() {
+        assert(0 == NativeInterface.runTest("Engine*"))
     }
 }
