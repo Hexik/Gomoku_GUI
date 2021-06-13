@@ -60,22 +60,29 @@ public:
     std::string ReadFromOutputQueue( int timeOutMs );
 
     bool IsEmptyOutputQueue();
-private:
+
+    /**
+     * @brief If data are ready to read
+     */
+    [[nodiscard]] bool HasReaderInput() const { return !m_queueIn.is_empty(); }
+
+    /**
+    *@brief Read last pipe output
+    *@return last output string
+    */
+    [[nodiscard]] std::string GetLastPipeOut() const { return std::move( m_LastPipeOut ); }
+
+    /**
+     * @brief Main engine loop
+     */
+    bool Loop();
+
+    /**
+     * @brief Send about info
+     */
+    void CmdAbout() const;
 
     static eCommand ParseCmd( const std::string& s, std::string& rest );
-
-    /**
-    * @brief Parse info command data
-    * @param s string to parse
-    * @param rest data after command keyword
-    * @return info data
-    */
-    [[nodiscard]] static std::string ParseInfo( const std::string& s, std::string& rest );
-
-    /**
-    *@brief Main engine loop
-    */
-    bool Loop();
 
     /**
      * @brief Returns Board representation
@@ -96,18 +103,30 @@ private:
      */
     [[nodiscard]] bool CmdExecute( const std::string& cmd );
 
+    void CmdParseStart( const std::string& params );
+
+    /**
+     * @brief Start engine
+     * @param size board size
+     */
+    void CmdStart( const coord_t size );
+    void CmdPutMyMove( uint32_t x, uint32_t y );
+    void CmdPutYourMove( uint32_t x, uint32_t y );
     std::string ReadInputLine();
+    void StartLoop();
+private:
+
+    /**
+    * @brief Parse info command data
+    * @param s string to parse
+    * @param rest data after command keyword
+    * @return info data
+    */
+    [[nodiscard]] static std::string ParseInfo( const std::string& s, std::string& rest );
 
     void WriteOutputLine( const std::string& data ) const;
 
-    /**
-    *@brief Send about info
-    */
-    void CmdAbout() const;
-
     void CmdResult() const;
-
-    void StartLoop();
 
     void StopLoop();
 
@@ -119,13 +138,9 @@ private:
 
     std::optional<std::vector<int64_t>> CmdParseCoords( const std::string& params );
 
-    void CmdParseInfo( const std::string& params );
-
     void CmdParseTurn( const std::string& params );
 
     void CmdParsePlay( const std::string& params );
-
-    void CmdParseStart( const std::string& params );
 
     void CmdParseTakeback( const std::string& params );
 
@@ -137,12 +152,6 @@ private:
     *@param takeback call context
     */
     void CmdUndoMove( const coord_t x, const coord_t y, const eMove_t type, const bool takeback );
-
-    /**
-    *@brief Start engine
-    *@param size board size
-    */
-    void CmdStart( const coord_t size );
 
     /**
     *@brief Start engine
@@ -161,10 +170,6 @@ private:
     template<eMove_t player>
     [[nodiscard]] bool CmdPutMove( const coord_t x, const coord_t y );
 
-    void CmdPutMyMove( uint32_t x, uint32_t y );
-
-    void CmdPutYourMove( uint32_t x, uint32_t y );
-
     /**
     *@brief Send response to command
     *@param args data to output
@@ -174,6 +179,8 @@ private:
         std::stringstream ss;
 
         ( ss << ... << args );
+
+        m_LastPipeOut = ss.str();
 
         __android_log_write( ANDROID_LOG_INFO, "PipeOut ", ss.str().c_str());
 
@@ -208,6 +215,7 @@ private:
     bool                             m_bInSearch     = false;
 
     Move CalculateMove();
+    mutable std::string              m_LastPipeOut;
 };
 
 #endif // ENGINE_H
