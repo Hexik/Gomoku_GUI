@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
 import org.junit.After
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -14,12 +15,15 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class NativeLibrary {
-    @Before
-    fun init() {
-        try {
-            System.loadLibrary("native-lib")
-        } catch (e: UnsatisfiedLinkError) {
-            // log the error or track it in analytics
+    companion object {
+        @BeforeClass
+        @JvmStatic
+        fun setup() {
+            try {
+                System.loadLibrary("native-lib")
+            } catch (e: UnsatisfiedLinkError) {
+                // log the error or track it in analytics
+            }
         }
     }
 
