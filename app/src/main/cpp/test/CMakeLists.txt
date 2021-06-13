@@ -5,6 +5,7 @@ set(TEST_SOURCES ${TEST_SOURCES}
         test_basic.cpp
         test_config.cpp
         test_engine.cpp
+        test_inputQueue.cpp
         )
 
 CHECK_CXX_COMPILER_FLAG("-Wreserved-identifier" COMPILER_SUPPORTS_RESERVED_IDENTIFIER)

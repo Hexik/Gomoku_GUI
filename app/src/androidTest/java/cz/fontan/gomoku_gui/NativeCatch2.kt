@@ -33,4 +33,9 @@ class NativeCatch2 {
     fun engine() {
         assert(0 == NativeInterface.runTest("Engine*"))
     }
+
+    @Test
+    fun lockedQueue() {
+        assert(0 == NativeInterface.runTest("LockedQueue*"))
+    }
 }
