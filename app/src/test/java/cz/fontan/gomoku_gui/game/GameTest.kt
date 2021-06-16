@@ -35,6 +35,7 @@ class GameTest {
         assert(game.moveCount() == 0)
         assert(game.playerToMove == EnumMove.Black)
         assert(game.canMakeMove(Move(0, 0)))
+        assert(game.canMakeMove(Move(1, 1)))
         assert(game.canMakeMove(Move(BOARD_SIZE_MAX - 1, BOARD_SIZE_MAX - 1)))
     }
 
@@ -44,6 +45,7 @@ class GameTest {
         assert(game.moveCount() == 0)
         assert(game.playerToMove == EnumMove.Black)
         assert(game.canMakeMove(Move(0, 0)))
+        assert(game.canMakeMove(Move(1, 1)))
         assert(game.canMakeMove(Move(BOARD_SIZE_MAX - 1, BOARD_SIZE_MAX - 1)))
     }
 

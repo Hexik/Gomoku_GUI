@@ -36,6 +36,7 @@ class NativeInterface {
         /**
          * Start test(s)
          * @param name can be empty for all tests
+         * @return number of failed tests
          */
         external fun runTest(name: String): Int
     }
