@@ -18,7 +18,7 @@ class NativeLibrary {
     companion object {
         @BeforeClass
         @JvmStatic
-        fun setup() {
+        fun oneTimeSetup() {
             try {
                 System.loadLibrary("native-lib")
             } catch (e: UnsatisfiedLinkError) {
@@ -27,41 +27,41 @@ class NativeLibrary {
         }
     }
 
+    @Before
+    fun runBeforeEveryTest(){
+        NativeInterface.startBrain(BOARD_SIZE_MAX)
+    }
+
     @After
-    fun teardown() {
+    fun cleanAfterEveryTest() {
         NativeInterface.stopBrain()
     }
 
     @Test
     fun empty() {
-        NativeInterface.startBrain(BOARD_SIZE_MAX)
         assert(true)
     }
 
     @Test
     fun about() {
-        NativeInterface.startBrain(BOARD_SIZE_MAX)
         NativeInterface.writeToBrain("about")
         assert(NativeInterface.readFromBrain(10).contains("Generic Engine"))
     }
 
     @Test
     fun start_ok() {
-        NativeInterface.startBrain(BOARD_SIZE_MAX)
         NativeInterface.writeToBrain("start 15")
         assert(NativeInterface.readFromBrain(10) == "OK")
     }
 
     @Test
     fun start_error() {
-        NativeInterface.startBrain(BOARD_SIZE_MAX)
         NativeInterface.writeToBrain("start 33")
         assert(NativeInterface.readFromBrain(10).startsWith("ERROR"))
     }
 
     @Test
     fun result() {
-        NativeInterface.startBrain(BOARD_SIZE_MAX)
         NativeInterface.writeToBrain("start 15")
         assert(NativeInterface.readFromBrain(10) == "OK")
         NativeInterface.writeToBrain("yxresult")
@@ -70,7 +70,6 @@ class NativeLibrary {
 
     @Test
     fun begin() {
-        NativeInterface.startBrain(BOARD_SIZE_MAX)
         NativeInterface.writeToBrain("start 15")
         assert(NativeInterface.readFromBrain(10) == "OK")
         NativeInterface.writeToBrain("begin")
@@ -79,7 +78,6 @@ class NativeLibrary {
 
     @Test
     fun board() {
-        NativeInterface.startBrain(BOARD_SIZE_MAX)
         NativeInterface.writeToBrain("start 15")
         assert(NativeInterface.readFromBrain(10) == "OK")
         NativeInterface.writeToBrain(
@@ -97,7 +95,6 @@ class NativeLibrary {
 
     @Test
     fun single_existing_response() {
-        NativeInterface.startBrain(BOARD_SIZE_MAX)
         NativeInterface.writeToBrain("start 5")
         assert(NativeInterface.readFromBrain(10) == "OK")
         NativeInterface.writeToBrain(
