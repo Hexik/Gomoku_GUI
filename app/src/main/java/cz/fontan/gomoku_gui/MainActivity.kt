@@ -1,7 +1,10 @@
 package cz.fontan.gomoku_gui
 
 import android.content.Intent
-import android.os.*
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import android.util.Log
@@ -13,7 +16,6 @@ import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
 import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_gui.model.MainViewModel
 import kotlin.system.exitProcess
-
 
 private const val TAG = "MainActivity"
 
