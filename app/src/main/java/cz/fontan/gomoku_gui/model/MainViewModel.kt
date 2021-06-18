@@ -103,7 +103,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     val msgResult: LiveData<String>
         get() = _msgResult
 
-    private val _dataFromBrain = AnswersRepository()
+    private val isRunningTest: Boolean by lazy {
+        try {
+            Class.forName("androidx.test.espresso.Espresso")
+            true
+        } catch (e: ClassNotFoundException) {
+            false
+        }
+    }
+
+    private val _dataFromBrain = AnswersRepository(isRunningTest)
         .fetchStrings()
         .asLiveData(
             // Use Default dispatcher for CPU intensive work and
