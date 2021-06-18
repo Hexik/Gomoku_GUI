@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         prepareBindings()
         prepareButtons()
         prepareObservers()
+        CountingIdlingResourceSingleton.increment()
     }
 
     private fun prepareBindings() {
@@ -91,6 +92,7 @@ class MainActivity : AppCompatActivity() {
     private fun prepareObservers() {
         // Observe data stream from brain
         viewModel.dataFromBrain.observe(this, { it ->
+            CountingIdlingResourceSingleton.decrement()
             it?.consume { viewModel.processResponse(it) }
         })
 

@@ -7,17 +7,17 @@ import kotlinx.coroutines.flow.flow
 
 /**
  * Read all data from C++ brain as flow
- * @property inTest do not loop in test mode
+ * @property inTest longer delay in test mode, should be at least 15ms to make Espresso happy
  */
 class AnswersRepository(val inTest: Boolean) {
     /**
      * This method is used to get data from brain in pseudo real time
      */
     fun fetchStrings(): Flow<ConsumableValue<String>> = flow {
-        while (!inTest) {
+        while (true) {
             val s = NativeInterface.readFromBrain(0)
             when (s.isEmpty()) {
-                true -> delay(5)
+                true -> delay(if (inTest) 50 else 5)
                 else -> emit(ConsumableValue(s))
             }
         }
