@@ -28,7 +28,7 @@ class NativeLibrary {
     }
 
     @Before
-    fun runBeforeEveryTest(){
+    fun runBeforeEveryTest() {
         NativeInterface.startBrain(BOARD_SIZE_MAX)
     }
 

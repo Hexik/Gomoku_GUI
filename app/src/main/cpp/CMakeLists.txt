@@ -26,7 +26,7 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        native-lib.cpp )
+        native-lib.cpp)
 
 #target_compile_options(native-lib PUBLIC -g -O0 -fsanitize=address -fno-omit-frame-pointer)
 #set_target_properties(native-lib PROPERTIES LINK_FLAGS -fsanitize=address)
