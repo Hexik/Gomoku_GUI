@@ -1,10 +1,7 @@
 package cz.fontan.gomoku_gui
 
 import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.StrictMode
+import android.os.*
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import android.util.Log
