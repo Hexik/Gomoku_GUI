@@ -45,41 +45,41 @@ class NativeLibrary {
     @Test
     fun about() {
         NativeInterface.writeToBrain("about")
-        assert(NativeInterface.readFromBrain(10).contains("Generic Engine"))
+        assert(NativeInterface.readFromBrain(1000).contains("Generic Engine"))
     }
 
     @Test
     fun start_ok() {
         NativeInterface.writeToBrain("start 15")
-        assert(NativeInterface.readFromBrain(10) == "OK")
+        assert(NativeInterface.readFromBrain(1000) == "OK")
     }
 
     @Test
     fun start_error() {
         NativeInterface.writeToBrain("start 33")
-        assert(NativeInterface.readFromBrain(10).startsWith("ERROR"))
+        assert(NativeInterface.readFromBrain(1000).startsWith("ERROR"))
     }
 
     @Test
     fun result() {
         NativeInterface.writeToBrain("start 15")
-        assert(NativeInterface.readFromBrain(10) == "OK")
+        assert(NativeInterface.readFromBrain(1000) == "OK")
         NativeInterface.writeToBrain("yxresult")
-        assert(NativeInterface.readFromBrain(10) == "MESSAGE RESULT NONE")
+        assert(NativeInterface.readFromBrain(1000) == "MESSAGE RESULT NONE")
     }
 
     @Test
     fun begin() {
         NativeInterface.writeToBrain("start 15")
-        assert(NativeInterface.readFromBrain(10) == "OK")
+        assert(NativeInterface.readFromBrain(1000) == "OK")
         NativeInterface.writeToBrain("begin")
-        assert(NativeInterface.readFromBrain(10).contains(","))
+        assert(NativeInterface.readFromBrain(1000).contains(","))
     }
 
     @Test
     fun board() {
         NativeInterface.writeToBrain("start 15")
-        assert(NativeInterface.readFromBrain(10) == "OK")
+        assert(NativeInterface.readFromBrain(1000) == "OK")
         NativeInterface.writeToBrain(
             """
             |info TIMEOUT_TURN 200
@@ -90,13 +90,13 @@ class NativeLibrary {
             |done
             |end""".trimMargin()
         )
-        assert(NativeInterface.readFromBrain(10).contains(","))
+        assert(NativeInterface.readFromBrain(1000).contains(","))
     }
 
     @Test
     fun single_existing_response() {
         NativeInterface.writeToBrain("start 5")
-        assert(NativeInterface.readFromBrain(10) == "OK")
+        assert(NativeInterface.readFromBrain(1000) == "OK")
         NativeInterface.writeToBrain(
             """
             |info TIMEOUT_TURN 200
@@ -128,8 +128,8 @@ class NativeLibrary {
             |4,3,2
             |done""".trimMargin()
         )
-        assert(NativeInterface.readFromBrain(10) == "4,4")
+        assert(NativeInterface.readFromBrain(1000) == "4,4")
         NativeInterface.writeToBrain("yxresult")
-        assert(NativeInterface.readFromBrain(10) == "MESSAGE RESULT DRAW")
+        assert(NativeInterface.readFromBrain(1000) == "MESSAGE RESULT DRAW")
     }
 }
