@@ -1,7 +1,13 @@
 package cz.fontan.gomoku_gui.espresso
 
+import android.view.InputDevice
+import android.view.MotionEvent
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.GeneralClickAction
+import androidx.test.espresso.action.Press
+import androidx.test.espresso.action.Tap
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
@@ -35,7 +41,7 @@ class MainActivityUITest {
 
 
     @Test
-    fun NewGame_MainActivity() {
+    fun newGame_MainActivity() {
         // NewGame
         Espresso.onView(ViewMatchers.withId(R.id.button_new)).perform(click())
             .check(matches(not(ViewMatchers.isEnabled())))
@@ -51,7 +57,7 @@ class MainActivityUITest {
     }
 
     @Test
-    fun Play_MainActivity() {
+    fun play_MainActivity() {
         // NewGame clicked
         Espresso.onView(ViewMatchers.withId(R.id.button_new)).perform(click())
             .check(matches(not(ViewMatchers.isEnabled())))
@@ -94,5 +100,50 @@ class MainActivityUITest {
             .check(matches(ViewMatchers.isEnabled()))
             .perform(click())
             .check(matches(not(ViewMatchers.isEnabled())))
+    }
+
+    @Test
+    fun mouseClick_MainActivity() {
+        // NewGame clicked
+        Espresso.onView(ViewMatchers.withId(R.id.button_new)).perform(click())
+            .check(matches(not(ViewMatchers.isEnabled())))
+        // Mouse clicked
+        Espresso.onView(ViewMatchers.withId(R.id.board_view)).perform(clickXY(50f, 50f))
+        // Check Buttons
+        Espresso.onView(ViewMatchers.withId(R.id.button_play))
+            .check(matches(ViewMatchers.isEnabled()))
+        Espresso.onView(ViewMatchers.withId(R.id.button_stop))
+            .check(matches(not(ViewMatchers.isEnabled())))
+        Espresso.onView(ViewMatchers.withId(R.id.button_redo))
+            .check(matches(not(ViewMatchers.isEnabled())))
+        Espresso.onView(ViewMatchers.withId(R.id.button_undo))
+            .check(matches(ViewMatchers.isEnabled()))
+        Espresso.onView(ViewMatchers.withId(R.id.button_new))
+            .check(matches(ViewMatchers.isEnabled()))
+        // Undo clicked
+        Espresso.onView(ViewMatchers.withId(R.id.button_undo)).perform(click())
+            .check(matches(not(ViewMatchers.isEnabled())))
+        Espresso.onView(ViewMatchers.withId(R.id.button_redo))
+            .check(matches(ViewMatchers.isEnabled()))
+
+        Espresso.onView(ViewMatchers.withId(R.id.button_new))
+            .check(matches(ViewMatchers.isEnabled()))
+            .perform(click())
+            .check(matches(not(ViewMatchers.isEnabled())))
+    }
+
+    private fun clickXY(pctX: Float, pctY: Float): ViewAction {
+        return GeneralClickAction(
+            Tap.SINGLE, { view ->
+                val screenPos = IntArray(2)
+                view.getLocationOnScreen(screenPos)
+                val screenX: Float = screenPos[0] + view.width * pctX / 100f
+                val screenY: Float = screenPos[1] + view.height * pctY / 100f
+                floatArrayOf(screenX, screenY)
+            },
+            Press.FINGER,
+            InputDevice.SOURCE_MOUSE,
+            MotionEvent.BUTTON_PRIMARY
+        )
     }
 }
