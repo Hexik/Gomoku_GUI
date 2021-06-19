@@ -66,9 +66,9 @@ Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_writeToBrain( JNIEnv* 
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_runTest( JNIEnv* env,
-                                                                   jobject /* this */,
-                                                                   jstring name ) {
+Java_cz_fontan_gomoku_1gui_NativeInterface_00024Companion_runCatch2Test( JNIEnv* env,
+                                                                         jobject /* this */,
+                                                                         jstring name ) {
     // Redirect std::cout to logcat
     AndroidBuffer buf;
     std::cout.rdbuf( &buf );

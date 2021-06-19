@@ -34,10 +34,10 @@ class NativeInterface {
         external fun writeToBrain(command: String)
 
         /**
-         * Start test(s)
+         * Start test(s) from Catch2 test suite
          * @param name can be empty for all tests
          * @return number of failed tests
          */
-        external fun runTest(name: String): Int
+        external fun runCatch2Test(name: String): Int
     }
 }
