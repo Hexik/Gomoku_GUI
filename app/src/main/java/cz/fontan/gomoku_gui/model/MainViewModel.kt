@@ -404,7 +404,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         try {
             game.dim = getDimension()
             NativeInterface.writeToBrain("start ${game.dim}")
-            loadGameFromStream(sharedPreference.getString("Moves", "")?.trimMargin())
+            game.fromStream(sharedPreference.getString("Moves", "")?.trimMargin())
         } catch (e: IllegalArgumentException) {
             game.reset()
             Log.wtf("Load", "Private")
