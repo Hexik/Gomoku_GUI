@@ -173,8 +173,7 @@
             android:singleLine="true"
             android:text="@string/button_stop"
             android:textAllCaps="false"
-            android:textSize="@dimen/text_size"
-            app:iconSize="40dp" />
+            android:textSize="@dimen/text_size" />
 
         <Button
             android:id="@+id/button_undo"
