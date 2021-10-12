@@ -7,6 +7,14 @@
         android:title="@string/menu_settings"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/menu_load"
+        android:title="@string/load_dialog"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_save"
+        android:title="@string/save_dialog"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/menu_about"
         android:title="@string/about_dialog"
         app:showAsAction="never" />

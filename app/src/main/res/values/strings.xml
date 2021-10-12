@@ -64,5 +64,7 @@
     <!-- Preference Titles -->
     <string name="board_header">Board settings</string>
     <string name="ai_settings_header">AI settings</string>
+    <string name="load_dialog">Load game</string>
+    <string name="save_dialog">Save game</string>
 
 </resources>

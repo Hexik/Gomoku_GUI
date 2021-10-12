@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import cz.fontan.gomoku_gui.InterfaceMainViewModel
@@ -137,7 +138,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private var inSearch: Boolean = false
 
     init {
-        loadGame()
+        loadGamePrivate()
         afterAction()
     }
 
@@ -353,24 +354,48 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     override fun onCleared() {
         super.onCleared()
         Log.i("MainVM", "onCleared")
-        saveGame()
+        saveGamePrivate()
+    }
+
+    /**
+     * Serialize game
+     * @see Game.toStream
+     */
+    fun getGameAsStream(): String {
+        return game.toStream()
     }
 
     /**
      * Save current position as shared preference
      */
-    fun saveGame() {
+    fun saveGamePrivate() {
         val sharedPreference =
             getApplication<Application>().applicationContext.getSharedPreferences(
                 "GAME_DATA",
                 Context.MODE_PRIVATE
             )
-        val editor = sharedPreference.edit()
-        editor.putString("Moves", game.toStream())
-        editor.apply()
+        sharedPreference.edit().putString("Moves", game.toStream()).apply()
     }
 
-    private fun loadGame() {
+    /**
+     * Set game position from external data string
+     */
+    fun loadGameFromStream(data: String?) {
+        try {
+            game.fromStream(data)
+            afterAction()
+        } catch (e: IllegalArgumentException) {
+            game.reset()
+            Log.wtf("Load", data)
+            Toast.makeText(
+                getApplication<Application>().applicationContext,
+                "Wrong game size!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun loadGamePrivate() {
         val sharedPreference =
             getApplication<Application>().applicationContext.getSharedPreferences(
                 "GAME_DATA",
@@ -379,9 +404,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         try {
             game.dim = getDimension()
             NativeInterface.writeToBrain("start ${game.dim}")
-            game.fromStream(sharedPreference.getString("Moves", "")?.trimMargin())
+            loadGameFromStream(sharedPreference.getString("Moves", "")?.trimMargin())
         } catch (e: IllegalArgumentException) {
             game.reset()
+            Log.wtf("Load", "Private")
         }
     }
 

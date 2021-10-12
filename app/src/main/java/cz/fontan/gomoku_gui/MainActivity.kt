@@ -1,17 +1,21 @@
 package cz.fontan.gomoku_gui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.*
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
+import android.provider.DocumentsContract
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
 import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_gui.model.MainViewModel
+import java.io.*
 import kotlin.system.exitProcess
 
 private const val TAG = "MainActivity"
@@ -64,7 +68,6 @@ class MainActivity : AppCompatActivity() {
 
         val factory = ViewModelProvider.AndroidViewModelFactory(application)
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
-
         binding.boardView.gameDelegate = viewModel
     }
 
@@ -133,6 +136,34 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    private val activityLauncherLoad =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                val result = activityResult.data?.data ?: return@registerForActivityResult
+                val inputStream = contentResolver.openInputStream(result)
+                val data = BufferedReader(InputStreamReader(inputStream)).use { it.readText() }
+                viewModel.loadGameFromStream(data)
+            }
+        }
+
+    private val activityLauncherSave =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                val result = activityResult.data?.data ?: return@registerForActivityResult
+                try {
+                    Log.i("Save game", result.toString())
+                    val outputStream = contentResolver.openOutputStream(result)
+                    val bw = BufferedWriter(OutputStreamWriter(outputStream))
+                    bw.write(viewModel.getGameAsStream())
+                    bw.flush()
+                    bw.close()
+                } catch (e: IOException) {
+                    Log.e("Save game", result.toString())
+                    e.printStackTrace()
+                }
+            }
+        }
+
     /**
      * Start action after the menu item was selected
      */
@@ -143,6 +174,33 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        if (item.itemId == R.id.menu_load) {
+            Log.d(TAG, "Load game")
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "*/*"
+                if (Build.VERSION.SDK_INT >= 26) {
+                    putExtra(DocumentsContract.EXTRA_INITIAL_URI, Environment.DIRECTORY_DOCUMENTS)
+                }
+            }
+
+            activityLauncherLoad.launch(intent)
+        }
+
+        if (item.itemId == R.id.menu_save) {
+            Log.d(TAG, "Save game")
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "plain/text"
+                //               putExtra(Intent.EXTRA_TITLE, "game.txt")
+                putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+                if (Build.VERSION.SDK_INT >= 26) {
+                    putExtra(DocumentsContract.EXTRA_INITIAL_URI, Environment.DIRECTORY_DOCUMENTS)
+                }
+            }
+            activityLauncherSave.launch(intent)
+        }
+
         if (item.itemId == R.id.menu_about) {
             Log.d(TAG, "About")
             val intent = Intent(this, AboutActivity::class.java)
@@ -151,7 +209,7 @@ class MainActivity : AppCompatActivity() {
 
         if (item.itemId == R.id.menu_quit) {
             Log.d(TAG, "Quit")
-            viewModel.saveGame()
+            viewModel.saveGamePrivate()
             if (Build.VERSION.SDK_INT >= 21) {
                 finishAndRemoveTask()
             } else {
