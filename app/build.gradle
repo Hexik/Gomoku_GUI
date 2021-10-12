@@ -15,7 +15,7 @@ ext {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion '31.0.0'
     signingConfigs {
         release {
@@ -29,7 +29,7 @@ android {
     defaultConfig {
         applicationId "cz.fontan.gomoku_gui"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode gitVersionCode
         versionName gitVersionName
         buildConfigField 'String', 'BUILD_TIME', 'new java.text.SimpleDateFormat("yyyy-MM-dd\'T\'HH:mm:ssZ", java.util.Locale.getDefault()).format(new java.util.Date(' + System.currentTimeMillis() + 'L))'
