@@ -52,10 +52,9 @@ void Engine::CmdResult() const {
 
 Engine& Engine::AddCommandsToInputQueue( const std::string& LastCommand ) {
     __android_log_write( ANDROID_LOG_DEBUG, "AddCommandsToInputQueue", LastCommand.c_str());
-    auto res      = Util::StringToUpper( LastCommand );
-    auto posToken = size_t{ 0 };
+    auto res = Util::StringToUpper( LastCommand );
 
-    while(( posToken = res.find( '\n' )) != std::string::npos ) {
+    for( size_t posToken = 0U; ( posToken = res.find( '\n' )) != std::string::npos; ) {
         const auto oneLine = res.substr( 0, posToken );
         if( !oneLine.empty()) {
             m_queueIn.push( oneLine );

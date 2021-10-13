@@ -37,9 +37,10 @@ namespace Util {
 
         __android_log_write( ANDROID_LOG_VERBOSE, "parse num token", s.c_str());
 
-        size_t beg = 0;
         size_t pos = 0;
-        while(( beg = numbers_str.find_first_not_of( delimiters, pos )) != std::string::npos ) {
+
+        for( size_t beg = 0;
+             ( beg = numbers_str.find_first_not_of( delimiters, pos )) != std::string::npos; ) {
             pos = numbers_str.find_first_of( delimiters, beg + 1 );
             numbers.push_back( numbers_str.substr( beg, pos - beg ));
         }

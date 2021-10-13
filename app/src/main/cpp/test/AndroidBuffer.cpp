@@ -15,7 +15,7 @@ int AndroidBuffer::overflow( int c ) {
     }
 
     if( c != traits_type::eof() && c != '\n' ) {
-        buffer[idx++] = c;
+        buffer[idx++] = static_cast<char>(c);
     }
 
     return c;

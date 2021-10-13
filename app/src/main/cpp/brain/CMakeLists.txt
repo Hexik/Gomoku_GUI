@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.4.1)
 set(CMAKE_VERBOSE_MAKEFILE on)
 
 project(brain)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra -pedantic -Werror ")
 
 # define the sources of the self test
 # Please keep these ordered alphabetically
