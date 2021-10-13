@@ -32,6 +32,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Keystore
+        run: |
+          echo "${{secrets.RELEASE_KEYSTORE}}" > release.keystore.asc
+          gpg -d --passphrase "${{secrets.RELEASE_KEYSTORE_PWD}}" --batch release.keystore.asc > keystore/keystore-release.jks
       - name: Build debug APK
         run: bash ./gradlew  app:assembleFreeStandardSpeedy --stacktrace
       - name: Upload APK
