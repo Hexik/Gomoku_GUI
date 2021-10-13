@@ -43,4 +43,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: app
-          path: app/build/outputs/apk/debug/app-free-standard-speedy.apk
+          path: app/build/outputs/apk/freeStandard/speedy/app-free-standard-speedy.apk
