@@ -35,6 +35,7 @@ jobs:
       - name: Keystore
         run: |
           echo "${{secrets.RELEASE_KEYSTORE}}" > release.keystore.asc
+          mkdir keystore
           gpg -d --passphrase "${{secrets.RELEASE_KEYSTORE_PWD}}" --batch release.keystore.asc > keystore/keystore-release.jks
       - name: Build debug APK
         run: bash ./gradlew  app:assembleFreeStandardSpeedy --stacktrace
