@@ -136,7 +136,7 @@ private:
 
     void CmdShowForbid();
 
-    std::optional<std::vector<int64_t>> CmdParseCoords( const std::string& params );
+    std::optional <std::vector<int64_t>> CmdParseCoords( const std::string& params );
 
     void CmdParseTurn( const std::string& params );
 
@@ -204,7 +204,7 @@ private:
     void pipeOutMessage( Args&& ... args ) const { pipeOut( "MESSAGE ", args... ); }
 
     Config                           m_info;                     /**< configuration data */
-    std::unique_ptr<Board>           m_board{
+    std::unique_ptr <Board>          m_board{
             nullptr }; /**< pointer to main board representation */
     mutable LockedQueue<std::string> m_queueIn;        /**< input data  */
     mutable LockedQueue<std::string> m_queueOut;       /**< output data  */
@@ -217,5 +217,7 @@ private:
     Move CalculateMove();
     mutable std::string              m_LastPipeOut;
 };
+
+extern Engine* instance; /**< singleton ptr */
 
 #endif // ENGINE_H
