@@ -1,6 +1,6 @@
 /*
- *  Catch v2.13.6
- *  Generated: 2021-04-16 18:23:38.044268
+ *  Catch v2.13.7
+ *  Generated: 2021-07-28 20:29:27.753164
  *  ----------------------------------------------------------
  *  This file has been merged from multiple headers. Please don't edit it directly
  *  Copyright (c) 2021 Two Blue Cubes Ltd. All rights reserved.
@@ -15,7 +15,7 @@
 
 #define CATCH_VERSION_MAJOR 2
 #define CATCH_VERSION_MINOR 13
-#define CATCH_VERSION_PATCH 6
+#define CATCH_VERSION_PATCH 7
 
 #ifdef __clang__
 #    pragma clang system_header
@@ -325,8 +325,8 @@ namespace Catch {
 
   // Check if byte is available and usable
   #  if __has_include(<cstddef>) && defined(CATCH_CPP17_OR_GREATER)
-  #    include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstddef"
-  #    if __cpp_lib_byte > 0
+  #    include <cstddef>
+  #    if defined(__cpp_lib_byte) && (__cpp_lib_byte > 0)
   #      define CATCH_INTERNAL_CONFIG_CPP17_BYTE
   #    endif
   #  endif // __has_include(<cstddef>) && defined(CATCH_CPP17_OR_GREATER)
@@ -471,9 +471,9 @@ namespace Catch {
 #  define INTERNAL_CATCH_UNIQUE_NAME( name ) INTERNAL_CATCH_UNIQUE_NAME_LINE( name, __LINE__ )
 #endif
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iosfwd"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdint"
+#include <iosfwd>
+#include <string>
+#include <cstdint>
 
 // We need a dummy global operator<< so we can bring it into Catch namespace later
 struct Catch_global_namespace_dummy {};
@@ -561,7 +561,7 @@ namespace Catch {
 
 // start catch_interfaces_testcase.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
+#include <vector>
 
 namespace Catch {
 
@@ -591,10 +591,10 @@ namespace Catch {
 // end catch_interfaces_testcase.h
 // start catch_stringref.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstddef"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iosfwd"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
+#include <cstddef>
+#include <string>
+#include <iosfwd>
+#include <cassert>
 
 namespace Catch {
 
@@ -916,7 +916,7 @@ constexpr auto operator "" _catch_sr( char const* rawChars, std::size_t size ) n
 // start catch_meta.hpp
 
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/type_traits"
+#include <type_traits>
 
 namespace Catch {
     template<typename T>
@@ -1410,15 +1410,15 @@ namespace Catch {
 
 // start catch_tostring.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstddef"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/type_traits"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <vector>
+#include <cstddef>
+#include <type_traits>
+#include <string>
 // start catch_stream.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iosfwd"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstddef"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ostream"
+#include <iosfwd>
+#include <cstddef>
+#include <ostream>
 
 namespace Catch {
 
@@ -1456,7 +1456,7 @@ namespace Catch {
 // end catch_stream.h
 // start catch_interfaces_enum_values_registry.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
+#include <vector>
 
 namespace Catch {
 
@@ -1492,7 +1492,7 @@ namespace Catch {
 // end catch_interfaces_enum_values_registry.h
 
 #ifdef CATCH_CONFIG_CPP17_STRING_VIEW
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string_view"
+#include <string_view>
 #endif
 
 #ifdef __OBJC__
@@ -2052,9 +2052,9 @@ namespace Catch {
 
 // Separate std::chrono::duration specialization
 #if defined(CATCH_CONFIG_ENABLE_CHRONO_STRINGMAKER)
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ctime"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ratio"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/chrono"
+#include <ctime>
+#include <ratio>
+#include <chrono>
 
 namespace Catch {
 
@@ -2184,7 +2184,7 @@ namespace Catch { \
 #endif
 
 // end catch_tostring.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iosfwd"
+#include <iosfwd>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -2429,8 +2429,8 @@ namespace Catch {
 // end catch_decomposer.h
 // start catch_interfaces_capture.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/chrono"
+#include <string>
+#include <chrono>
 
 namespace Catch {
 
@@ -2589,8 +2589,8 @@ namespace Catch {
 // end catch_assertionhandler.h
 // start catch_message.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
+#include <string>
+#include <vector>
 
 namespace Catch {
 
@@ -2820,7 +2820,7 @@ namespace Catch {
 
 // start catch_totals.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstddef"
+#include <cstddef>
 
 namespace Catch {
 
@@ -2851,7 +2851,7 @@ namespace Catch {
 }
 
 // end catch_totals.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <string>
 
 namespace Catch {
 
@@ -2882,7 +2882,7 @@ namespace Catch {
 // end catch_section_info.h
 // start catch_timer.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdint"
+#include <cstdint>
 
 namespace Catch {
 
@@ -2902,7 +2902,7 @@ namespace Catch {
 } // namespace Catch
 
 // end catch_timer.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <string>
 
 namespace Catch {
 
@@ -2942,8 +2942,8 @@ namespace Catch {
 
 // start catch_interfaces_registry_hub.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <string>
+#include <memory>
 
 namespace Catch {
 
@@ -2995,9 +2995,9 @@ namespace Catch {
         static std::string translatorName( signature )
 #endif
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/exception"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
+#include <exception>
+#include <string>
+#include <vector>
 
 namespace Catch {
     using exceptionTranslateFunction = std::string(*)();
@@ -3068,7 +3068,7 @@ namespace Catch {
 // end catch_interfaces_exception.h
 // start catch_approx.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/type_traits"
+#include <type_traits>
 
 namespace Catch {
 namespace Detail {
@@ -3189,9 +3189,9 @@ struct StringMaker<Catch::Detail::Approx> {
 // end catch_approx.h
 // start catch_string_manip.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iosfwd"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
+#include <string>
+#include <iosfwd>
+#include <vector>
 
 namespace Catch {
 
@@ -3227,8 +3227,8 @@ namespace Catch {
 
 // start catch_matchers.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
+#include <string>
+#include <vector>
 
 namespace Catch {
 namespace Matchers {
@@ -3478,8 +3478,8 @@ namespace Matchers {
 // end catch_matchers_floating.h
 // start catch_matchers_generic.hpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/functional"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <functional>
+#include <string>
 
 namespace Catch {
 namespace Matchers {
@@ -3526,7 +3526,7 @@ public:
 // end catch_matchers_generic.hpp
 // start catch_matchers_string.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <string>
 
 namespace Catch {
 namespace Matchers {
@@ -3595,7 +3595,7 @@ namespace Matchers {
 // end catch_matchers_string.h
 // start catch_matchers_vector.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
+#include <algorithm>
 
 namespace Catch {
 namespace Matchers {
@@ -3835,7 +3835,7 @@ namespace Catch {
 // start catch_interfaces_generatortracker.h
 
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <memory>
 
 namespace Catch {
 
@@ -3866,7 +3866,7 @@ namespace Catch {
 // end catch_interfaces_generatortracker.h
 // start catch_enforce.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/exception"
+#include <exception>
 
 namespace Catch {
 #if !defined(CATCH_CONFIG_DISABLE_EXCEPTIONS)
@@ -3905,12 +3905,12 @@ namespace Catch {
     do{ if( !(condition) ) CATCH_ERROR( __VA_ARGS__ ); } while(false)
 
 // end catch_enforce.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
+#include <memory>
+#include <vector>
+#include <cassert>
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/utility"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/exception"
+#include <utility>
+#include <exception>
 
 namespace Catch {
 
@@ -4337,7 +4337,7 @@ namespace Generators {
 
 // start catch_context.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <memory>
 
 namespace Catch {
 
@@ -4458,11 +4458,11 @@ namespace Catch {
 } // end namespace Catch
 
 // end catch_option.hpp
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/chrono"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iosfwd"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <chrono>
+#include <iosfwd>
+#include <string>
+#include <vector>
+#include <memory>
 
 namespace Catch {
 
@@ -4539,7 +4539,7 @@ namespace Catch {
 // end catch_interfaces_config.h
 // start catch_random_number_generator.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdint"
+#include <cstdint>
 
 namespace Catch {
 
@@ -4587,7 +4587,7 @@ namespace Catch {
 } // end namespace Catch
 
 // end catch_random_number_generator.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/random"
+#include <random>
 
 namespace Catch {
 namespace Generators {
@@ -4749,9 +4749,9 @@ GeneratorWrapper<ResultType> from_range(Container const& cnt) {
 // in the conditionally compiled sections
 // start catch_test_case_info.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <string>
+#include <vector>
+#include <memory>
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -5093,9 +5093,9 @@ namespace Catch
 }
 
 // end catch_wildcard_pattern.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <string>
+#include <vector>
+#include <memory>
 
 namespace Catch {
 
@@ -5171,7 +5171,7 @@ namespace Catch {
 // end catch_test_spec.h
 // start catch_interfaces_tag_alias_registry.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <string>
 
 namespace Catch {
 
@@ -5251,9 +5251,9 @@ namespace Catch {
 // end catch_test_spec_parser.h
 // Libstdc++ doesn't like incomplete classes for unique_ptr
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <memory>
+#include <vector>
+#include <string>
 
 #ifndef CATCH_CONFIG_CONSOLE_WIDTH
 #define CATCH_CONFIG_CONSOLE_WIDTH 80
@@ -5369,7 +5369,7 @@ namespace Catch {
 // end catch_config.hpp
 // start catch_assertionresult.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <string>
 
 namespace Catch {
 
@@ -5458,14 +5458,16 @@ namespace Catch {
 } // namespace Catch
 
 // end catch_outlier_classification.hpp
+
+#include <iterator>
 #endif // CATCH_CONFIG_ENABLE_BENCHMARKING
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iosfwd"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/map"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/set"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
+#include <string>
+#include <iosfwd>
+#include <map>
+#include <set>
+#include <memory>
+#include <algorithm>
 
 namespace Catch {
 
@@ -5704,13 +5706,13 @@ namespace Catch {
 } // end namespace Catch
 
 // end catch_interfaces_reporter.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstring"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cfloat"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdio"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ostream"
+#include <algorithm>
+#include <cstring>
+#include <cfloat>
+#include <cstdio>
+#include <cassert>
+#include <memory>
+#include <ostream>
 
 namespace Catch {
     void prepareExpandedExpression(AssertionResult& result);
@@ -6210,7 +6212,7 @@ namespace Catch {
 
 // start catch_xmlwriter.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
+#include <vector>
 
 namespace Catch {
     enum class XmlFormatting {
@@ -6342,9 +6344,10 @@ namespace Catch {
 
         void writeTestCase(TestCaseNode const& testCaseNode);
 
-        void writeSection(std::string const& className,
-                          std::string const& rootName,
-                          SectionNode const& sectionNode);
+        void writeSection( std::string const& className,
+                           std::string const& rootName,
+                           SectionNode const& sectionNode,
+                           bool testOkToFail );
 
         void writeAssertions(SectionNode const& sectionNode);
         void writeAssertion(AssertionStats const& stats);
@@ -6879,7 +6882,7 @@ namespace Catch {
                     }
                     iters *= 2;
                 }
-                throw optimized_away_error{};
+                Catch::throw_exception(optimized_away_error{});
             }
         } // namespace Detail
     } // namespace Benchmark
@@ -6887,6 +6890,7 @@ namespace Catch {
 
 // end catch_run_for_at_least.hpp
 #include <algorithm>
+#include <iterator>
 
 namespace Catch {
     namespace Benchmark {
@@ -7457,9 +7461,9 @@ namespace Catch {
 // Keep these here for external reporters
 // start catch_test_case_tracker.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <string>
+#include <vector>
+#include <memory>
 
 namespace Catch {
 namespace TestCaseTracking {
@@ -7848,8 +7852,8 @@ namespace Catch {
 // end catch_stats.cpp
 // start catch_approx.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cmath"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/limits"
+#include <cmath>
+#include <limits>
 
 namespace {
 
@@ -7985,7 +7989,7 @@ namespace Catch {
 
 // start catch_fatal_condition.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
+#include <cassert>
 
 namespace Catch {
 
@@ -8039,7 +8043,7 @@ namespace Catch {
 } // end namespace Catch
 
 // end catch_fatal_condition.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <string>
 
 namespace Catch {
 
@@ -8433,7 +8437,7 @@ namespace Catch {
 #ifndef CLARA_CONFIG_OPTIONAL_TYPE
 #ifdef __has_include
 #if __has_include(<optional>) && __cplusplus >= 201703L
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/optional"
+#include <optional>
 #define CLARA_CONFIG_OPTIONAL_TYPE std::optional
 #endif
 #endif
@@ -8451,10 +8455,10 @@ namespace Catch {
 // This project is hosted at https://github.com/philsquared/textflowcpp
 
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ostream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
+#include <cassert>
+#include <ostream>
+#include <sstream>
+#include <vector>
 
 #ifndef CATCH_CLARA_TEXTFLOW_CONFIG_CONSOLE_WIDTH
 #define CATCH_CLARA_TEXTFLOW_CONFIG_CONSOLE_WIDTH 80
@@ -8780,11 +8784,11 @@ inline auto Column::operator + (Column const& other) -> Columns {
 // ----------- end of #include from clara_textflow.hpp -----------
 // ........... back in clara.hpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cctype"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/set"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
+#include <cctype>
+#include <string>
+#include <memory>
+#include <set>
+#include <algorithm>
 
 #if !defined(CATCH_PLATFORM_WINDOWS) && ( defined(WIN32) || defined(__WIN32__) || defined(_WIN32) || defined(_MSC_VER) )
 #define CATCH_PLATFORM_WINDOWS
@@ -9685,8 +9689,8 @@ namespace Catch {
 } // end namespace Catch
 
 // end catch_commandline.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/fstream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ctime"
+#include <fstream>
+#include <ctime>
 
 namespace Catch {
 
@@ -9903,8 +9907,8 @@ namespace Catch {
 // end catch_commandline.cpp
 // start catch_common.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstring"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ostream"
+#include <cstring>
+#include <ostream>
 
 namespace Catch {
 
@@ -10065,7 +10069,7 @@ namespace Catch {
 #endif // defined(CATCH_PLATFORM_WINDOWS)
 
 // end catch_windows_h_proxy.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
+#include <sstream>
 
 namespace Catch {
     namespace {
@@ -10162,7 +10166,7 @@ namespace {
 
 #elif defined( CATCH_CONFIG_COLOUR_ANSI ) //////////////////////////////////////
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/unistd.h"
+#include <unistd.h>
 
 namespace Catch {
 namespace {
@@ -10348,7 +10352,7 @@ namespace Catch {
 
 // start catch_debug_console.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <string>
 
 namespace Catch {
     void writeToDebugConsole( std::string const& text );
@@ -10356,7 +10360,7 @@ namespace Catch {
 
 // end catch_debug_console.h
 #if defined(CATCH_CONFIG_ANDROID_LOGWRITE)
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/android/log.h"
+#include <android/log.h>
 
     namespace Catch {
         void writeToDebugConsole( std::string const& text ) {
@@ -10445,8 +10449,8 @@ namespace Catch {
     } // namespace Catch
 
 #elif defined(CATCH_PLATFORM_LINUX)
-    #include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/fstream"
-    #include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+    #include <fstream>
+    #include <string>
 
     namespace Catch{
         // The standard POSIX way of detecting a debugger is to attempt to
@@ -10512,7 +10516,7 @@ namespace Catch {
 // end catch_decomposer.cpp
 // start catch_enforce.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/stdexcept"
+#include <stdexcept>
 
 namespace Catch {
 #if defined(CATCH_CONFIG_DISABLE_EXCEPTIONS) && !defined(CATCH_CONFIG_DISABLE_EXCEPTIONS_CUSTOM_HANDLER)
@@ -10544,8 +10548,8 @@ namespace Catch {
 // start catch_enum_values_registry.cpp
 // start catch_enum_values_registry.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <vector>
+#include <memory>
 
 namespace Catch {
 
@@ -10568,8 +10572,8 @@ namespace Catch {
 
 // end catch_enum_values_registry.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/map"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
+#include <map>
+#include <cassert>
 
 namespace Catch {
 
@@ -10635,7 +10639,7 @@ namespace Catch {
 // end catch_enum_values_registry.cpp
 // start catch_errno_guard.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cerrno"
+#include <cerrno>
 
 namespace Catch {
         ErrnoGuard::ErrnoGuard():m_oldErrno(errno){}
@@ -10646,9 +10650,9 @@ namespace Catch {
 
 // start catch_exception_translator_registry.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <vector>
+#include <string>
+#include <memory>
 
 namespace Catch {
 
@@ -10743,7 +10747,7 @@ namespace Catch {
 // end catch_exception_translator_registry.cpp
 // start catch_fatal_condition.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
+#include <algorithm>
 
 #if !defined( CATCH_CONFIG_WINDOWS_SEH ) && !defined( CATCH_CONFIG_POSIX_SIGNALS )
 
@@ -10850,7 +10854,7 @@ namespace Catch {
 
 #if defined( CATCH_CONFIG_POSIX_SIGNALS )
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/signal.h"
+#include <signal.h>
 
 namespace Catch {
 
@@ -10953,8 +10957,8 @@ namespace Catch {
 // end catch_fatal_condition.cpp
 // start catch_generators.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/limits"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/set"
+#include <limits>
+#include <set>
 
 namespace Catch {
 
@@ -11205,7 +11209,7 @@ Catch::LeakDetector::~LeakDetector() {
 
 // start catch_list.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/set"
+#include <set>
 
 namespace Catch {
 
@@ -11237,9 +11241,9 @@ namespace Catch {
 }
 
 // end catch_text.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/limits"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iomanip"
+#include <limits>
+#include <algorithm>
+#include <iomanip>
 
 namespace Catch {
 
@@ -11445,7 +11449,7 @@ namespace Catch {
 // end catch_polyfills.hpp
 // start catch_to_string.hpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <string>
 
 namespace Catch {
     template <typename T>
@@ -11461,15 +11465,15 @@ namespace Catch {
 } // end namespace Catch
 
 // end catch_to_string.hpp
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cmath"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdlib"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdint"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstring"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/type_traits"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iomanip"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/limits"
+#include <algorithm>
+#include <cmath>
+#include <cstdlib>
+#include <cstdint>
+#include <cstring>
+#include <sstream>
+#include <type_traits>
+#include <iomanip>
+#include <limits>
 
 namespace Catch {
 namespace {
@@ -11692,7 +11696,7 @@ std::string Catch::Matchers::Generic::Detail::finalizeDescription(const std::str
 // end catch_matchers_generic.cpp
 // start catch_matchers_string.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/regex"
+#include <regex>
 
 namespace Catch {
 namespace Matchers {
@@ -11801,8 +11805,8 @@ namespace Catch {
 } // end namespace Catch
 
 // end catch_uncaught_exceptions.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/stack"
+#include <cassert>
+#include <stack>
 
 namespace Catch {
 
@@ -11934,9 +11938,9 @@ namespace Catch {
 #ifndef TWOBLUECUBES_CATCH_OUTPUT_REDIRECT_H
 #define TWOBLUECUBES_CATCH_OUTPUT_REDIRECT_H
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdio"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iosfwd"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <cstdio>
+#include <iosfwd>
+#include <string>
 
 namespace Catch {
 
@@ -12037,11 +12041,11 @@ namespace Catch {
 
 #endif // TWOBLUECUBES_CATCH_OUTPUT_REDIRECT_H
 // end catch_output_redirect.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdio"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstring"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/fstream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/stdexcept"
+#include <cstdio>
+#include <cstring>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
 
 #if defined(CATCH_CONFIG_NEW_CAPTURE)
     #if defined(_MSC_VER)
@@ -12175,7 +12179,7 @@ namespace Catch {
 // end catch_output_redirect.cpp
 // start catch_polyfills.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cmath"
+#include <cmath>
 
 namespace Catch {
 
@@ -12264,10 +12268,10 @@ namespace {
 
 // start catch_test_case_registry_impl.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/set"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ios"
+#include <vector>
+#include <set>
+#include <algorithm>
+#include <ios>
 
 namespace Catch {
 
@@ -12320,7 +12324,7 @@ namespace Catch {
 // end catch_test_case_registry_impl.h
 // start catch_reporter_registry.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/map"
+#include <map>
 
 namespace Catch {
 
@@ -12349,7 +12353,7 @@ namespace Catch {
 
 // start catch_tag_alias.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
+#include <string>
 
 namespace Catch {
 
@@ -12363,7 +12367,7 @@ namespace Catch {
 } // end namespace Catch
 
 // end catch_tag_alias.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/map"
+#include <map>
 
 namespace Catch {
 
@@ -12383,8 +12387,8 @@ namespace Catch {
 // end catch_tag_alias_registry.h
 // start catch_startup_exception_registry.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/exception"
+#include <vector>
+#include <exception>
 
 namespace Catch {
 
@@ -12567,9 +12571,9 @@ namespace Catch {
 // end catch_result_type.cpp
 // start catch_run_context.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
+#include <cassert>
+#include <algorithm>
+#include <sstream>
 
 namespace Catch {
 
@@ -13198,7 +13202,7 @@ namespace Catch {
 
 // start catch_session.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <memory>
 
 namespace Catch {
 
@@ -13248,7 +13252,7 @@ namespace Catch {
 // end catch_session.h
 // start catch_version.h
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iosfwd"
+#include <iosfwd>
 
 namespace Catch {
 
@@ -13277,10 +13281,10 @@ namespace Catch {
 }
 
 // end catch_version.h
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdlib"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iomanip"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/set"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iterator"
+#include <cstdlib>
+#include <iomanip>
+#include <set>
+#include <iterator>
 
 namespace Catch {
 
@@ -13568,7 +13572,7 @@ namespace Catch {
 // end catch_session.cpp
 // start catch_singletons.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
+#include <vector>
 
 namespace Catch {
 
@@ -13618,12 +13622,12 @@ void StartupExceptionRegistry::add( std::exception_ptr const& exception ) noexce
 // end catch_startup_exception_registry.cpp
 // start catch_stream.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdio"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iostream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/fstream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <cstdio>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <memory>
 
 namespace Catch {
 
@@ -13789,11 +13793,11 @@ namespace Catch {
 // end catch_stream.cpp
 // start catch_string_manip.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ostream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstring"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cctype"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
+#include <algorithm>
+#include <ostream>
+#include <cstring>
+#include <cctype>
+#include <vector>
 
 namespace Catch {
 
@@ -13891,10 +13895,10 @@ namespace Catch {
 // end catch_string_manip.cpp
 // start catch_stringref.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ostream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstring"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdint"
+#include <algorithm>
+#include <ostream>
+#include <cstring>
+#include <cstdint>
 
 namespace Catch {
     StringRef::StringRef( char const* rawChars ) noexcept
@@ -13955,7 +13959,7 @@ namespace Catch {
 // end catch_tag_alias_autoregistrar.cpp
 // start catch_tag_alias_registry.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
+#include <sstream>
 
 namespace Catch {
 
@@ -14002,10 +14006,10 @@ namespace Catch {
 // end catch_tag_alias_registry.cpp
 // start catch_test_case_info.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cctype"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/exception"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
+#include <cctype>
+#include <exception>
+#include <algorithm>
+#include <sstream>
 
 namespace Catch {
 
@@ -14175,8 +14179,8 @@ namespace Catch {
 // end catch_test_case_info.cpp
 // start catch_test_case_registry_impl.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
+#include <algorithm>
+#include <sstream>
 
 namespace Catch {
 
@@ -14334,11 +14338,11 @@ namespace Catch {
 // end catch_test_case_registry_impl.cpp
 // start catch_test_case_tracker.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/stdexcept"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
+#include <algorithm>
+#include <cassert>
+#include <stdexcept>
+#include <memory>
+#include <sstream>
 
 #if defined(__clang__)
 #    pragma clang diagnostic push
@@ -14603,10 +14607,10 @@ namespace Catch {
 // end catch_test_registry.cpp
 // start catch_test_spec.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/string"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/vector"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <memory>
 
 namespace Catch {
 
@@ -14922,7 +14926,7 @@ namespace Catch {
 // end catch_test_spec_parser.cpp
 // start catch_timer.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/chrono"
+#include <chrono>
 
 static const uint64_t nanosecondsInSecond = 1000000000;
 
@@ -14999,8 +15003,8 @@ namespace Catch {
 #define CATCH_CONFIG_ENABLE_CHRONO_STRINGMAKER
 #endif
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cmath"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iomanip"
+#include <cmath>
+#include <iomanip>
 
 namespace Catch {
 
@@ -15144,7 +15148,7 @@ std::string StringMaker<wchar_t *>::convert(wchar_t * str) {
 #endif
 
 #if defined(CATCH_CONFIG_CPP17_BYTE)
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstddef"
+#include <cstddef>
 std::string StringMaker<std::byte>::convert(std::byte value) {
     return ::Catch::Detail::stringify(std::to_integer<unsigned long long>(value));
 }
@@ -15313,7 +15317,7 @@ namespace Catch {
 #  endif
 #endif
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/exception"
+#include <exception>
 
 #if defined(__cpp_lib_uncaught_exceptions) \
     && !defined(CATCH_INTERNAL_CONFIG_CPP17_UNCAUGHT_EXCEPTIONS)
@@ -15330,7 +15334,7 @@ namespace Catch {
 
 #endif // CATCH_CONFIG_UNCAUGHT_EXCEPTIONS_HPP
 // end catch_config_uncaught_exceptions.hpp
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/exception"
+#include <exception>
 
 namespace Catch {
     bool uncaught_exceptions() {
@@ -15346,7 +15350,7 @@ namespace Catch {
 // end catch_uncaught_exceptions.cpp
 // start catch_version.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ostream"
+#include <ostream>
 
 namespace Catch {
 
@@ -15376,7 +15380,7 @@ namespace Catch {
     }
 
     Version const& libraryVersion() {
-        static Version version( 2, 13, 6, "", 0 );
+        static Version version( 2, 13, 7, "", 0 );
         return version;
     }
 
@@ -15423,8 +15427,8 @@ namespace Catch {
 // end catch_wildcard_pattern.cpp
 // start catch_xmlwriter.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/iomanip"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/type_traits"
+#include <iomanip>
+#include <type_traits>
 
 namespace Catch {
 
@@ -15747,11 +15751,11 @@ namespace {
 // end catch_xmlwriter.cpp
 // start catch_reporter_bases.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstring"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cfloat"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdio"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/memory"
+#include <cstring>
+#include <cfloat>
+#include <cstdio>
+#include <cassert>
+#include <memory>
 
 namespace Catch {
     void prepareExpandedExpression(AssertionResult& result) {
@@ -16101,8 +16105,8 @@ private:
 // end catch_reporter_compact.cpp
 // start catch_reporter_console.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cfloat"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cstdio"
+#include <cfloat>
+#include <cstdio>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -16785,10 +16789,11 @@ CATCH_REGISTER_REPORTER("console", ConsoleReporter)
 // end catch_reporter_console.cpp
 // start catch_reporter_junit.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/sstream"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/ctime"
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/algorithm"
+#include <cassert>
+#include <sstream>
+#include <ctime>
+#include <algorithm>
+#include <iomanip>
 
 namespace Catch {
 
@@ -16816,7 +16821,7 @@ namespace Catch {
 #else
             std::strftime(timeStamp, timeStampSize, fmt, timeInfo);
 #endif
-            return std::string(timeStamp);
+            return std::string(timeStamp, timeStampSize-1);
         }
 
         std::string fileNameTag(const std::vector<std::string> &tags) {
@@ -16827,6 +16832,17 @@ namespace Catch {
                 return it->substr(1);
             return std::string();
         }
+
+        // Formats the duration in seconds to 3 decimal places.
+        // This is done because some genius defined Maven Surefire schema
+        // in a way that only accepts 3 decimal places, and tools like
+        // Jenkins use that schema for validation JUnit reporter output.
+        std::string formatDuration( double seconds ) {
+            ReusableStringStream rss;
+            rss << std::fixed << std::setprecision( 3 ) << seconds;
+            return rss.str();
+        }
+
     } // anonymous namespace
 
     JunitReporter::JunitReporter( ReporterConfig const& _config )
@@ -16896,7 +16912,7 @@ namespace Catch {
         if( m_config->showDurations() == ShowDurations::Never )
             xml.writeAttribute( "time", "" );
         else
-            xml.writeAttribute( "time", suiteTime );
+            xml.writeAttribute( "time", formatDuration( suiteTime ) );
         xml.writeAttribute( "timestamp", getCurrentTimestamp() );
 
         // Write properties if there are any
@@ -16941,12 +16957,13 @@ namespace Catch {
         if ( !m_config->name().empty() )
             className = m_config->name() + "." + className;
 
-        writeSection( className, "", rootSection );
+        writeSection( className, "", rootSection, stats.testInfo.okToFail() );
     }
 
-    void JunitReporter::writeSection(  std::string const& className,
-                        std::string const& rootName,
-                        SectionNode const& sectionNode ) {
+    void JunitReporter::writeSection( std::string const& className,
+                                      std::string const& rootName,
+                                      SectionNode const& sectionNode,
+                                      bool testOkToFail) {
         std::string name = trim( sectionNode.stats.sectionInfo.name );
         if( !rootName.empty() )
             name = rootName + '/' + name;
@@ -16963,12 +16980,17 @@ namespace Catch {
                 xml.writeAttribute( "classname", className );
                 xml.writeAttribute( "name", name );
             }
-            xml.writeAttribute( "time", ::Catch::Detail::stringify( sectionNode.stats.durationInSeconds ) );
+            xml.writeAttribute( "time", formatDuration( sectionNode.stats.durationInSeconds ) );
             // This is not ideal, but it should be enough to mimic gtest's
             // junit output.
             // Ideally the JUnit reporter would also handle `skipTest`
             // events and write those out appropriately.
             xml.writeAttribute( "status", "run" );
+
+            if (sectionNode.stats.assertions.failedButOk) {
+                xml.scopedElement("skipped")
+                    .writeAttribute("message", "TEST_CASE tagged with !mayfail");
+            }
 
             writeAssertions( sectionNode );
 
@@ -16979,9 +17001,9 @@ namespace Catch {
         }
         for( auto const& childNode : sectionNode.childSections )
             if( className.empty() )
-                writeSection( name, "", *childNode );
+                writeSection( name, "", *childNode, testOkToFail );
             else
-                writeSection( className, name, *childNode );
+                writeSection( className, name, *childNode, testOkToFail );
     }
 
     void JunitReporter::writeAssertions( SectionNode const& sectionNode ) {
@@ -17053,7 +17075,7 @@ namespace Catch {
 // end catch_reporter_junit.cpp
 // start catch_reporter_listening.cpp
 
-#include "../../../../../../../../AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/cassert"
+#include <cassert>
 
 namespace Catch {
 
