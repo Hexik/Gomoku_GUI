@@ -2,9 +2,9 @@
  * @file test_inputQueue.cpp
  * @brief Unit tests for LockedQueue
  **/
-#include "catch2/catch.hpp"
+#include "../catch2/catch.hpp"
 
-#include "../game/lockedQueue.h"
+#include "../../game/lockedQueue.h"
 #include <future>
 
 /**

@@ -5,7 +5,7 @@ set(TEST_SOURCES ${TEST_SOURCES}
         test_basic.cpp
         game/test_config.cpp
         game/test_engine.cpp
-        test_inputQueue.cpp
+        sharedlib/test_inputQueue.cpp
         )
 
 CHECK_CXX_COMPILER_FLAG("-Wreserved-identifier" COMPILER_SUPPORTS_RESERVED_IDENTIFIER)
