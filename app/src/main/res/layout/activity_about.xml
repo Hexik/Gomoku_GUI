@@ -36,6 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/sw_name"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="SW Name" />
 
                 <TextView
@@ -44,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/gomoku_gui"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="@string/gomoku_gui" />
 
             </TableRow>
@@ -59,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/author"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="Author" />
 
                 <TextView
@@ -67,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/miroslav_fontan"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="Miroslav Fontan" />
 
             </TableRow>
@@ -82,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/version"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="Version" />
 
                 <TextView
@@ -90,6 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/versionName"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="@string/versionName" />
 
             </TableRow>
@@ -105,6 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/engine_name"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="@string/engine_name" />
 
                 <TextView
@@ -113,6 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/engine_random"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="@string/engine_random" />
 
             </TableRow>
@@ -128,6 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/engine_version"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="@string/engine_version" />
 
                 <TextView
@@ -136,6 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/versionName"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="@string/versionName" />
 
             </TableRow>
@@ -151,6 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/build_date"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="Build date" />
 
                 <TextView
@@ -159,6 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/none"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="@string/none" />
 
             </TableRow>
@@ -174,6 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/www"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="WWW:" />
 
                 <TextView
@@ -185,6 +198,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/www_address"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="https://www.facebook.com/embryo.engine" />
 
             </TableRow>
@@ -200,6 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/email"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="Email" />
 
                 <TextView
@@ -211,6 +226,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/email_address"
+                    android:textSize="@dimen/text_size_about"
                     tools:text="mira.fontan@gmail.com" />
 
             </TableRow>
