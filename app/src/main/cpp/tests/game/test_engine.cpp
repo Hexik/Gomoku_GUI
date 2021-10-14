@@ -3,10 +3,10 @@
  * @brief Game brain tests
  **/
 
-#include "catch2/catch.hpp"
+#include "../catch2/catch.hpp"
 
-#include "../game/board.h"
-#include "../game/engine.h"
+#include "../../game/board.h"
+#include "../../game/engine.h"
 
 /**
  * @brief Engine About test

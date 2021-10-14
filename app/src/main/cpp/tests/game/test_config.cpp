@@ -3,9 +3,9 @@
  * @brief Configuration set
  **/
 
-#include "catch2/catch.hpp"
+#include "../catch2/catch.hpp"
 
-#include "../game/config.h"
+#include "../../game/config.h"
 
 /**
  * @brief Config defaults test

@@ -3,8 +3,8 @@
 set(TEST_SOURCES ${TEST_SOURCES}
         AndroidBuffer.cpp
         test_basic.cpp
-        test_config.cpp
-        test_engine.cpp
+        game/test_config.cpp
+        game/test_engine.cpp
         test_inputQueue.cpp
         )
 
