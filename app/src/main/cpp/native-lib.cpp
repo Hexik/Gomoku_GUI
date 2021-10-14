@@ -7,7 +7,7 @@
 
 #include "tests/catch2/catch.hpp"
 
-#include "tests/AndroidBuffer.h"
+#include "tests/android/AndroidBuffer.h"
 
 Engine* instance = nullptr;
 

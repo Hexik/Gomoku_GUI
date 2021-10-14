@@ -1,7 +1,7 @@
 # define the sources of the self test
 # Please keep these ordered alphabetically
 set(TEST_SOURCES ${TEST_SOURCES}
-        AndroidBuffer.cpp
+        android/AndroidBuffer.cpp
         test_basic.cpp
         game/test_config.cpp
         game/test_engine.cpp
