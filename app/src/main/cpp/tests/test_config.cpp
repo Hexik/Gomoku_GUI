@@ -5,7 +5,7 @@
 
 #include "catch.hpp"
 
-#include "../brain/config.h"
+#include "../game/config.h"
 
 /**
  * @brief Config defaults test

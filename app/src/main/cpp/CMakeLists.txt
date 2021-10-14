@@ -82,8 +82,8 @@ if (COMPILER_SUPPORT_WERROR)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}   -Werror")
 endif ()
 
-add_subdirectory(brain)
-add_subdirectory(test)
+add_subdirectory(game)
+add_subdirectory(tests)
 
 CHECK_CXX_COMPILER_FLAG("-Wmissing-prototypes" COMPILER_SUPPORTS_MISSING_PROTOTYPES)
 if (COMPILER_SUPPORTS_MISSING_PROTOTYPES)
@@ -126,7 +126,7 @@ find_library( # Sets the name of the path variable.
 
 target_link_libraries( # Specifies the target library.
         native-lib
-        brain
+        game
         $<TARGET_OBJECTS:test_main>
         # Links the target library to the log library
         # included in the NDK.

@@ -4,7 +4,7 @@
  **/
 #include "catch.hpp"
 
-#include "../brain/lockedQueue.h"
+#include "../game/lockedQueue.h"
 #include <future>
 
 /**

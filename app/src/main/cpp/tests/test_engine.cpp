@@ -5,8 +5,8 @@
 
 #include "catch.hpp"
 
-#include "../brain/board.h"
-#include "../brain/engine.h"
+#include "../game/board.h"
+#include "../game/engine.h"
 
 /**
  * @brief Engine About test

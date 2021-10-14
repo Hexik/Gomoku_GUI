@@ -1,13 +1,13 @@
-#include "brain/engine.h"
+#include "game/engine.h"
 
 #include <android/log.h>
 #include <jni.h>
 
 #define CATCH_CONFIG_MAIN
 
-#include "test/catch.hpp"
+#include "tests/catch.hpp"
 
-#include "test/AndroidBuffer.h"
+#include "tests/AndroidBuffer.h"
 
 Engine* instance = nullptr;
 
