@@ -3,7 +3,7 @@
  * @brief Game brain tests
  **/
 
-#include "catch.hpp"
+#include "catch2/catch.hpp"
 
 #include "../game/board.h"
 #include "../game/engine.h"

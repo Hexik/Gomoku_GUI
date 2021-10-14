@@ -5,7 +5,7 @@
 
 #define CATCH_CONFIG_MAIN
 
-#include "tests/catch.hpp"
+#include "tests/catch2/catch.hpp"
 
 #include "tests/AndroidBuffer.h"
 

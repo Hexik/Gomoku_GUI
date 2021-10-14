@@ -3,7 +3,7 @@
  * @brief Configuration set
  **/
 
-#include "catch.hpp"
+#include "catch2/catch.hpp"
 
 #include "../game/config.h"
 

@@ -3,7 +3,7 @@
  * @brief Basic simple tests
  **/
 
-#include "catch.hpp"
+#include "catch2/catch.hpp"
 
 /* ================================================================= */
 /**  First test in every test run. This simple builtin test is
