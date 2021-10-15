@@ -44,6 +44,10 @@ android {
         }
     }
 
+    spotbugs {
+        excludeFilter = file("$rootDir/gradle/config/excludeFilter.xml")
+    }
+
     applicationVariants.all { variant ->
         variant.resValue "string", "versionName", gitVersionName
     }
