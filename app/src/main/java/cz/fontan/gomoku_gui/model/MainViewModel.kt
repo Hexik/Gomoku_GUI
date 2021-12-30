@@ -248,8 +248,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         game.makeMove(move)
         queryGameResult()
         when {
-            autoBlack && game.playerToMove == EnumMove.Black -> startSearch(false)
-            autoWhite && game.playerToMove == EnumMove.White -> startSearch(false)
+            autoBlack && game.playerToMove == EnumMove.Black && _canSearch.value == true -> startSearch(
+                false
+            )
+            autoWhite && game.playerToMove == EnumMove.White && _canSearch.value == true -> startSearch(
+                false
+            )
             else -> setIdleStatus()
         }
         stopWasPressed = false
