@@ -4,6 +4,7 @@
         <item>0,1 second per move</item>
         <item>1 second per move</item>
         <item>10 seconds per move</item>
+        <item>60 seconds per move</item>
         <item>Unlimited</item>
     </string-array>
 
@@ -11,6 +12,7 @@
         <item>100</item>
         <item>1000</item>
         <item>10000</item>
+        <item>60000</item>
         <item>-1</item>
     </string-array>
 
