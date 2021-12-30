@@ -46,7 +46,7 @@
     <string name="result_black">Black win</string>
     <string name="result_draw">Draw</string>
     <string name="result_white">White win</string>
-    <string name="speed">N/s</string>
+    <string name="speed">kN/s</string>
     <string name="splash_image">Starting screen picture</string>
     <string name="status">Status</string>
     <string name="sw_name">SW name</string>
