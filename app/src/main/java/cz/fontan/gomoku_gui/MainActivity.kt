@@ -276,6 +276,8 @@ class MainActivity : AppCompatActivity() {
         init {
             System.loadLibrary("native-lib")
             NativeInterface.startBrain(BOARD_SIZE_MAX)
+            NativeInterface.writeToBrain("INFO GUI_MODE 1") // Yixin mode
+            NativeInterface.writeToBrain("INFO SHOW_DETAIL 1")
         }
     }
 }
