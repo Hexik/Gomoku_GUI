@@ -144,7 +144,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             }
             MotionEvent.ACTION_UP -> {
                 if (!zoomAllowed || !zoomMode) {
-                    safeDelegate.makeMove(lastMove)
+                    safeDelegate.makeMove(lastMove, true)
                     performClick()
                 }
             }
@@ -236,8 +236,8 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
     private fun drawBestMove(canvas: Canvas) {
         val safeDelegate = gameDelegate ?: return
-
         val m = safeDelegate.getBestMove()
+
         if (m.type != EnumMove.Empty) {
             val oldColor = paint.color
 

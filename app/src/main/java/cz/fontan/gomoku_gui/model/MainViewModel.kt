@@ -221,6 +221,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     }
 
     private fun setIdleStatus() {
+        game.bestMove = Move()
         inSearch = false
         _canStop.value = false
         _canUndo.value = game.canUndo()
@@ -246,9 +247,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         return game.canMakeMove(move)
     }
 
-    override fun makeMove(move: Move) {
+    override fun makeMove(move: Move, sendBoard: Boolean) {
         game.makeMove(move)
+
+        if (sendBoard) {
+            NativeInterface.writeToBrain(game.toBoard(false))
+        }
         queryGameResult()
+
         when {
             autoBlack && game.playerToMove == EnumMove.Black && _canSearch.value == true -> startSearch(
                 false
