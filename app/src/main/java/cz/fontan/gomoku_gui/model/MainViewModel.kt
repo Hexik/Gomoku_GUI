@@ -133,6 +133,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         PreferenceManager.getDefaultSharedPreferences(getApplication<Application>().applicationContext)
     private var autoBlack: Boolean = false
     private var autoWhite: Boolean = false
+    private var showForbid: Boolean = false
     private var moveTime: Int = 1000
 
     private var stopWasPressed = false
@@ -230,6 +231,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private fun readSettings() {
         autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
         autoWhite = sharedPreferences.getBoolean("check_box_preference_AI_white", false)
+        showForbid = sharedPreferences.getBoolean("check_box_preference_forbidden", false)
         (sharedPreferences.getString("list_preference_time", "1000")?.toInt()
             ?: 1000).also { moveTime = it }
         val tmpDim = getDimension()
@@ -268,6 +270,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         NativeInterface.writeToBrain("YXRESULT")
         val resp = NativeInterface.readFromBrain(10)
         processResponse(resp)
+        if (showForbid) {
+            NativeInterface.writeToBrain("YXSHOWFORBID")
+        }
     }
 
     override fun moveCount(): Int {
@@ -286,6 +291,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         return game.bestMove
     }
 
+    override fun getForbid(): String {
+        return game.forbid
+    }
+
     /**
      * Parse incoming data from brain
      * @param response incoming data
@@ -295,7 +304,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         when {
             upper.startsWith("DEBUG ") -> return
             upper.startsWith("ERROR ") -> return
-            upper.startsWith("FORBID ") -> return
+            upper.startsWith("FORBID ") -> parseForbid(
+                upper.removePrefix("FORBID ").removeSuffix(".")
+            )
             upper.startsWith("MESSAGE ") -> parseMessage(upper.removePrefix("MESSAGE "))
             upper.startsWith("OK") -> return
             upper.startsWith("SUGGEST ") -> return
@@ -303,6 +314,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             upper.contains("NAME") -> return // ABOUT response
             else -> parseMoveResponse(upper)
         }
+    }
+
+    private fun parseForbid(response: String) {
+        try {
+            require(response.length % 4 == 0)
+            game.forbid = response
+            _isDirty.value = true
+        } catch (e: IllegalArgumentException) {
+            Log.wtf("Forbid", response)
+        }
+
     }
 
     private fun parseMessage(response: String) {

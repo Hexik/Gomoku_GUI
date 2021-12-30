@@ -35,6 +35,11 @@ interface InterfaceMainViewModel {
     fun getBestMove(): Move
 
     /**
+     * Get list of fouls
+     */
+    fun getForbid(): String
+
+    /**
      * Get count of moves on Board
      */
     fun moveCount(): Int

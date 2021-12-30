@@ -179,6 +179,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         drawCoordinates(canvas)
         drawHandicapPoints(canvas)
         drawBestMove(canvas)
+        drawForbid(canvas)
     }
 
     private fun drawHorizontalLines(canvas: Canvas) {
@@ -247,6 +248,33 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
             paint.color = oldColor
         }
+    }
+
+    private fun drawForbid(canvas: Canvas) {
+        val safeDelegate = gameDelegate ?: return
+        var s = safeDelegate.getForbid()
+        require(s.length % 4 == 0)
+
+        val oldColor = paint.color
+        val oldStroke = paint.strokeWidth
+
+        while (s.isNotEmpty()) {
+
+            paint.color = Color.RED
+            paint.strokeWidth = 8.0f
+
+            val m = Move(
+                s[0].digitToInt() * 10 + s[1].digitToInt(),
+                s[2].digitToInt() * 10 + s[3].digitToInt()
+            )
+            val p = move2Point(m)
+            val delta = step * kHandicapDrawCoef * 3.0f
+            canvas.drawLine(p.x - delta, p.y - delta, p.x + delta, p.y + delta, paint)
+            canvas.drawLine(p.x - delta, p.y + delta, p.x + delta, p.y - delta, paint)
+            s = s.substring(4)
+        }
+        paint.color = oldColor
+        paint.strokeWidth = oldStroke
     }
 
     private fun drawHandicapPoints(canvas: Canvas) {

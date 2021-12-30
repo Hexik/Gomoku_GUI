@@ -28,6 +28,11 @@ class Game(
      */
     var bestMove: Move = Move()
 
+    /**
+     * List of forbidden moves
+     */
+    var forbid: String = String()
+
     init {
         Log.d(TAG, "Init")
         newGame()
