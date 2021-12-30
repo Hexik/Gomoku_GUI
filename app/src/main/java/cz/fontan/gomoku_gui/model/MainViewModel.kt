@@ -133,13 +133,28 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         PreferenceManager.getDefaultSharedPreferences(getApplication<Application>().applicationContext)
     private var autoBlack: Boolean = false
     private var autoWhite: Boolean = false
+    private var moveTime: Int = 1000
 
     private var stopWasPressed = false
     private var inSearch: Boolean = false
 
     init {
+        readSettings()
         loadGamePrivate()
         afterAction()
+        setSearchTime()
+    }
+
+    private fun setSearchTime() {
+        NativeInterface.writeToBrain("INFO timeout_match 3600000")
+        NativeInterface.writeToBrain("INFO time_left 3600000")
+        when {
+            moveTime == -1 -> NativeInterface.writeToBrain("INFO max_node -1") // unlimited
+            else -> {
+                NativeInterface.writeToBrain("INFO max_node 0")
+                NativeInterface.writeToBrain("INFO timeout_turn " + moveTime.toString())
+            }
+        }
     }
 
     /**
@@ -153,6 +168,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             _canUndo.value = false
             _canRedo.value = false
             stopWasPressed = false
+            setSearchTime()
             NativeInterface.writeToBrain(game.toBoard(true))
             _isDirty.value = true
         } else {
@@ -165,7 +181,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
      */
     fun stopSearch() {
         NativeInterface.writeToBrain("YXSTOP")
-        queryGameResult()
         setIdleStatus()
         stopWasPressed = true
     }
@@ -195,6 +210,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         stopWasPressed = false
         NativeInterface.writeToBrain("start ${game.dim}")
         afterAction()
+        setSearchTime()
     }
 
     private fun afterAction() {
@@ -214,6 +230,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private fun readSettings() {
         autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
         autoWhite = sharedPreferences.getBoolean("check_box_preference_AI_white", false)
+        (sharedPreferences.getString("list_preference_time", "1000")?.toInt()
+            ?: 1000).also { moveTime = it }
         val tmpDim = getDimension()
         if (tmpDim != game.dim) {
             game.dim = tmpDim
