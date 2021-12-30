@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import androidx.core.view.doOnPreDraw
 import androidx.preference.PreferenceManager
 import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
+import cz.fontan.gomoku_gui.game.EnumMove
 import cz.fontan.gomoku_gui.game.Move
 
 private const val TAG: String = "BoardView"
@@ -177,6 +178,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         drawFrame(canvas)
         drawCoordinates(canvas)
         drawHandicapPoints(canvas)
+        drawBestMove(canvas)
     }
 
     private fun drawHorizontalLines(canvas: Canvas) {
@@ -228,6 +230,22 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                     paint
                 )
             }
+        }
+    }
+
+    private fun drawBestMove(canvas: Canvas) {
+        val safeDelegate = gameDelegate ?: return
+
+        val m = safeDelegate.getBestMove()
+        if (m.type != EnumMove.Empty) {
+            val oldColor = paint.color
+
+            paint.color = Color.RED
+
+            val p = move2Point(m)
+            canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef * 1.5f, paint)
+
+            paint.color = oldColor
         }
     }
 

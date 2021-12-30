@@ -30,6 +30,11 @@ interface InterfaceMainViewModel {
     fun makeMove(move: Move)
 
     /**
+     * Get best move in current search
+     */
+    fun getBestMove(): Move
+
+    /**
      * Get count of moves on Board
      */
     fun moveCount(): Int

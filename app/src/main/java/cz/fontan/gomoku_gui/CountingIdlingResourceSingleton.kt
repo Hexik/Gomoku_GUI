@@ -12,7 +12,7 @@ object CountingIdlingResourceSingleton {
     /**
      * Idling resource instance
      */
-    val countingIdlingResource: CountingIdlingResource = CountingIdlingResource(RESOURCE)
+    private val countingIdlingResource: CountingIdlingResource = CountingIdlingResource(RESOURCE)
 
     /**
      * Increase usage count

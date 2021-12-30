@@ -23,6 +23,11 @@ class Game(
      */
     var playerToMove: EnumMove = EnumMove.Black
 
+    /**
+     * best move during the search
+     */
+    var bestMove: Move = Move()
+
     init {
         Log.d(TAG, "Init")
         newGame()
@@ -96,6 +101,7 @@ class Game(
     fun reset(): Game {
         moveList.reset()
         playerToMove = EnumMove.Black
+        bestMove = Move()
         desk.fill(EnumMove.Empty)
         return this
     }

@@ -148,11 +148,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private fun setSearchTime() {
         NativeInterface.writeToBrain("INFO timeout_match 3600000")
         NativeInterface.writeToBrain("INFO time_left 3600000")
-        when {
-            moveTime == -1 -> NativeInterface.writeToBrain("INFO max_node -1") // unlimited
+        when (moveTime) {
+            -1 -> NativeInterface.writeToBrain("INFO max_node -1") // unlimited
             else -> {
                 NativeInterface.writeToBrain("INFO max_node 0")
-                NativeInterface.writeToBrain("INFO timeout_turn " + moveTime.toString())
+                NativeInterface.writeToBrain("INFO timeout_turn $moveTime")
             }
         }
     }
@@ -282,6 +282,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         return inSearch
     }
 
+    override fun getBestMove(): Move {
+        return game.bestMove
+    }
+
     /**
      * Parse incoming data from brain
      * @param response incoming data
@@ -333,7 +337,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private fun parseRealTime(response: String) {
         // MESSAGE REALTIME ...
         when {
-            response.startsWith("BEST ") -> return
+            response.startsWith("BEST ") -> {
+                val splitted = response.removePrefix("BEST ").split(",")
+                try {
+                    require(splitted.size == 2)
+                    game.bestMove = (Move(splitted[0].toInt(), splitted[1].toInt(), EnumMove.Wall))
+                    _isDirty.value = true
+                } catch (e: IllegalArgumentException) {
+                    Log.wtf("Res", response)
+                }
+            }
             response.startsWith("LOSE  ") -> return
             response.startsWith("POS  ") -> return
             response.startsWith("PV  ") -> return

@@ -7,6 +7,7 @@ class MoveTest {
     fun empty() {
         val m = Move()
         assert(m.hashCode() == 0)
+        assert(m.type == EnumMove.Empty)
     }
 
     @Test(expected = IllegalArgumentException::class)
