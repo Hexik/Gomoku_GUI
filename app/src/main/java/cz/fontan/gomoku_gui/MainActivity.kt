@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         // Observe data stream from brain
         viewModel.dataFromBrain.observe(this, { it ->
             CountingIdlingResourceSingleton.decrement()
-            it?.consume { viewModel.processResponse(it) }
+            it.consume { viewModel.processResponse(it) }
         })
 
         viewModel.isDirty.observe(

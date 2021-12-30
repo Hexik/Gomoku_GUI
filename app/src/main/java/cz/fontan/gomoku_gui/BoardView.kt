@@ -99,7 +99,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
      */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
-        gameDelegate ?: return false
+        val safeDelegate = gameDelegate ?: return false
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -112,7 +112,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                     zoomMode = false
                     Log.v(TAG, "Orig ${event.x},${event.y}")
 
-                    if (gameDelegate?.isSearching()!!) return false
+                    if (safeDelegate.isSearching()) return false
 
                     // Initialize the array with our Coordinate
                     val pts: FloatArray = floatArrayOf(event.x, event.y)
@@ -134,7 +134,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
                     lastMove = coordinates2Move(pts[0], pts[1])
 
-                    if (!(gameDelegate!!.canMakeMove(lastMove))) {
+                    if (!(safeDelegate.canMakeMove(lastMove))) {
                         invalidate()
                         return false
                     }
@@ -143,7 +143,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             }
             MotionEvent.ACTION_UP -> {
                 if (!zoomAllowed || !zoomMode) {
-                    gameDelegate!!.makeMove(lastMove)
+                    safeDelegate.makeMove(lastMove)
                     performClick()
                 }
             }
