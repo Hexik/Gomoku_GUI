@@ -135,6 +135,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private var autoWhite: Boolean = false
     private var showForbid: Boolean = false
     private var moveTime: Int = 1000
+    private var cacheSize: Int = 64
 
     private var stopWasPressed = false
     private var inSearch: Boolean = false
@@ -239,6 +240,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         if (tmpDim != game.dim) {
             game.dim = tmpDim
             newGame()
+        }
+        val tmpCacheSize = sharedPreferences.getString("list_preference_cache", "64")?.toInt() ?: 64
+        if (tmpCacheSize != cacheSize) {
+            cacheSize = tmpCacheSize
+            NativeInterface.writeToBrain("INFO CACHE_SIZE " + (cacheSize * 1024).toString())
         }
     }
 

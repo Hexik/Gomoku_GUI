@@ -24,6 +24,8 @@
         <item>64MB cache</item>
         <item>128MB cache</item>
         <item>256MB cache</item>
+        <item>512MB cache</item>
+        <item>1GB cache</item>
     </string-array>
 
     <string-array name="cache_values">
@@ -33,6 +35,8 @@
         <item>64</item>
         <item>128</item>
         <item>256</item>
+        <item>512</item>
+        <item>1024</item>
     </string-array>
 
     <!-- Board size -->
