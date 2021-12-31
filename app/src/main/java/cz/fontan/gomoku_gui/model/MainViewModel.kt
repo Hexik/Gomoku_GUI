@@ -220,7 +220,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         _msgEval.value = getResourceString(R.string.none)
         _msgNodes.value = getResourceString(R.string.none)
         _msgSpeed.value = getResourceString(R.string.none)
-        _msgResult.value = getResourceString(R.string.none)
     }
 
     private fun afterAction() {
