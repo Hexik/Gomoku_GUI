@@ -215,10 +215,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         setSearchTime()
     }
 
+    private fun resetProgress() {
+        _msgDepth.value = getResourceString(R.string.none)
+        _msgEval.value = getResourceString(R.string.none)
+        _msgNodes.value = getResourceString(R.string.none)
+        _msgSpeed.value = getResourceString(R.string.none)
+        _msgResult.value = getResourceString(R.string.none)
+    }
+
     private fun afterAction() {
         NativeInterface.writeToBrain(game.toBoard(false))
         queryGameResult()
         setIdleStatus()
+        resetProgress()
     }
 
     private fun setIdleStatus() {
