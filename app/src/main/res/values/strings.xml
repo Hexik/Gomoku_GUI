@@ -2,7 +2,7 @@
     <string name="about_dialog">About</string>
     <string name="ai_black">AI plays Black</string>
     <string name="ai_white">AI plays White</string>
-    <string name="app_name">Gomoku GUI</string>
+    <string name="app_name">Embryo Engine</string>
     <string name="author">Author</string>
     <string name="board_view">Board</string>
     <string name="build_date">Build date</string>
@@ -29,7 +29,6 @@
     <string name="forbidden_moves">Forbidden moves</string>
     <string name="forbidden_moves_off">Forbidden moves are not displayed</string>
     <string name="forbidden_moves_on">Show forbidden moves</string>
-    <string name="gomoku_gui">Gomoku GUI</string>
     <string name="level">Playing Level</string>
     <string name="loading">Loading…</string>
     <string name="menu_settings">Settings</string>
