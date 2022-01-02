@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package cz.fontan.gomoku_gui
 
 import androidx.test.espresso.idling.CountingIdlingResource
