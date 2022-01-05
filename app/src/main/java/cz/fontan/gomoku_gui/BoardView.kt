@@ -58,6 +58,8 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private val originalMatrix = Matrix()
     private val zoomingMatrix = Matrix()
 
+    private var bitmap: Bitmap? = null
+
     init {
         paint.textAlign = Paint.Align.CENTER
         paint.isAntiAlias = true
@@ -66,7 +68,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         // if you ask for width, height too early, the value is 0
         doOnPreDraw {
             Log.v(TAG, "Pre $width,$height,$offset")
-            recalcLimits()
+            recalc()
         }
     }
 
@@ -90,7 +92,6 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         if (zoomAllowed) {
             canvas.concat(if (zoomMode) zoomingMatrix else originalMatrix)
         }
-        recalcLimits()
         drawBoard(canvas)
         drawStones(canvas)
     }
@@ -170,16 +171,13 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             }
         }
         paint.color = oldColor
+
+        drawBestMove(canvas)
+        drawForbid(canvas)
     }
 
     private fun drawBoard(canvas: Canvas) {
-        drawHorizontalLines(canvas)
-        drawVerticalLines(canvas)
-        drawFrame(canvas)
-        drawCoordinates(canvas)
-        drawHandicapPoints(canvas)
-        drawBestMove(canvas)
-        drawForbid(canvas)
+        canvas.drawBitmap(bitmap ?: recalcBitmap(), 0.0f, 0.0f, paint)
     }
 
     private fun drawHorizontalLines(canvas: Canvas) {
@@ -306,6 +304,26 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
     private fun move2Point(move: Move): PointF {
         return PointF(offset + move.x * step, offset + (kStepCount - move.y) * step)
+    }
+
+    fun recalc() {
+        recalcLimits()
+        bitmap = recalcBitmap()
+    }
+
+    private fun recalcBitmap(): Bitmap {
+        val h = if (height > 0) height else 1000
+        val w = if (width > 0) width else 1000
+        val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bmp)
+
+        drawHorizontalLines(canvas)
+        drawVerticalLines(canvas)
+        drawFrame(canvas)
+        drawCoordinates(canvas)
+        drawHandicapPoints(canvas)
+
+        return bmp
     }
 
     /**

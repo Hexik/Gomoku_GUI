@@ -243,6 +243,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.refresh()
+        binding.boardView.recalc()
         binding.boardView.invalidate()
         Log.v(TAG, "onResume")
     }
