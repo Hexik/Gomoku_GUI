@@ -207,6 +207,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        if (item.itemId == R.id.menu_benchmark) {
+            Log.d(TAG, "Benchmark")
+            NativeInterface.writeToBrain("BENCH")
+        }
+
         if (item.itemId == R.id.menu_quit) {
             Log.d(TAG, "Quit")
             viewModel.saveGamePrivate()

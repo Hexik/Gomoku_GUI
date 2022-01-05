@@ -19,6 +19,10 @@
         android:title="@string/about_dialog"
         app:showAsAction="never" />
     <item
+        android:id="@+id/menu_benchmark"
+        android:title="@string/benchmark"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/menu_quit"
         android:title="@string/quit"
         app:showAsAction="never" />

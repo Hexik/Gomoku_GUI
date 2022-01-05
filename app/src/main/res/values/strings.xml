@@ -5,6 +5,7 @@
     <string name="app_name">Embryo Engine</string>
     <string name="author">Author</string>
     <string name="board_view">Board</string>
+    <string name="benchmark">Benchmark</string>
     <string name="build_date">Build date</string>
     <string name="button_new">New</string>
     <string name="button_play">Play</string>

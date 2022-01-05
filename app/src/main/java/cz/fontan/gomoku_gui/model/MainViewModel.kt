@@ -351,8 +351,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         // MESSAGE ...
         when {
             response.startsWith("DEPTH ") -> parseStatus(response)
+            response.startsWith("POSITION: ") -> parsePosition(response.removePrefix("POSITION: "))
             response.startsWith("REALTIME ") -> parseRealTime(response.removePrefix("REALTIME "))
             response.startsWith("RESULT ") -> parseResult(response.removePrefix("RESULT "))
+            response.startsWith("TIME(MS) ") -> parseBenchmark(response)
             else -> return
         }
     }
@@ -394,6 +396,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             response.startsWith("PV  ") -> return
             response.startsWith("REFRESH") -> return
             else -> return
+        }
+    }
+
+    private fun parsePosition(response: String) {
+        _msgDepth.value = response
+        _msgSpeed.value = getResourceString(R.string.none)
+    }
+
+    private fun parseBenchmark(response: String) {
+        val splitted = response.split(" ")
+        val it = splitted.iterator()
+        // Caution: the message should be well-formed
+        while (it.hasNext()) {
+            when (it.next()) {
+                "NPS" -> _msgSpeed.value = it.next()
+            }
         }
     }
 
