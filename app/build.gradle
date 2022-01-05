@@ -102,6 +102,7 @@ android {
 
         caro {
             dimension 'gametype'
+            applicationIdSuffix ".caro"
             versionNameSuffix ".Caro"
             externalNativeBuild {
                 cmake {
@@ -111,6 +112,7 @@ android {
         }
         freestyle {
             dimension 'gametype'
+            applicationIdSuffix ".freeStyle"
             versionNameSuffix ".FreeStyle"
             externalNativeBuild {
                 cmake {
@@ -120,6 +122,7 @@ android {
         }
         renju {
             dimension 'gametype'
+            applicationIdSuffix ".renju"
             versionNameSuffix ".Renju"
             externalNativeBuild {
                 cmake {
@@ -129,6 +132,7 @@ android {
         }
         standard {
             dimension 'gametype'
+            applicationIdSuffix ".standard"
             versionNameSuffix ".Standard"
             externalNativeBuild {
                 cmake {
