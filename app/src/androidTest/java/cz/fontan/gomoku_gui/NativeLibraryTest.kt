@@ -45,7 +45,7 @@ class NativeLibraryTest {
     @Test
     fun about() {
         NativeInterface.writeToBrain("about")
-        assert(NativeInterface.readFromBrain(1000).contains("Generic Engine"))
+        assert(NativeInterface.readFromBrain(1000).contains("Mira Fontan"))
     }
 
     @Test
@@ -128,8 +128,13 @@ class NativeLibraryTest {
             |4,3,2
             |done""".trimMargin()
         )
-        assert(NativeInterface.readFromBrain(1000) == "4,4")
+        var s: String = ""
+        do {
+            s = NativeInterface.readFromBrain(1000)
+        } while (s.startsWith("DEBUG") || s.startsWith("MESSAGE"))
+        assert(s == "4,4")
         NativeInterface.writeToBrain("yxresult")
         assert(NativeInterface.readFromBrain(1000) == "MESSAGE RESULT DRAW")
+        NativeInterface.writeToBrain("end")
     }
 }
