@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
 import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
@@ -33,6 +34,9 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Handle the splash screen transition.
+        installSplashScreen()
 
         Handler(Looper.getMainLooper()).postAtFrontOfQueue {
             if (BuildConfig.DEBUG) {
@@ -223,11 +227,7 @@ class MainActivity : AppCompatActivity() {
         if (item.itemId == R.id.menu_quit) {
             Log.d(TAG, "Quit")
             viewModel.saveGamePrivate()
-            if (Build.VERSION.SDK_INT >= 21) {
-                finishAndRemoveTask()
-            } else {
-                finishAffinity()
-            }
+            finishAndRemoveTask()
             exitProcess(0)
         }
         return super.onOptionsItemSelected(item)
