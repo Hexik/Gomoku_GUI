@@ -306,6 +306,9 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         return PointF(offset + move.x * step, offset + (kStepCount - move.y) * step)
     }
 
+    /**
+     * Recalculate limits, create new bitmap
+     */
     fun recalc() {
         recalcLimits()
         bitmap = recalcBitmap()
