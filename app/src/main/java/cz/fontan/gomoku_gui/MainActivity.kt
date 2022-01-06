@@ -60,6 +60,14 @@ class MainActivity : AppCompatActivity() {
         prepareButtons()
         prepareObservers()
         CountingIdlingResourceSingleton.increment()
+
+        val launchIntent = intent
+        if (launchIntent.action == "com.google.intent.action.TEST_LOOP") {
+            Log.d(TAG, "TEST_LOOP")
+            // Code to handle your game loop here
+            // val scenario = launchIntent.getIntExtra("scenario", 0)
+            finish()
+        }
     }
 
     private fun prepareBindings() {
