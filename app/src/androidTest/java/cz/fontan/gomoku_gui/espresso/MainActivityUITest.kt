@@ -64,6 +64,7 @@ class MainActivityUITest {
         // Play clicked
         Espresso.onView(ViewMatchers.withId(R.id.button_play))
             .check(matches(ViewMatchers.isEnabled())).perform(click())
+        Thread.sleep(100)
         // Check Buttons
         Espresso.onView(ViewMatchers.withId(R.id.button_play))
             .check(matches(ViewMatchers.isEnabled()))
