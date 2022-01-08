@@ -20,22 +20,32 @@ class NativeCatch2 {
     }
 
     @Test
-    fun basic() {
+    fun Basic() {
         assert(0 == NativeInterface.runCatch2Test("Basic*"))
     }
 
     @Test
-    fun config() {
+    fun Config() {
         assert(0 == NativeInterface.runCatch2Test("Config*"))
     }
 
     @Test
-    fun engine() {
+    fun Engine() {
         assert(0 == NativeInterface.runCatch2Test("Engine*"))
     }
 
     @Test
-    fun lockedQueue() {
-        assert(0 == NativeInterface.runCatch2Test("LockedQueue*"))
+    fun InputQueue() {
+        assert(0 == NativeInterface.runCatch2Test("InputQueue*"))
+    }
+
+    @Test
+    fun Ray() {
+        assert(0 == NativeInterface.runCatch2Test("Ray*"))
+    }
+
+    @Test
+    fun All() {
+        assert(0 == NativeInterface.runCatch2Test("*"))
     }
 }
