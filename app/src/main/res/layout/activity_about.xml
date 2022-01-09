@@ -87,7 +87,7 @@
                     android:layout_weight="1"
                     android:text="@string/version"
                     android:textSize="@dimen/text_size_about"
-                    tools:text="Version" />
+                    tools:text="@string/version" />
 
                 <TextView
                     android:id="@+id/textViewAboutSWVersionValue"
@@ -97,31 +97,6 @@
                     android:text="@string/versionName"
                     android:textSize="@dimen/text_size_about"
                     tools:text="@string/versionName" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:id="@+id/textViewAboutEngineName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/engine_name"
-                    android:textSize="@dimen/text_size_about"
-                    tools:text="@string/engine_name" />
-
-                <TextView
-                    android:id="@+id/textViewAboutEngineNameValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/engine_random"
-                    android:textSize="@dimen/text_size_about"
-                    tools:text="@string/engine_random" />
 
             </TableRow>
 

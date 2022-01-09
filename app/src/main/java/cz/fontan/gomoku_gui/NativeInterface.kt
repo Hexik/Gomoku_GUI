@@ -39,5 +39,7 @@ class NativeInterface {
          * @return number of failed tests
          */
         external fun runCatch2Test(name: String): Int
+
+        external fun getEngineId(): String
     }
 }

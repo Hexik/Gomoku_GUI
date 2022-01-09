@@ -50,7 +50,7 @@
     <string name="splash_image">Starting screen picture</string>
     <string name="status">Status</string>
     <string name="sw_name">SW name</string>
-    <string name="version">Version</string>
+    <string name="version">GUI Version</string>
     <string name="use_database">Use database</string>
     <string name="use_database_off">Database not in use</string>
     <string name="use_database_on">Database ready</string>
