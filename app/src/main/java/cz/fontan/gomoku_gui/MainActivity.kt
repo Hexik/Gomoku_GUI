@@ -13,6 +13,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
 import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_gui.model.MainViewModel
@@ -20,6 +23,7 @@ import java.io.*
 import kotlin.system.exitProcess
 
 private const val TAG = "MainActivity"
+private const val AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
 
 /**
  * Main App Activity, setup bindings and observers
@@ -28,6 +32,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
+
+    private var mInterstitialAd: InterstitialAd? = null
+    private var mAdIsLoading: Boolean = false
 
     /**
      * Prepare bindings, buttons, observers
@@ -42,10 +49,10 @@ class MainActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) {
                 StrictMode.setThreadPolicy(
                     ThreadPolicy.Builder()
-                        .detectDiskReads()
+                        .detectAll()
                         .detectDiskWrites()
                         .detectNetwork() // or .detectAll() for all detectable problems
-                        .detectAll()
+                        .permitDiskReads()
                         .penaltyLog()
                         .build()
                 )
@@ -72,6 +79,19 @@ class MainActivity : AppCompatActivity() {
             // val scenario = launchIntent.getIntExtra("scenario", 0)
             finish()
         }
+
+        // Initialize the Mobile Ads SDK.
+        MobileAds.initialize(this) {}
+
+        // Set your test devices. Check your logcat output for the hashed device ID to
+        // get test ads on a physical device. e.g.
+        // "Use RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("ABCDEF012345"))
+        // to get test ads on this device."
+        MobileAds.setRequestConfiguration(
+            RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf("ABCDEF012345"))
+                .build()
+        )
     }
 
     private fun prepareBindings() {
@@ -99,6 +119,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.redoMove()
         }
         binding.buttonNew.setOnClickListener {
+            showInterstitial()
             viewModel.newGame()
         }
     }
@@ -138,6 +159,60 @@ class MainActivity : AppCompatActivity() {
         viewModel.msgNodes.observe(this, { binding.textViewDataNodes.text = it })
         viewModel.msgSpeed.observe(this, { binding.textViewDataSpeed.text = it })
         viewModel.msgResult.observe(this, { binding.textViewDataStatus.text = it })
+    }
+
+
+    private fun loadAd() {
+        val adRequest = AdRequest.Builder().build()
+
+        InterstitialAd.load(this, AD_UNIT_ID, adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d(TAG, adError.message)
+                    mInterstitialAd = null
+                    mAdIsLoading = false
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    Log.d(TAG, "Ad was loaded.")
+                    mInterstitialAd = interstitialAd
+                    mAdIsLoading = false
+                }
+            }
+        )
+    }
+
+    // Show the ad if it's ready. Otherwise toast and restart the game.
+    private fun showInterstitial() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    Log.d(TAG, "Ad was dismissed.")
+                    // Don't forget to set the ad reference to null so you
+                    // don't show the ad a second time.
+                    mInterstitialAd = null
+                    loadAd()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                    Log.d(TAG, "Ad failed to show.")
+                    // Don't forget to set the ad reference to null so you
+                    // don't show the ad a second time.
+                    mInterstitialAd = null
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    Log.d(TAG, "Ad showed fullscreen content.")
+                    // Called when ad is dismissed.
+                }
+            }
+            mInterstitialAd?.show(this)
+        } else {
+            if (!mAdIsLoading && mInterstitialAd == null) {
+                mAdIsLoading = true
+                loadAd()
+            }
+        }
     }
 
     /**

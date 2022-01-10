@@ -16,7 +16,7 @@ ext {
 
 android {
     compileSdkVersion 31
-    buildToolsVersion '31.0.0'
+    buildToolsVersion '32.0.0'
     signingConfigs {
         release {
             storeFile file('../keystore/keystore-release.jks')
@@ -195,6 +195,7 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
     implementation 'androidx.core:core-splashscreen:1.0.0-alpha02'
+    implementation 'com.google.android.gms:play-services-ads:20.5.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

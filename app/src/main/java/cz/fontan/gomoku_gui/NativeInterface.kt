@@ -40,6 +40,9 @@ class NativeInterface {
          */
         external fun runCatch2Test(name: String): Int
 
+        /**
+         * Engine identification string from another project
+         */
         external fun getEngineId(): String
     }
 }
