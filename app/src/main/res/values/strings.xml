@@ -46,6 +46,7 @@
     <string name="speed">kN/s</string>
     <string name="status">Status</string>
     <string name="sw_name">SW name</string>
+    <string name="time">Time</string>
     <string name="version">GUI Version</string>
     <string name="use_database">Use database</string>
     <string name="use_database_off">Database not in use</string>

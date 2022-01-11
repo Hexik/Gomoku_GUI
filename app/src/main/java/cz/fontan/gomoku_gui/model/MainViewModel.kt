@@ -104,6 +104,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     val msgResult: LiveData<String>
         get() = _msgResult
 
+    private val _msgLabel = MutableLiveData<String>()
+
+    /**
+     * Game result as answer from brain
+     */
+    val msgLabel: LiveData<String>
+        get() = _msgLabel
+
     private val isRunningTest: Boolean by lazy {
         try {
             Class.forName("androidx.test.espresso.Espresso")
@@ -139,6 +147,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
 
     private var stopWasPressed = false
     private var inSearch: Boolean = false
+    private var showStatus: Boolean = false
 
     init {
         readSettings()
@@ -172,6 +181,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             stopWasPressed = false
             setSearchTime()
             NativeInterface.writeToBrain(game.toBoard(true))
+            showStatus = false
+            _msgLabel.value = getResourceString(R.string.time)
             _isDirty.value = true
         } else {
             setIdleStatus()
@@ -193,6 +204,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     fun undoMove() {
         game.undoMove()
         stopWasPressed = false
+        showStatus = true
         afterAction()
     }
 
@@ -201,6 +213,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
      */
     fun redoMove() {
         game.redoMove()
+        showStatus = true
         afterAction()
     }
 
@@ -210,6 +223,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     fun newGame() {
         game.newGame()
         stopWasPressed = false
+        showStatus = true
         NativeInterface.writeToBrain("start ${game.dim}")
         afterAction()
         setSearchTime()
@@ -367,9 +381,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             "WHITE" -> _msgResult.value = getResourceString(R.string.result_white)
             "DRAW" -> _msgResult.value = getResourceString(R.string.result_draw)
             else -> {
-                _msgResult.value = getResourceString(R.string.none)
+                if (showStatus) {
+                    _msgResult.value = getResourceString(R.string.none)
+                }
                 gameOver = false
             }
+        }
+        if (gameOver) {
+            _msgLabel.value = getResourceString(R.string.status)
         }
         _canSearch.value = !gameOver
     }
@@ -426,6 +445,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
                 "EV" -> _msgEval.value = it.next()
                 "N" -> _msgNodes.value = it.next()
                 "N/MS" -> _msgSpeed.value = it.next()
+                "TM" -> _msgResult.value = "%.1f".format(it.next().toFloat().div(1000f))
             }
         }
     }

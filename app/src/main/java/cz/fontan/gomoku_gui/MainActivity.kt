@@ -159,6 +159,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.msgNodes.observe(this, { binding.textViewDataNodes.text = it })
         viewModel.msgSpeed.observe(this, { binding.textViewDataSpeed.text = it })
         viewModel.msgResult.observe(this, { binding.textViewDataStatus.text = it })
+        viewModel.msgLabel.observe(this, { binding.textViewLabelStatus.text = it })
     }
 
 
