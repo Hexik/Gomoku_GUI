@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cz.fontan.gomoku_gui">
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -12,7 +14,8 @@
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity">
@@ -23,8 +26,9 @@
         <activity android:name=".AboutActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.App.Starting"
-            android:exported="true">
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="com.google.intent.action.TEST_LOOP" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -36,5 +40,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
