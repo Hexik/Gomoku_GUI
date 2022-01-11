@@ -24,7 +24,7 @@ class AboutActivityUITest {
 
     @Test
     fun checkText_AboutActivity() {
-        onView(withId(R.id.textViewAboutEngineNameValue))
-            .check(matches(withText("Randomizer")))
+        onView(withId(R.id.textViewAboutEngineVersionValue))
+            .check(matches(withText("Embryo")))
     }
 }
