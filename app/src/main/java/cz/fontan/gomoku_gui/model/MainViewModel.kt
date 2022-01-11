@@ -429,7 +429,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         // Caution: the message should be well-formed
         while (it.hasNext()) {
             when (it.next()) {
-                "NPS" -> _msgSpeed.value = it.next()
+                "NPS" -> _msgSpeed.value = it.next().toInt().div(1000).toString()
             }
         }
     }
