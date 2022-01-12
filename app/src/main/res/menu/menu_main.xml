@@ -7,6 +7,10 @@
         android:title="@string/menu_settings"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/menu_upgrade"
+        android:title="@string/make_upgrade"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/menu_load"
         android:title="@string/load_dialog"
         app:showAsAction="never" />

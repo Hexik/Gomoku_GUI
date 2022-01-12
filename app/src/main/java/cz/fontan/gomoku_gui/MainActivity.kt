@@ -224,7 +224,10 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
+        val ret = super.onCreateOptionsMenu(menu)
+        if (ProfiVersion.isProfi()) menu.removeItem(R.id.menu_upgrade)
+//        menu.findItem(R.id.menu_upgrade).setEnabled(!ProfiVersion.isProfi())
+        return ret
     }
 
     private val activityLauncherLoad =
