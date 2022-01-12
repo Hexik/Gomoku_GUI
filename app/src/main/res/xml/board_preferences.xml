@@ -26,7 +26,7 @@
         app:summaryOn="@string/zoom_on"
         app:title="@string/zoom" />
     <CheckBoxPreference
-        app:defaultValue="@string/default_false"
+        app:defaultValue="@string/default_true"
         app:key="check_box_preference_forbidden"
         app:summaryOff="@string/forbidden_moves_off"
         app:summaryOn="@string/forbidden_moves_on"

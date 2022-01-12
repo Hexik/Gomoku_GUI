@@ -1,4 +1,5 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ListPreference
         app:defaultValue="@string/default_time"
         app:entries="@array/level_entries"
@@ -13,12 +14,14 @@
         app:key="list_preference_cache"
         app:summary="%s"
         app:title="Transposition table" />
-    <CheckBoxPreference
-        app:defaultValue="@string/default_false"
+    <ListPreference
+        android:layout_height="wrap_content"
+        app:defaultValue="@string/default_threads"
         app:enabled="false"
+        app:entries="@array/thread_count_entries"
+        app:entryValues="@array/thread_count_values"
         app:key="check_box_preference_multicore"
-        app:summaryOff="@string/multithreading_off"
-        app:summaryOn="@string/multithreading_on"
-        app:title="@string/multithreading" />
+        app:summary="%s"
+        app:title="@string/multithreading_no" />
 
 </PreferenceScreen>

@@ -9,6 +9,7 @@ import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import cz.fontan.gomoku_gui.InterfaceMainViewModel
 import cz.fontan.gomoku_gui.NativeInterface
+import cz.fontan.gomoku_gui.ProfiVersion
 import cz.fontan.gomoku_gui.R
 import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_gui.game.EnumMove
@@ -144,6 +145,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private var showForbid: Boolean = false
     private var moveTime: Int = 1000
     private var cacheSize: Int = 64
+    private var threadNum: Int = 0
 
     private var stopWasPressed = false
     private var inSearch: Boolean = false
@@ -268,6 +270,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             cacheSize = tmpCacheSize
             NativeInterface.writeToBrain("INFO CACHE_SIZE " + (cacheSize * 1024).toString())
         }
+        val tmpThreadNum =
+            sharedPreferences.getString("check_box_preference_multicore", "1")?.toInt() ?: 1
+        if (tmpThreadNum != threadNum) {
+            threadNum = if (ProfiVersion.isProfi()) tmpThreadNum else 1
+            NativeInterface.writeToBrain("INFO THREAD_NUM $threadNum")
+        }
+        ProfiVersion.checkProfi()
     }
 
     // InterfaceMain overrides

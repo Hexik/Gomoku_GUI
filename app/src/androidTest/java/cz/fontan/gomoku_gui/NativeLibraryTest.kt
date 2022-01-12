@@ -128,7 +128,7 @@ class NativeLibraryTest {
             |4,3,2
             |done""".trimMargin()
         )
-        var s: String = ""
+        var s: String
         do {
             s = NativeInterface.readFromBrain(1000)
         } while (s.startsWith("DEBUG") || s.startsWith("MESSAGE"))

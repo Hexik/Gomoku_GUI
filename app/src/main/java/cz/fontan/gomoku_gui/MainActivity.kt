@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         prepareBindings()
         prepareButtons()
         prepareObservers()
+        ProfiVersion.application = application
         CountingIdlingResourceSingleton.increment()
 
         val launchIntent = intent
@@ -121,7 +122,9 @@ class MainActivity : AppCompatActivity() {
             viewModel.redoMove()
         }
         binding.buttonNew.setOnClickListener {
-            showInterstitial()
+            if (!ProfiVersion.isProfi()) {
+                showInterstitial()
+            }
             viewModel.newGame()
         }
     }

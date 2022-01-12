@@ -55,4 +55,27 @@
         <item>17</item>
         <item>20</item>
     </string-array>
+
+    <!-- Thread count -->
+    <string-array name="thread_count_entries">
+        <item>1 thread</item>
+        <item>2 threads</item>
+        <item>3 threads</item>
+        <item>4 threads</item>
+        <item>5 threads</item>
+        <item>6 threads</item>
+        <item>7 threads</item>
+        <item>8 threads</item>
+    </string-array>
+
+    <string-array name="thread_count_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
 </resources>
