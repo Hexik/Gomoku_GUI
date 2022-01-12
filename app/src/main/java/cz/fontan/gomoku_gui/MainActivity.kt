@@ -20,6 +20,7 @@ import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
 import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_gui.model.MainViewModel
 import java.io.*
+import kotlin.random.Random
 import kotlin.system.exitProcess
 
 private const val TAG = "MainActivity"
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private var mInterstitialAd: InterstitialAd? = null
     private var mAdIsLoading: Boolean = false
+    private var mSkipNextAds: Int = 0
 
     /**
      * Prepare bindings, buttons, observers
@@ -178,6 +180,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "Ad was loaded.")
                     mInterstitialAd = interstitialAd
                     mAdIsLoading = false
+                    mSkipNextAds = Random.nextInt(1, 5)
                 }
             }
         )
@@ -185,7 +188,7 @@ class MainActivity : AppCompatActivity() {
 
     // Show the ad if it's ready. Otherwise toast and restart the game.
     private fun showInterstitial() {
-        if (mInterstitialAd != null) {
+        if (mInterstitialAd != null && --mSkipNextAds <= 0) {
             mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     Log.d(TAG, "Ad was dismissed.")
