@@ -34,9 +34,7 @@
     <string name="menu_settings">Settings</string>
     <string name="miroslav_fontan">Miroslav Fontan</string>
     <string name="multithreading_profi">Use more threads</string>
-    <string name="multithreading_no">Only one thread in free version</string>
-    <string name="multithreading_on">Run at full strength</string>
-    <string name="multithreading_off">Single core Basic version</string>
+    <string name="multithreading_no">Single core Free version</string>
     <string name="nodes">Nodes</string>
     <string name="none">---</string>
     <string name="numbered_moves">Numbered moves</string>
