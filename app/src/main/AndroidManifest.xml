@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cz.fontan.gomoku_gui">
+    package="cz.fontan.gomoku_embryo">
 
     <application
         android:allowBackup="true"
@@ -21,7 +21,7 @@
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="cz.fontan.gomoku_gui.MainActivity" />
+                android:value="cz.fontan.gomoku_embryo.MainActivity" />
         </activity>
         <activity android:name=".AboutActivity" />
         <activity

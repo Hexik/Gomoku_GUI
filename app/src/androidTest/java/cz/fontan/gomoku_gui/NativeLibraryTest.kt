@@ -1,7 +1,7 @@
-package cz.fontan.gomoku_gui
+package cz.fontan.gomoku_embryo
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
+import cz.fontan.gomoku_embryo.game.BOARD_SIZE_MAX
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass

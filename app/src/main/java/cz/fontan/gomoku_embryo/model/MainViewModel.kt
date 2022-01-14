@@ -1,4 +1,4 @@
-package cz.fontan.gomoku_gui.model
+package cz.fontan.gomoku_embryo.model
 
 import android.app.Application
 import android.content.Context
@@ -7,14 +7,14 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
-import cz.fontan.gomoku_gui.InterfaceMainViewModel
-import cz.fontan.gomoku_gui.NativeInterface
-import cz.fontan.gomoku_gui.ProfiVersion
-import cz.fontan.gomoku_gui.R
-import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
-import cz.fontan.gomoku_gui.game.EnumMove
-import cz.fontan.gomoku_gui.game.Game
-import cz.fontan.gomoku_gui.game.Move
+import cz.fontan.gomoku_embryo.InterfaceMainViewModel
+import cz.fontan.gomoku_embryo.NativeInterface
+import cz.fontan.gomoku_embryo.ProfiVersion
+import cz.fontan.gomoku_embryo.R
+import cz.fontan.gomoku_embryo.game.BOARD_SIZE_MAX
+import cz.fontan.gomoku_embryo.game.EnumMove
+import cz.fontan.gomoku_embryo.game.Game
+import cz.fontan.gomoku_embryo.game.Move
 import kotlinx.coroutines.Dispatchers
 
 /**

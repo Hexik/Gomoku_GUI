@@ -1,4 +1,4 @@
-package cz.fontan.gomoku_gui
+package cz.fontan.gomoku_embryo
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.BeforeClass

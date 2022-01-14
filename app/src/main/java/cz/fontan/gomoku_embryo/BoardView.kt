@@ -1,4 +1,4 @@
-package cz.fontan.gomoku_gui
+package cz.fontan.gomoku_embryo
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,9 +8,9 @@ import android.util.Log
 import android.view.MotionEvent
 import androidx.core.view.doOnPreDraw
 import androidx.preference.PreferenceManager
-import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
-import cz.fontan.gomoku_gui.game.EnumMove
-import cz.fontan.gomoku_gui.game.Move
+import cz.fontan.gomoku_embryo.game.BOARD_SIZE_MAX
+import cz.fontan.gomoku_embryo.game.EnumMove
+import cz.fontan.gomoku_embryo.game.Move
 
 private const val TAG: String = "BoardView"
 

@@ -1,6 +1,6 @@
-package cz.fontan.gomoku_gui
+package cz.fontan.gomoku_embryo
 
-import cz.fontan.gomoku_gui.game.Move
+import cz.fontan.gomoku_embryo.game.Move
 
 /**
  * Basic interface between MainActivity, BoardView an MainViewModel

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
   <Match>
-    <Package name="cz.fontan.gomoku_gui.databinding"/>
+    <Package name="cz.fontan.gomoku_embryo.databinding"/>
     <Bug pattern="BC_UNCONFIRMED_CAST"/>
   </Match>
 </FindBugsFilter>

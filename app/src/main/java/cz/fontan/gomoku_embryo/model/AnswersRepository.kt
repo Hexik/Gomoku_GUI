@@ -1,6 +1,6 @@
-package cz.fontan.gomoku_gui.model
+package cz.fontan.gomoku_embryo.model
 
-import cz.fontan.gomoku_gui.NativeInterface
+import cz.fontan.gomoku_embryo.NativeInterface
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

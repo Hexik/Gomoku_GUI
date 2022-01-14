@@ -1,4 +1,4 @@
-package cz.fontan.gomoku_gui.game
+package cz.fontan.gomoku_embryo.game
 
 /**
  * Class keeping the list of Moves, user can browse the list in both direction

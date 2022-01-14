@@ -1,15 +1,15 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        app:fragment="cz.fontan.gomoku_gui.SettingsActivity$AISettingsFragment"
+        app:fragment="cz.fontan.gomoku_embryo.SettingsActivity$AISettingsFragment"
         app:key="ai_settings_header"
         app:title="@string/ai_settings_header" />
     <Preference
-        app:fragment="cz.fontan.gomoku_gui.SettingsActivity$BoardFragment"
+        app:fragment="cz.fontan.gomoku_embryo.SettingsActivity$BoardFragment"
         app:key="board_header"
         app:title="@string/board_header" />
     <Preference
-        app:fragment="cz.fontan.gomoku_gui.SettingsActivity$LevelFragment"
+        app:fragment="cz.fontan.gomoku_embryo.SettingsActivity$LevelFragment"
         app:key="level_header"
         app:title="@string/level" />
 

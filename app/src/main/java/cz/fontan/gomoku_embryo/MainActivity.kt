@@ -1,4 +1,4 @@
-package cz.fontan.gomoku_gui
+package cz.fontan.gomoku_embryo
 
 import android.app.Activity
 import android.content.Intent
@@ -16,9 +16,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import cz.fontan.gomoku_gui.databinding.ActivityMainBinding
-import cz.fontan.gomoku_gui.game.BOARD_SIZE_MAX
-import cz.fontan.gomoku_gui.model.MainViewModel
+import cz.fontan.gomoku_embryo.databinding.ActivityMainBinding
+import cz.fontan.gomoku_embryo.game.BOARD_SIZE_MAX
+import cz.fontan.gomoku_embryo.model.MainViewModel
 import java.io.*
 import kotlin.random.Random
 import kotlin.system.exitProcess

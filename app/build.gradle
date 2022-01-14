@@ -39,7 +39,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "cz.fontan.gomoku_gui"
+        applicationId "cz.fontan.gomoku_embryo"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode gitVersionCode

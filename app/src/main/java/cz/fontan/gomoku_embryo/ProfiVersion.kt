@@ -1,4 +1,4 @@
-package cz.fontan.gomoku_gui
+package cz.fontan.gomoku_embryo
 
 import android.app.Application
 import android.content.Context

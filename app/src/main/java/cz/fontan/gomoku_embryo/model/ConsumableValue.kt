@@ -1,4 +1,4 @@
-package cz.fontan.gomoku_gui.model
+package cz.fontan.gomoku_embryo.model
 
 import java.util.concurrent.atomic.AtomicBoolean
 

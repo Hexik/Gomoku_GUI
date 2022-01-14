@@ -1,4 +1,4 @@
-package cz.fontan.gomoku_gui.espresso
+package cz.fontan.gomoku_embryo.espresso
 
 import android.view.InputDevice
 import android.view.MotionEvent
@@ -12,9 +12,9 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import cz.fontan.gomoku_gui.CountingIdlingResourceSingleton
-import cz.fontan.gomoku_gui.MainActivity
-import cz.fontan.gomoku_gui.R
+import cz.fontan.gomoku_embryo.CountingIdlingResourceSingleton
+import cz.fontan.gomoku_embryo.MainActivity
+import cz.fontan.gomoku_embryo.R
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
