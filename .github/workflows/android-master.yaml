@@ -20,7 +20,7 @@ jobs:
         with:
           java-version: 11
       - name: Unit tests
-        run: bash ./gradlew testFreeCaroReleaseUnitTest testFreeFreestyleReleaseUnitTest testFreeRenjuReleaseUnitTest testFreeStandardReleaseUnitTest --stacktrace
+        run: bash ./gradlew testCaroReleaseUnitTest testFreestyleReleaseUnitTest testRenjuReleaseUnitTest testStandardReleaseUnitTest --stacktrace
 
   apk:
     name: Generate APK
@@ -38,9 +38,9 @@ jobs:
           mkdir keystore
           gpg -d --passphrase "${{secrets.RELEASE_KEYSTORE_PWD}}" --batch release.keystore.asc > keystore/keystore-release.jks
       - name: Build debug APK
-        run: bash ./gradlew  app:assembleFreeStandardRelease --stacktrace
+        run: bash ./gradlew  app:assembleStandardRelease --stacktrace
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
           name: app
-          path: app/build/outputs/apk/freeStandard/release/app-free-standard-release.apk
+          path: app/build/outputs/apk/standard/release/app-standard-release.apk

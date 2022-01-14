@@ -38,7 +38,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags '-std=c++17'
-                arguments "-DANDROID_TOOLCHAIN=clang", "-DCPU_PLATFORM=Modern"
+                arguments "-DANDROID_TOOLCHAIN=clang", "-DCPU_PLATFORM=Modern", "-DSPECIAL_TARGET=Mercury"
             }
         }
     }
@@ -79,27 +79,8 @@ android {
         }
     }
 
-    flavorDimensions "version", "gametype"
+    flavorDimensions "gametype"
     productFlavors {
-        free {
-            dimension "version"
-            versionNameSuffix ".Free"
-            externalNativeBuild {
-                cmake {
-                    arguments "-DSPECIAL_TARGET=Gomocup"
-                }
-            }
-        }
-        profi {
-            dimension "version"
-            versionNameSuffix ".Profi"
-            externalNativeBuild {
-                cmake {
-                    arguments "-DSPECIAL_TARGET=Mercury"
-                }
-            }
-        }
-
         caro {
             dimension 'gametype'
             applicationIdSuffix ".caro"

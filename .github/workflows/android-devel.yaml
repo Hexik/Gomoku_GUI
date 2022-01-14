@@ -20,4 +20,4 @@ jobs:
         with:
           java-version: 11
       - name: Unit tests
-        run: bash ./gradlew testFreeCaroReleaseUnitTest testFreeFreestyleReleaseUnitTest testFreeRenjuReleaseUnitTest testFreeStandardReleaseUnitTest --stacktrace
+        run: bash ./gradlew testCaroReleaseUnitTest testFreestyleReleaseUnitTest testRenjuReleaseUnitTest testStandardReleaseUnitTest --stacktrace
