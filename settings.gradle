@@ -1,2 +1,3 @@
-rootProject.name = "Gomoku GUI"
+rootProject.name = "Gomoku Embryo"
 include ':app'
+include ':iap'
