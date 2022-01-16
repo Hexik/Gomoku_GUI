@@ -273,7 +273,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         val tmpThreadNum =
             sharedPreferences.getString("check_box_preference_multicore", "1")?.toInt() ?: 1
         if (tmpThreadNum != threadNum) {
-            threadNum = if (ProfiVersion.isProfi()) tmpThreadNum else 1
+            threadNum = if (ProfiVersion.isActive) tmpThreadNum else 1
             NativeInterface.writeToBrain("INFO THREAD_NUM $threadNum")
         }
         ProfiVersion.checkProfi()

@@ -12,7 +12,9 @@ import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import com.aemerse.iap.*
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -33,7 +35,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
+    private lateinit var iapConnector: IapConnector
 
+    private var _menu: Menu? = null
+    private val isBillingClientConnected: MutableLiveData<Boolean> = MutableLiveData()
     private var mInterstitialAd: InterstitialAd? = null
     private var mAdIsLoading: Boolean = false
     private var mSkipNextAds: Int = 0
@@ -74,6 +79,7 @@ class MainActivity : AppCompatActivity() {
         prepareObservers()
         ProfiVersion.application = application
         CountingIdlingResourceSingleton.increment()
+        isBillingClientConnected.value = false
 
         val launchIntent = intent
         if (launchIntent.action == "com.google.intent.action.TEST_LOOP") {
@@ -95,6 +101,50 @@ class MainActivity : AppCompatActivity() {
                 .setTestDeviceIds(listOf("ABCDEF012345"))
                 .build()
         )
+
+        iapConnector = IapConnector(
+            context = this,
+            nonConsumableKeys = listOf("profi_version"),
+            consumableKeys = emptyList(),
+            subscriptionKeys = emptyList(),
+            key = "LICENSE KEY",
+            enableLogging = true
+        )
+
+        iapConnector.addBillingClientConnectionListener(object : BillingClientConnectionListener {
+
+            override fun onConnected(status: Boolean, billingResponseCode: Int) {
+                Log.d(
+                    "KSA",
+                    "This is the status: $status and response code is: $billingResponseCode"
+                )
+                isBillingClientConnected.value = status
+            }
+        })
+
+        iapConnector.addPurchaseListener(object : PurchaseServiceListener {
+            override fun onPricesUpdated(iapKeyPrices: Map<String, DataWrappers.SkuDetails>) {
+                // list of available products will be received here, so you can update UI with prices if needed
+            }
+
+            override fun onProductPurchased(purchaseInfo: DataWrappers.PurchaseInfo) {
+                when (purchaseInfo.sku) {
+                    "profi_version" -> {
+                        ProfiVersion.isActive = true
+                    }
+                    else -> {}
+                }
+            }
+
+            override fun onProductRestored(purchaseInfo: DataWrappers.PurchaseInfo) {
+                // will be triggered fetching owned products using IapConnector;
+            }
+        })
+
+        isBillingClientConnected.observe(this, {
+            Log.d("KSA", "This is the new billing client status $it")
+            _menu?.findItem(R.id.menu_upgrade)?.isEnabled = !ProfiVersion.isActive && it
+        })
     }
 
     private fun prepareBindings() {
@@ -122,7 +172,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.redoMove()
         }
         binding.buttonNew.setOnClickListener {
-            if (!ProfiVersion.isProfi()) {
+            if (!ProfiVersion.isActive) {
                 showInterstitial()
             }
             viewModel.newGame()
@@ -228,8 +278,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         val ret = super.onCreateOptionsMenu(menu)
-        if (ProfiVersion.isProfi()) menu.removeItem(R.id.menu_upgrade)
-//        menu.findItem(R.id.menu_upgrade).setEnabled(!ProfiVersion.isProfi())
+        _menu = menu
+//        if (ProfiVersion.mStatus || isBillingClientConnected.value == false) menu.removeItem(R.id.menu_upgrade)
+        menu.findItem(R.id.menu_upgrade).isEnabled =
+            !ProfiVersion.isActive && isBillingClientConnected.value == true
         return ret
     }
 

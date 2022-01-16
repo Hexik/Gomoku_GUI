@@ -8,17 +8,10 @@ import android.content.Context
  */
 object ProfiVersion {
     /**
-     * Return Registration status
-     */
-    fun isProfi(): Boolean {
-        return mStatus
-    }
-
-    /**
      * Check Status at Google Play
      */
     fun checkProfi() {
-        mStatus = when (checkRegistration()) {
+        isActive = when (checkRegistration()) {
             EnumStatus.REGISTERED -> saveStatus(true)
             EnumStatus.NOT_REGISTERED -> saveStatus(false)
             EnumStatus.NO_CONNECTION -> loadStatus()
@@ -60,7 +53,11 @@ object ProfiVersion {
      *  placeholder for App
      */
     lateinit var application: Application
-    private var mStatus = false
+
+    /**
+     * Registration status
+     */
+    var isActive: Boolean = false
 
     private enum class EnumStatus { REGISTERED, NOT_REGISTERED, NO_CONNECTION }
 }

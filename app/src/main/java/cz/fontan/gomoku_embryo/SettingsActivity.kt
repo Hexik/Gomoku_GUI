@@ -126,10 +126,10 @@ class SettingsActivity : AppCompatActivity(),
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.level_preferences, rootKey)
             preferenceScreen.findPreference<Preference>("check_box_preference_multicore")?.isEnabled =
-                ProfiVersion.isProfi()
+                ProfiVersion.isActive
             preferenceScreen.findPreference<Preference>("check_box_preference_multicore")?.title =
                 getString(
-                    if (ProfiVersion.isProfi()) R.string.multithreading_profi else R.string.multithreading_no
+                    if (ProfiVersion.isActive) R.string.multithreading_profi else R.string.multithreading_no
                 )
         }
     }
