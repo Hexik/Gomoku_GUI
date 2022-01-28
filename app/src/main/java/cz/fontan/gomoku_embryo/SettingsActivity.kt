@@ -64,7 +64,7 @@ class SettingsActivity : AppCompatActivity(),
         // Instantiate the new Fragment
         val fragment = supportFragmentManager.fragmentFactory.instantiate(
             classLoader,
-            pref.fragment
+            pref.fragment.toString()
         ).apply {
             arguments = pref.extras
         }

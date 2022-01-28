@@ -44,8 +44,8 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private var step = 0f
 
     // setting preferences
-    private val sharedPreferences: SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(context)
+    private val sharedPreferences: SharedPreferences? =
+        context?.let { PreferenceManager.getDefaultSharedPreferences(it) }
 
     private var kBoardSize = BOARD_SIZE_MAX
     private var kStepCount = kBoardSize - 1
@@ -336,13 +336,14 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         Log.v(TAG, "Reca")
         val defaultDimension = context.getString(R.string.default_board).toInt()
         kBoardSize =
-            sharedPreferences.getString("list_preference_board_size", defaultDimension.toString())
+            sharedPreferences?.getString("list_preference_board_size", defaultDimension.toString())
                 ?.toInt()
                 ?: defaultDimension
         kStepCount = kBoardSize - 1
-        showCoordinates = sharedPreferences.getBoolean("check_box_preference_coordinates", true)
-        showNumbers = sharedPreferences.getBoolean("check_box_preference_numbers", true)
-        zoomAllowed = sharedPreferences.getBoolean("check_box_preference_zoom", false)
+        showCoordinates =
+            sharedPreferences?.getBoolean("check_box_preference_coordinates", true) ?: true
+        showNumbers = sharedPreferences?.getBoolean("check_box_preference_numbers", true) ?: true
+        zoomAllowed = sharedPreferences?.getBoolean("check_box_preference_zoom", false) ?: false
 
         if (showCoordinates) {
             offset = 0.08f * width
