@@ -24,6 +24,8 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
     // constants
     companion object {
+        private const val kButtonPercentage = 75
+        private const val kButtonPixels = 130
         private const val kHandicapDrawCoef = 0.07f
         private const val kHandicapOffset = 3
         private const val kMatrixScaleFactor = 1.6f
@@ -78,8 +80,17 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
-        // be sure the view has square shape
-        val smaller = kotlin.math.min(widthMeasureSpec, heightMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        // be sure the view has square shape and has some room for buttons
+        val smaller = if (widthSize < heightSize)
+            kotlin.math.min(
+                kotlin.math.min(widthSize, heightSize * kButtonPercentage / 100),
+                heightSize - kButtonPixels
+            )
+        else
+            heightSize
+
         setMeasuredDimension(smaller, smaller)
     }
 
