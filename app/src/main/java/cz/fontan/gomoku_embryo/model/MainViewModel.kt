@@ -467,6 +467,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             require(splitted.size == 2)
             inSearch = false
             makeMove(Move(splitted[0].toInt(), splitted[1].toInt()))
+            game.bestMove = Move()
         } catch (e: IllegalArgumentException) {
             Log.wtf("Res", response)
         }
