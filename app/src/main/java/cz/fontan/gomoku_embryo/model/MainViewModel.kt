@@ -182,6 +182,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             _canRedo.value = false
             stopWasPressed = false
             setSearchTime()
+            NativeInterface.writeToBrain("yxhashclear")
             NativeInterface.writeToBrain(game.toBoard(true))
             showStatus = false
             _msgLabel.value = getResourceString(R.string.time)
@@ -226,6 +227,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         game.newGame()
         stopWasPressed = false
         showStatus = true
+        NativeInterface.writeToBrain("yxhashclear")
         NativeInterface.writeToBrain("start ${game.dim}")
         afterAction()
         setSearchTime()
