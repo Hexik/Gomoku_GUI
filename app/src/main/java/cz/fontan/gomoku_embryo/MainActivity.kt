@@ -14,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import com.aemerse.iap.*
+import com.aemerse.iap.BillingClientConnectionListener
+import com.aemerse.iap.DataWrappers
+import com.aemerse.iap.IapConnector
+import com.aemerse.iap.PurchaseServiceListener
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -141,10 +144,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        isBillingClientConnected.observe(this, {
+        isBillingClientConnected.observe(this) {
             Log.d("KSA", "This is the new billing client status $it")
             _menu?.findItem(R.id.menu_upgrade)?.isEnabled = !ProfiVersion.isActive && it
-        })
+        }
     }
 
     private fun prepareBindings() {
@@ -182,39 +185,39 @@ class MainActivity : AppCompatActivity() {
     // Observers
     private fun prepareObservers() {
         // Observe data stream from brain
-        viewModel.dataFromBrain.observe(this, { it ->
+        viewModel.dataFromBrain.observe(this) { it ->
             CountingIdlingResourceSingleton.decrement()
             it.consume { viewModel.processResponse(it) }
-        })
+        }
 
         viewModel.isDirty.observe(
-            this, { binding.boardView.invalidate() }
-        )
+            this
+        ) { binding.boardView.invalidate() }
 
-        viewModel.canSearch.observe(this, {
+        viewModel.canSearch.observe(this) {
             binding.buttonPlay.isEnabled = it
-        })
+        }
 
-        viewModel.canStop.observe(this, {
+        viewModel.canStop.observe(this) {
             binding.buttonStop.isEnabled = it
-        })
+        }
 
-        viewModel.canRedo.observe(this, {
+        viewModel.canRedo.observe(this) {
             binding.buttonRedo.isEnabled = it
             binding.buttonNew.isEnabled = it || binding.buttonUndo.isEnabled
-        })
+        }
 
-        viewModel.canUndo.observe(this, {
+        viewModel.canUndo.observe(this) {
             binding.buttonUndo.isEnabled = it
             binding.buttonNew.isEnabled = it || binding.buttonRedo.isEnabled
-        })
+        }
 
-        viewModel.msgDepth.observe(this, { binding.textViewDataDepth.text = it })
-        viewModel.msgEval.observe(this, { binding.textViewDataEval.text = it })
-        viewModel.msgNodes.observe(this, { binding.textViewDataNodes.text = it })
-        viewModel.msgSpeed.observe(this, { binding.textViewDataSpeed.text = it })
-        viewModel.msgResult.observe(this, { binding.textViewDataStatus.text = it })
-        viewModel.msgLabel.observe(this, { binding.textViewLabelStatus.text = it })
+        viewModel.msgDepth.observe(this) { binding.textViewDataDepth.text = it }
+        viewModel.msgEval.observe(this) { binding.textViewDataEval.text = it }
+        viewModel.msgNodes.observe(this) { binding.textViewDataNodes.text = it }
+        viewModel.msgSpeed.observe(this) { binding.textViewDataSpeed.text = it }
+        viewModel.msgResult.observe(this) { binding.textViewDataStatus.text = it }
+        viewModel.msgLabel.observe(this) { binding.textViewLabelStatus.text = it }
     }
 
 
