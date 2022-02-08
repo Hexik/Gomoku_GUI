@@ -65,6 +65,9 @@ class Game(
         if (move.type == EnumMove.Wall) {
             return makeBlockMove(move)
         }
+        if (move.type == EnumMove.Empty) {
+            return makeEmptyMove(move)
+        }
 
         val localMove = Move(move.x, move.y, playerToMove)
         require(canMakeMove(localMove))
@@ -85,6 +88,20 @@ class Game(
         desk[deskIndex(move)] = move.type
         blockMoves.add(move)
         check(!canMakeMove(move))
+        return this
+    }
+
+    /**
+     * Put move on desk with all safety checks
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     */
+    private fun makeEmptyMove(move: Move): Game {
+        require(move.type == EnumMove.Empty)
+        require(!canMakeMove(move))
+        desk[deskIndex(move)] = move.type
+        blockMoves.remove(Move(move.x, move.y, EnumMove.Wall))
+        check(canMakeMove(move))
         return this
     }
 
@@ -145,6 +162,13 @@ class Game(
      */
     fun canMakeMove(m: Move): Boolean {
         return desk[deskIndex(m)] == EnumMove.Empty
+    }
+
+    /**
+     * Desk type at move position
+     */
+    fun getDeskType(m: Move): EnumMove {
+        return desk[deskIndex(m)]
     }
 
     /**
@@ -256,7 +280,7 @@ class Game(
             val numbers = lines[i].split(" ")
             require(numbers.size == 3)
             when (numbers[2].toInt()) {
-                0 -> makeMove(Move(numbers[0].toInt(), numbers[1].toInt()))
+                0 -> makeMove(Move(numbers[0].toInt(), numbers[1].toInt(), EnumMove.Black))
                 1 -> makeMove(Move(numbers[0].toInt(), numbers[1].toInt(), EnumMove.Wall))
                 else -> throw IllegalArgumentException()
             }

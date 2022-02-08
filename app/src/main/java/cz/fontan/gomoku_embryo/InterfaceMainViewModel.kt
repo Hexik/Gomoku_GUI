@@ -1,5 +1,6 @@
 package cz.fontan.gomoku_embryo
 
+import cz.fontan.gomoku_embryo.game.EnumMove
 import cz.fontan.gomoku_embryo.game.Move
 
 /**
@@ -12,6 +13,12 @@ interface InterfaceMainViewModel {
      * @param move test this Move
      */
     fun canMakeMove(move: Move): Boolean
+
+    /**
+     * Returns dest status at move position
+     * @param move test this Move
+     */
+    fun getDeskType(move: Move): EnumMove
 
     /**
      * Get Move played at i-th order
@@ -58,4 +65,9 @@ interface InterfaceMainViewModel {
      * Blocked cells (Wall) list
      */
     fun getBlockers(): ArrayList<Move>
+
+    /**
+     * Remove Blocked cell at move position
+     */
+    fun removeBlock(move: Move)
 }

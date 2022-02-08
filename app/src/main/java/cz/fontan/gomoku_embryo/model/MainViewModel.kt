@@ -291,6 +291,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         return game.canMakeMove(move)
     }
 
+    override fun getDeskType(move: Move): EnumMove {
+        return game.getDeskType(move)
+    }
+
     override fun makeMove(move: Move, sendBoard: Boolean) {
         game.makeMove(move)
 
@@ -299,11 +303,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         }
         queryGameResult()
 
+        val isPlayer = move.type == EnumMove.Black || move.type == EnumMove.White
         when {
-            move.type != EnumMove.Wall && autoBlack && game.playerToMove == EnumMove.Black && _canSearch.value == true -> startSearch(
+            isPlayer && autoBlack && game.playerToMove == EnumMove.Black && _canSearch.value == true -> startSearch(
                 false
             )
-            move.type != EnumMove.Wall && autoWhite && game.playerToMove == EnumMove.White && _canSearch.value == true -> startSearch(
+            isPlayer && autoWhite && game.playerToMove == EnumMove.White && _canSearch.value == true -> startSearch(
                 false
             )
             else -> setIdleStatus()
@@ -347,6 +352,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
 
     override fun getBlockers(): ArrayList<Move> {
         return game.blockMoves
+    }
+
+    override fun removeBlock(move: Move) {
+        makeMove(Move(move.x, move.y, EnumMove.Empty), true)
     }
 
     override fun getForbid(): String {
@@ -503,7 +512,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         try {
             require(splitted.size == 2)
             inSearch = false
-            makeMove(Move(splitted[0].toInt(), splitted[1].toInt()), false)
+            makeMove(Move(splitted[0].toInt(), splitted[1].toInt(), EnumMove.Black), false)
             game.bestMove = Move()
         } catch (e: IllegalArgumentException) {
             Log.wtf("Res", response)

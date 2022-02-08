@@ -59,6 +59,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private var zoomAllowed = false
     private var zoomMode = false
     private var longClick = false
+    private var removeBlock = false
 
     // transformation matrix
     private val originalMatrix = Matrix()
@@ -162,8 +163,12 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                     lastMove = coordinates2Move(pts[0], pts[1])
 
                     if (!(safeDelegate.canMakeMove(lastMove))) {
-                        invalidate()
-                        return false
+                        if (safeDelegate.getDeskType(lastMove) == EnumMove.Wall) {
+                            removeBlock = true
+                        } else {
+                            invalidate()
+                            return false
+                        }
                     }
                     Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
                 }
@@ -171,10 +176,17 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             MotionEvent.ACTION_UP -> {
                 if (!zoomAllowed || !zoomMode) {
                     if (longClick) {
-                        lastMove = Move(lastMove.x, lastMove.y, EnumMove.Wall)
+
+                        if (removeBlock) {
+                            safeDelegate.removeBlock(lastMove)
+                            removeBlock = false
+                        } else {
+                            safeDelegate.makeMove(Move(lastMove.x, lastMove.y, EnumMove.Wall), true)
+                        }
                         longClick = false
+                    } else {
+                        safeDelegate.makeMove(lastMove, true)
                     }
-                    safeDelegate.makeMove(lastMove, true)
                     performClick()
                 }
                 handler.removeCallbacks(onLongPress)
@@ -363,7 +375,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private fun coordinates2Move(x: Float, y: Float): Move {
         return Move(
             ((x - offset + step / 2) / step).toInt(),
-            kStepCount - ((y - offset + step / 2) / step).toInt()
+            kStepCount - ((y - offset + step / 2) / step).toInt(), EnumMove.Black
         )
     }
 
