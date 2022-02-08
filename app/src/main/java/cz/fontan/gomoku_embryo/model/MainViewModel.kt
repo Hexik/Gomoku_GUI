@@ -258,7 +258,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         _canUndo.value = game.canUndo()
         _canRedo.value = game.canRedo()
         _isDirty.value = true
-     }
+    }
 
     private fun readSettings() {
         autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
@@ -388,15 +388,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         // MESSAGE ...
         when {
             response.startsWith("DEPTH ") -> parseStatus(response)
-            response.startsWith("POSITION: ") -> parsePosition(response.removePrefix("POSITION: "))
+            response.startsWith("POSITION: ") -> parseBenchmarkPosition(response.removePrefix("POSITION: "))
             response.startsWith("REALTIME ") -> parseRealTime(response.removePrefix("REALTIME "))
-            response.startsWith("RESULT ") -> parseResult(response.removePrefix("RESULT "))
-            response.startsWith("TIME(MS) ") -> parseBenchmark(response)
+            response.startsWith("RESULT ") -> parseMessageResult(response.removePrefix("RESULT "))
+            response.startsWith("TIME(MS) ") -> parseBenchmarkResult(response)
             else -> return
         }
     }
 
-    private fun parseResult(response: String) {
+    private fun parseMessageResult(response: String) {
         // MESSAGE RESULT ...
         var gameOver = true
         when (response) {
@@ -458,12 +458,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         }
     }
 
-    private fun parsePosition(response: String) {
+    private fun parseBenchmarkPosition(response: String) {
+        // MESSAGE POSITION: ...
         _msgDepth.value = response
         _msgSpeed.value = getResourceString(R.string.none)
+        _msgEval.value = getResourceString(R.string.none)
+        _msgNodes.value = getResourceString(R.string.none)
+        _msgResult.value = getResourceString(R.string.benchmark)
+
     }
 
-    private fun parseBenchmark(response: String) {
+    private fun parseBenchmarkResult(response: String) {
         val splitted = response.split(" ")
         val it = splitted.iterator()
         // Caution: the message should be well-formed
