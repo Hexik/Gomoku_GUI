@@ -169,6 +169,11 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         val safeDelegate = gameDelegate ?: return
         val oldColor = paint.color
 
+        drawBlockMoves(canvas)
+        drawLoserMoves(canvas)
+        drawBestMove(canvas)
+        drawForbid(canvas)
+
         for (i in 0 until (safeDelegate.moveCount())) {
             val p = move2Point(safeDelegate.getIthMove(i))
             paint.color = if (i % 2 != 0) Color.WHITE else Color.DKGRAY
@@ -183,9 +188,6 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             }
         }
         paint.color = oldColor
-
-        drawBestMove(canvas)
-        drawForbid(canvas)
     }
 
     private fun drawBoard(canvas: Canvas) {
@@ -257,6 +259,23 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef * 1.5f, paint)
 
             paint.color = oldColor
+        }
+    }
+
+    private fun drawLoserMoves(canvas: Canvas) {
+        if (showLosing) {
+            val safeDelegate = gameDelegate ?: return
+            val losers = safeDelegate.getLosers()
+
+            for (m in losers) {
+                val oldColor = paint.color
+                paint.color = Color.WHITE
+
+                val p = move2Point(m)
+                canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef * 1.5f, paint)
+
+                paint.color = oldColor
+            }
         }
     }
 

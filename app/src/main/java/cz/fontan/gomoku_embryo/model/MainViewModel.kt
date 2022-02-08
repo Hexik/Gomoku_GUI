@@ -175,6 +175,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
      */
     fun startSearch(forceSearch: Boolean) {
         if (!inSearch && (!stopWasPressed || forceSearch)) {
+            game.loserMoves.clear()
             inSearch = true
             _canSearch.value = false
             _canStop.value = true
@@ -206,6 +207,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
      */
     fun undoMove() {
         game.undoMove()
+        game.loserMoves.clear()
         stopWasPressed = false
         showStatus = true
         afterAction()
@@ -216,6 +218,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
      */
     fun redoMove() {
         game.redoMove()
+        game.loserMoves.clear()
         showStatus = true
         afterAction()
     }
@@ -225,6 +228,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
      */
     fun newGame() {
         game.newGame()
+        game.loserMoves.clear()
         stopWasPressed = false
         showStatus = true
         NativeInterface.writeToBrain("yxhashclear")
@@ -254,7 +258,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         _canUndo.value = game.canUndo()
         _canRedo.value = game.canRedo()
         _isDirty.value = true
-    }
+     }
 
     private fun readSettings() {
         autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
@@ -334,6 +338,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
 
     override fun getBestMove(): Move {
         return game.bestMove
+    }
+
+    override fun getLosers(): ArrayList<Move> {
+        return game.loserMoves
+    }
+
+    override fun getBlockers(): ArrayList<Move> {
+        return game.blockMoves
     }
 
     override fun getForbid(): String {
@@ -421,10 +433,27 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
                     Log.wtf("Res", response)
                 }
             }
-            response.startsWith("LOSE  ") -> return
+            response.startsWith("LOSE ") -> {
+                val splitted = response.removePrefix("LOSE ").split(",")
+                try {
+                    require(splitted.size == 2)
+                    game.loserMoves.add(
+                        (Move(
+                            splitted[0].toInt(),
+                            splitted[1].toInt(),
+                            EnumMove.Wall
+                        ))
+                    )
+                    _isDirty.value = true
+                } catch (e: IllegalArgumentException) {
+                    Log.wtf("Res", response)
+                }
+            }
             response.startsWith("POS  ") -> return
             response.startsWith("PV  ") -> return
-            response.startsWith("REFRESH") -> return
+            response.startsWith("REFRESH") -> {
+                game.loserMoves.clear()
+            }
             else -> return
         }
     }

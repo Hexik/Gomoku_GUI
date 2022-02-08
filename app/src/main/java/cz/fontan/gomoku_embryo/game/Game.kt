@@ -29,6 +29,16 @@ class Game(
     var bestMove: Move = Move()
 
     /**
+     * List if losing moves found during the search
+     */
+    var loserMoves: ArrayList<Move> = arrayListOf()
+
+    /**
+     * Blocked cells, untouchable during whole game
+     */
+    var blockMoves: ArrayList<Move> = arrayListOf()
+
+    /**
      * List of forbidden moves
      */
     var forbid: String = String()
@@ -36,6 +46,9 @@ class Game(
     init {
         Log.d(TAG, "Init")
         newGame()
+        makeBlockMove(Move(9, 9))
+        makeBlockMove(Move(5, 4))
+        makeBlockMove(Move(5, 10))
     }
 
     /**
@@ -58,6 +71,20 @@ class Game(
         moveList.add(localMove)
         check(!canMakeMove(localMove))
         return switchPlayerToMove()
+    }
+
+    /**
+     * Put move on desk with all safety checks
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     */
+    private fun makeBlockMove(move: Move): Game {
+        val localMove = Move(move.x, move.y, EnumMove.Wall)
+        require(canMakeMove(localMove))
+        desk[deskIndex(localMove)] = localMove.type
+        blockMoves.add(localMove)
+        check(!canMakeMove(localMove))
+        return this
     }
 
     /**
@@ -108,6 +135,9 @@ class Game(
         playerToMove = EnumMove.Black
         bestMove = Move()
         desk.fill(EnumMove.Empty)
+        for (it in blockMoves) {
+            desk[deskIndex(it)] = EnumMove.Wall
+        }
         return this
     }
 
@@ -156,6 +186,9 @@ class Game(
         when (commonBoardCommand) {
             true -> sb.appendLine("board")
             false -> sb.appendLine("yxboard")
+        }
+        for (it in blockMoves) {
+            sb.appendLine("${it.x},${it.y},3")
         }
         moveList.rewind()
         var player = if (moveList.getIndex() % 2 == 0) 2 else 1
