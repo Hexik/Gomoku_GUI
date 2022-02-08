@@ -262,6 +262,21 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         }
     }
 
+    private fun drawBlockMoves(canvas: Canvas) {
+        val safeDelegate = gameDelegate ?: return
+        val blockers = safeDelegate.getBlockers()
+
+        for (m in blockers) {
+            val oldColor = paint.color
+            paint.color = Color.LTGRAY
+
+            val p = move2Point(m)
+            canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef * 3.5f, paint)
+
+            paint.color = oldColor
+        }
+    }
+
     private fun drawLoserMoves(canvas: Canvas) {
         if (showLosing) {
             val safeDelegate = gameDelegate ?: return

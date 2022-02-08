@@ -48,4 +48,14 @@ interface InterfaceMainViewModel {
      * Refresh data, redraw board
      */
     fun refresh()
+
+    /**
+     * list of losing moves
+     */
+    fun getLosers(): ArrayList<Move>
+
+    /**
+     * Blocked cells (Wall) list
+     */
+    fun getBlockers(): ArrayList<Move>
 }

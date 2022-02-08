@@ -132,12 +132,10 @@ class Game(
      */
     fun reset(): Game {
         moveList.reset()
+        loserMoves.clear()
         playerToMove = EnumMove.Black
         bestMove = Move()
         desk.fill(EnumMove.Empty)
-        for (it in blockMoves) {
-            desk[deskIndex(it)] = EnumMove.Wall
-        }
         return this
     }
 
@@ -220,9 +218,14 @@ class Game(
 
         val sb =
             StringBuilder().appendLine(dim).appendLine(dim).appendLine("1")
+
+        for (it in blockMoves) {
+            sb.appendLine("${it.x} ${it.y} 1")
+        }
+
         moveList.rewind()
         for (it in moveList) {
-            sb.appendLine("${it.x} ${it.y}")
+            sb.appendLine("${it.x} ${it.y} 0")
         }
         return sb.toString()
     }
@@ -246,10 +249,17 @@ class Game(
         require(lines[2].toInt() == 1)
 
         reset()
+        blockMoves.clear()
+
         for (i in 3 until lines.size) {
             val numbers = lines[i].split(" ")
-            require(numbers.size == 2)
-            makeMove(Move(numbers[0].toInt(), numbers[1].toInt()))
+            require(numbers.size == 3)
+            when (numbers[2].toInt()) {
+                0 -> makeMove(Move(numbers[0].toInt(), numbers[1].toInt()))
+                1 -> makeBlockMove(Move(numbers[0].toInt(), numbers[1].toInt()))
+                else -> break
+            }
+
         }
         return this
     }
