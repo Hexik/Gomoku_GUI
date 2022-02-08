@@ -52,6 +52,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private var kBoardSize = BOARD_SIZE_MAX
     private var kStepCount = kBoardSize - 1
     private var showCoordinates = false
+    private var showLosing = false
     private var showNumbers = false
     private var zoomAllowed = false
     private var zoomMode = false
@@ -353,6 +354,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         kStepCount = kBoardSize - 1
         showCoordinates =
             sharedPreferences?.getBoolean("check_box_preference_coordinates", true) ?: true
+        showLosing = sharedPreferences?.getBoolean("check_box_preference_losers", false) ?: false
         showNumbers = sharedPreferences?.getBoolean("check_box_preference_numbers", true) ?: true
         zoomAllowed = sharedPreferences?.getBoolean("check_box_preference_zoom", false) ?: false
 

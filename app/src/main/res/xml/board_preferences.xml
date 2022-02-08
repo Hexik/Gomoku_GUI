@@ -31,5 +31,11 @@
         app:summaryOff="@string/forbidden_moves_off"
         app:summaryOn="@string/forbidden_moves_on"
         app:title="@string/forbidden_moves" />
+    <CheckBoxPreference
+        app:defaultValue="@string/default_false"
+        app:key="check_box_preference_losers"
+        app:summaryOff="@string/losing_moves_off"
+        app:summaryOn="@string/losing_moves_on"
+        app:title="@string/losing_moves" />
 
 </PreferenceScreen>
