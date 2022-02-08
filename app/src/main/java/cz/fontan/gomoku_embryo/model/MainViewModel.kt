@@ -354,10 +354,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         return game.blockMoves
     }
 
-    override fun removeBlock(move: Move) {
-        makeMove(Move(move.x, move.y, EnumMove.Empty), true)
-    }
-
     override fun getForbid(): String {
         return game.forbid
     }

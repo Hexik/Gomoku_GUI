@@ -37,5 +37,12 @@
         app:summaryOff="@string/losing_moves_off"
         app:summaryOn="@string/losing_moves_on"
         app:title="@string/losing_moves" />
+    <CheckBoxPreference
+        app:defaultValue="@string/default_false"
+        app:enabled="false"
+        app:key="check_box_preference_blockers"
+        app:summaryOff="@string/blocking_moves_off"
+        app:summaryOn="@string/blocking_moves_on"
+        app:title="@string/blocking_moves" />
 
 </PreferenceScreen>

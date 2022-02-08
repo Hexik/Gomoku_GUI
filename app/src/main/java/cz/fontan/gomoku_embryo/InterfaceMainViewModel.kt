@@ -66,8 +66,4 @@ interface InterfaceMainViewModel {
      */
     fun getBlockers(): ArrayList<Move>
 
-    /**
-     * Remove Blocked cell at move position
-     */
-    fun removeBlock(move: Move)
 }

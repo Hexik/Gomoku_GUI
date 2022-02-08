@@ -56,6 +56,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private var showCoordinates = false
     private var showLosing = false
     private var showNumbers = false
+    private var blockAllowed = false
     private var zoomAllowed = false
     private var zoomMode = false
     private var longClick = false
@@ -126,7 +127,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
      */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
-        val safeDelegate = gameDelegate ?: return false
+        val delegate = gameDelegate ?: return false
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -140,7 +141,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                     zoomMode = false
                     Log.v(TAG, "Orig ${event.x},${event.y}")
 
-                    if (safeDelegate.isSearching()) return false
+                    if (delegate.isSearching()) return false
 
                     // Initialize the array with our Coordinate
                     val pts: FloatArray = floatArrayOf(event.x, event.y)
@@ -162,8 +163,8 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
                     lastMove = coordinates2Move(pts[0], pts[1])
 
-                    if (!(safeDelegate.canMakeMove(lastMove))) {
-                        if (safeDelegate.getDeskType(lastMove) == EnumMove.Wall) {
+                    if (!(delegate.canMakeMove(lastMove))) {
+                        if (delegate.getDeskType(lastMove) == EnumMove.Wall) {
                             removeBlock = true
                         } else {
                             invalidate()
@@ -176,19 +177,23 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             MotionEvent.ACTION_UP -> {
                 if (!zoomAllowed || !zoomMode) {
                     if (longClick) {
-
-                        if (removeBlock) {
-                            safeDelegate.removeBlock(lastMove)
-                            removeBlock = false
-                        } else {
-                            safeDelegate.makeMove(Move(lastMove.x, lastMove.y, EnumMove.Wall), true)
+                        if (blockAllowed) {
+                            if (removeBlock) {
+                                delegate.makeMove(
+                                    Move(lastMove.x, lastMove.y, EnumMove.Empty),
+                                    true
+                                )
+                            } else {
+                                delegate.makeMove(Move(lastMove.x, lastMove.y, EnumMove.Wall), true)
+                            }
                         }
-                        longClick = false
                     } else {
-                        safeDelegate.makeMove(lastMove, true)
+                        delegate.makeMove(lastMove, true)
                     }
                     performClick()
                 }
+                longClick = false
+                removeBlock = false
                 handler.removeCallbacks(onLongPress)
                 handler.removeCallbacks(onTap)
             }
@@ -422,6 +427,8 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         showLosing = sharedPreferences?.getBoolean("check_box_preference_losers", false) ?: false
         showNumbers = sharedPreferences?.getBoolean("check_box_preference_numbers", true) ?: true
         zoomAllowed = sharedPreferences?.getBoolean("check_box_preference_zoom", false) ?: false
+        blockAllowed =
+            sharedPreferences?.getBoolean("check_box_preference_blockers", false) ?: false
 
         if (showCoordinates) {
             offset = 0.08f * width

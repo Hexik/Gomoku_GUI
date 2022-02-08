@@ -6,6 +6,9 @@
     <string name="author">Author</string>
     <string name="board_view">Board</string>
     <string name="benchmark">Benchmark</string>
+    <string name="blocking_moves">Use blocking cells</string>
+    <string name="blocking_moves_on">Blocking cells allowed</string>
+    <string name="blocking_moves_off">Blocking cells not allowed</string>
     <string name="build_date">Build date</string>
     <string name="button_new">New</string>
     <string name="button_play">Play</string>
