@@ -229,6 +229,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     fun newGame() {
         game.newGame()
         game.loserMoves.clear()
+        game.blockMoves.clear()
         stopWasPressed = false
         showStatus = true
         NativeInterface.writeToBrain("yxhashclear")
@@ -299,10 +300,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         queryGameResult()
 
         when {
-            autoBlack && game.playerToMove == EnumMove.Black && _canSearch.value == true -> startSearch(
+            move.type != EnumMove.Wall && autoBlack && game.playerToMove == EnumMove.Black && _canSearch.value == true -> startSearch(
                 false
             )
-            autoWhite && game.playerToMove == EnumMove.White && _canSearch.value == true -> startSearch(
+            move.type != EnumMove.Wall && autoWhite && game.playerToMove == EnumMove.White && _canSearch.value == true -> startSearch(
                 false
             )
             else -> setIdleStatus()
@@ -502,7 +503,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         try {
             require(splitted.size == 2)
             inSearch = false
-            makeMove(Move(splitted[0].toInt(), splitted[1].toInt()))
+            makeMove(Move(splitted[0].toInt(), splitted[1].toInt()), false)
             game.bestMove = Move()
         } catch (e: IllegalArgumentException) {
             Log.wtf("Res", response)

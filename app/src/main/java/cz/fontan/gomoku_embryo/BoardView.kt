@@ -6,6 +6,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
+import android.view.ViewConfiguration
 import androidx.core.view.doOnPreDraw
 import androidx.preference.PreferenceManager
 import cz.fontan.gomoku_embryo.game.BOARD_SIZE_MAX
@@ -30,6 +31,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         private const val kHandicapOffset = 3
         private const val kMatrixScaleFactor = 1.6f
         private const val kStoneCoef = 0.44f
+        private const val kLongPressDelay = 800
     }
 
     /**
@@ -56,6 +58,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private var showNumbers = false
     private var zoomAllowed = false
     private var zoomMode = false
+    private var longClick = false
 
     // transformation matrix
     private val originalMatrix = Matrix()
@@ -73,6 +76,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             Log.v(TAG, "Pre $width,$height,$offset")
             recalc()
         }
+
     }
 
     /**
@@ -95,7 +99,6 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         setMeasuredDimension(smaller, smaller)
     }
 
-
     /**
      * Draw the view, playing board and stones
      */
@@ -108,6 +111,15 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         drawStones(canvas)
     }
 
+    private val onTap: Runnable = Runnable {
+        handler.postDelayed(
+            onLongPress,
+            kLongPressDelay - ViewConfiguration.getTapTimeout().toLong()
+        )
+    }
+
+    private val onLongPress: Runnable = Runnable { longClick = true }
+
     /**
      * Catches touch events, implements zoom mode if set
      */
@@ -117,6 +129,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                handler.postDelayed(onTap, ViewConfiguration.getTapTimeout().toLong())
                 if (zoomAllowed && !zoomMode) {
                     zoomMode = true
                     zoomingMatrix.set(originalMatrix)
@@ -157,9 +170,15 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             }
             MotionEvent.ACTION_UP -> {
                 if (!zoomAllowed || !zoomMode) {
+                    if (longClick) {
+                        lastMove = Move(lastMove.x, lastMove.y, EnumMove.Wall)
+                        longClick = false
+                    }
                     safeDelegate.makeMove(lastMove, true)
                     performClick()
                 }
+                handler.removeCallbacks(onLongPress)
+                handler.removeCallbacks(onTap)
             }
         }
         return true

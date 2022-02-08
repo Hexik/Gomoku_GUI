@@ -46,9 +46,6 @@ class Game(
     init {
         Log.d(TAG, "Init")
         newGame()
-        makeBlockMove(Move(9, 9))
-        makeBlockMove(Move(5, 4))
-        makeBlockMove(Move(5, 10))
     }
 
     /**
@@ -65,6 +62,10 @@ class Game(
      * @throws IllegalStateException
      */
     fun makeMove(move: Move): Game {
+        if (move.type == EnumMove.Wall) {
+            return makeBlockMove(move)
+        }
+
         val localMove = Move(move.x, move.y, playerToMove)
         require(canMakeMove(localMove))
         desk[deskIndex(localMove)] = localMove.type
@@ -79,11 +80,11 @@ class Game(
      * @throws IllegalStateException
      */
     private fun makeBlockMove(move: Move): Game {
-        val localMove = Move(move.x, move.y, EnumMove.Wall)
-        require(canMakeMove(localMove))
-        desk[deskIndex(localMove)] = localMove.type
-        blockMoves.add(localMove)
-        check(!canMakeMove(localMove))
+        require(move.type == EnumMove.Wall)
+        require(canMakeMove(move))
+        desk[deskIndex(move)] = move.type
+        blockMoves.add(move)
+        check(!canMakeMove(move))
         return this
     }
 
@@ -256,10 +257,9 @@ class Game(
             require(numbers.size == 3)
             when (numbers[2].toInt()) {
                 0 -> makeMove(Move(numbers[0].toInt(), numbers[1].toInt()))
-                1 -> makeBlockMove(Move(numbers[0].toInt(), numbers[1].toInt()))
-                else -> break
+                1 -> makeMove(Move(numbers[0].toInt(), numbers[1].toInt(), EnumMove.Wall))
+                else -> throw IllegalArgumentException()
             }
-
         }
         return this
     }

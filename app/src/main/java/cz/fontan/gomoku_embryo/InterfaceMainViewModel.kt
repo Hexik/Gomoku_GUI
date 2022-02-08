@@ -27,7 +27,7 @@ interface InterfaceMainViewModel {
     /**
      * Put move on the Board and recalc all corresponding data
      */
-    fun makeMove(move: Move, sendBoard: Boolean = false)
+    fun makeMove(move: Move, sendBoard: Boolean)
 
     /**
      * Get best move in current search
