@@ -127,10 +127,10 @@ class GameTest {
             |$BOARD_SIZE_MAX
             |$BOARD_SIZE_MAX
             |1
-            |1 1
-            |2 2
-            |3 3
-            |4 4
+            |1 1 0
+            |2 2 0
+            |3 3 0
+            |4 4 0
             |""".trimMargin()
         )
     }
@@ -142,14 +142,52 @@ class GameTest {
             |$BOARD_SIZE_MAX
             |$BOARD_SIZE_MAX
             |1
-            |1 1
-            |2 2
-            |3 3
-            |4 4
+            |1 1 0
+            |2 2 0
+            |3 3 0
+            |4 4 0
             |""".trimMargin()
         assert(
             Game(BOARD_SIZE_MAX).fromStream(s)
                 .toBoard(true) == "board\n1,1,1\n2,2,2\n3,3,1\n4,4,2\ndone"
+        )
+    }
+
+    @Test
+    fun to_stream_moves_and_block() {
+        val game = Game(BOARD_SIZE_MAX).makeMove(Move(1, 1, EnumMove.Black))
+            .makeMove(Move(2, 2, EnumMove.White)).makeMove(Move(5, 5, EnumMove.Wall))
+            .makeMove(Move(3, 3, EnumMove.Black)).makeMove(Move(4, 4, EnumMove.White))
+        assert(
+            game.toStream() == """
+            |$BOARD_SIZE_MAX
+            |$BOARD_SIZE_MAX
+            |1
+            |5 5 1
+            |1 1 0
+            |2 2 0
+            |3 3 0
+            |4 4 0
+            |""".trimMargin()
+        )
+    }
+
+    @Test
+    fun from_stream_moves_and_block() {
+        val s =
+            """
+            |$BOARD_SIZE_MAX
+            |$BOARD_SIZE_MAX
+            |1
+            |5 5 1
+            |1 1 0
+            |2 2 0
+            |3 3 0
+            |4 4 0
+            |""".trimMargin()
+        assert(
+            Game(BOARD_SIZE_MAX).fromStream(s)
+                .toBoard(true) == "board\n5,5,3\n1,1,1\n2,2,2\n3,3,1\n4,4,2\ndone"
         )
     }
 
