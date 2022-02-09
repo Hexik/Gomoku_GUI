@@ -39,7 +39,6 @@ class MainActivityUITest {
             .unregister(CountingIdlingResourceSingleton.countingIdlingResource)
     }
 
-
     @Test
     fun newGame_MainActivity() {
         // NewGame
@@ -91,7 +90,7 @@ class MainActivityUITest {
         for (i in 0..10) {
             Espresso.onView(ViewMatchers.withId(R.id.button_undo))
                 .check(matches(ViewMatchers.isEnabled())).perform(click())
-            Thread.sleep(1000)
+            Thread.sleep(100)
         }
         Espresso.onView(ViewMatchers.withId(R.id.button_redo))
             .check(matches(ViewMatchers.isEnabled()))
