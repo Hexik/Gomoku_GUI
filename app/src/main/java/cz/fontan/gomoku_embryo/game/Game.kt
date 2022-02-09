@@ -62,18 +62,17 @@ class Game(
      * @throws IllegalStateException
      */
     fun makeMove(move: Move): Game {
-        if (move.type == EnumMove.Wall) {
-            return makeBlockMove(move)
-        }
         if (move.type == EnumMove.Empty) {
             return makeEmptyMove(move)
         }
+        if (move.type == EnumMove.Wall) {
+            return makeBlockMove(move)
+        }
 
-        val localMove = Move(move.x, move.y, playerToMove)
-        require(canMakeMove(localMove))
-        desk[deskIndex(localMove)] = localMove.type
-        moveList.add(localMove)
-        check(!canMakeMove(localMove))
+        require(canMakeMove(move))
+        desk[deskIndex(move)] = playerToMove
+        moveList.add(Move(move.x, move.y, playerToMove))
+        check(!canMakeMove(move))
         return switchPlayerToMove()
     }
 

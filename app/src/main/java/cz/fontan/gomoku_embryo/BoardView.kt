@@ -40,27 +40,29 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     var gameDelegate: InterfaceMainViewModel? = null
 
     // draw related
-    private val paint = Paint()
-    private var nextMove = Move()
     private var limitLow = 0f
     private var limitHigh = 0f
+    private var nextMove = Move()
     private var offset = 0f
+    private val paint = Paint()
     private var step = 0f
 
     // setting preferences
     private val sharedPreferences: SharedPreferences? =
         context?.let { PreferenceManager.getDefaultSharedPreferences(it) }
 
+    private var blockAllowed = false
     private var kBoardSize = BOARD_SIZE_MAX
-    private var kStepCount = kBoardSize - 1
     private var showCoordinates = false
     private var showLosing = false
     private var showNumbers = false
-    private var blockAllowed = false
     private var zoomAllowed = false
-    private var zoomMode = false
+
+    // internal status
+    private var kStepCount = kBoardSize - 1
     private var longClick = false
     private var removeBlock = false
+    private var zoomMode = false
 
     // transformation matrix
     private val originalMatrix = Matrix()
@@ -176,22 +178,17 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             }
             MotionEvent.ACTION_UP -> {
                 if (!zoomAllowed || !zoomMode) {
-                    if (longClick) {
-                        if (blockAllowed) {
-                            if (removeBlock) {
-                                delegate.makeMove(
-                                    Move(nextMove.x, nextMove.y, EnumMove.Empty),
-                                    true
-                                )
-                            } else {
-                                delegate.makeMove(Move(nextMove.x, nextMove.y, EnumMove.Wall), true)
-                            }
-                        }
+                    if (longClick && blockAllowed) {
+                        // remove or add Blocking cell
+                        val action = if (removeBlock) EnumMove.Empty else EnumMove.Wall
+                        delegate.makeMove(Move(nextMove.x, nextMove.y, action), true)
                     } else {
-                        delegate.makeMove(nextMove, true)
+                        // standard move
+                        delegate.makeMove(Move(nextMove.x, nextMove.y, EnumMove.Black), true)
                     }
                     performClick()
                 }
+                // set to the idle setup
                 longClick = false
                 removeBlock = false
                 handler.removeCallbacks(onLongPress)
@@ -307,7 +304,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             paint.color = Color.LTGRAY
 
             val p = move2Point(m)
-            canvas.drawCircle(p.x, p.y, step * kHandicapDrawCoef * 3.5f, paint)
+            canvas.drawCircle(p.x, p.y, step * kStoneCoef * 0.6f, paint)
 
             paint.color = oldColor
         }
@@ -380,7 +377,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     private fun coordinates2Move(x: Float, y: Float): Move {
         return Move(
             ((x - offset + step / 2) / step).toInt(),
-            kStepCount - ((y - offset + step / 2) / step).toInt(), EnumMove.Black
+            kStepCount - ((y - offset + step / 2) / step).toInt()
         )
     }
 
@@ -437,9 +434,11 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
             offset = 0.05f * width
             step = (width - 2.0f * offset) / kStepCount
         }
-        limitLow = offset - step * 0.5f
-        limitHigh = offset + kStepCount * step + step * 0.5f
-        paint.textSize = step * 0.5f
+
+        val halfStep = step * 0.5f
+        limitLow = offset - halfStep
+        limitHigh = offset + kStepCount * step + halfStep
+        paint.textSize = halfStep
     }
 
     /**
