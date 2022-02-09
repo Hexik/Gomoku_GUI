@@ -41,7 +41,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
 
     // draw related
     private val paint = Paint()
-    private var lastMove = Move()
+    private var nextMove = Move()
     private var limitLow = 0f
     private var limitHigh = 0f
     private var offset = 0f
@@ -161,17 +161,17 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                         return false
                     }
 
-                    lastMove = coordinates2Move(pts[0], pts[1])
+                    nextMove = coordinates2Move(pts[0], pts[1])
 
-                    if (!(delegate.canMakeMove(lastMove))) {
-                        if (delegate.getDeskType(lastMove) == EnumMove.Wall) {
+                    if (!(delegate.canMakeMove(nextMove))) {
+                        if (delegate.getDeskType(nextMove) == EnumMove.Wall) {
                             removeBlock = true
                         } else {
                             invalidate()
                             return false
                         }
                     }
-                    Log.d(TAG, "Down ${lastMove.x},${lastMove.y}")
+                    Log.d(TAG, "Down ${nextMove.x},${nextMove.y}")
                 }
             }
             MotionEvent.ACTION_UP -> {
@@ -180,15 +180,15 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                         if (blockAllowed) {
                             if (removeBlock) {
                                 delegate.makeMove(
-                                    Move(lastMove.x, lastMove.y, EnumMove.Empty),
+                                    Move(nextMove.x, nextMove.y, EnumMove.Empty),
                                     true
                                 )
                             } else {
-                                delegate.makeMove(Move(lastMove.x, lastMove.y, EnumMove.Wall), true)
+                                delegate.makeMove(Move(nextMove.x, nextMove.y, EnumMove.Wall), true)
                             }
                         }
                     } else {
-                        delegate.makeMove(lastMove, true)
+                        delegate.makeMove(nextMove, true)
                     }
                     performClick()
                 }
