@@ -15,36 +15,23 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            jniDebuggable false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            renderscriptOptimLevel 3
         }
     }
 }
 
 dependencies {
-    implementation 'com.android.billingclient:billing-ktx:4.0.0'
+    implementation 'com.android.billingclient:billing-ktx:4.1.0'
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
 
     testImplementation 'junit:junit:4.13.2'
-}
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                // Applies the component for the release build variant.
-                from components.release
-
-                // You can then customize attributes of the publication as shown below.
-                groupId = 'com.aemerse'
-                artifactId = 'Google-IAP'
-                version = '1.2.2'
-            }
-        }
-    }
 }
