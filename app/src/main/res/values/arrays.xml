@@ -45,6 +45,7 @@
         <item>13x13 points</item>
         <item>15x15 points</item>
         <item>17x17 points</item>
+        <item>19x19 points</item>
         <item>20x20 points</item>
     </string-array>
 
@@ -53,6 +54,7 @@
         <item>13</item>
         <item>15</item>
         <item>17</item>
+        <item>19</item>
         <item>20</item>
     </string-array>
 
