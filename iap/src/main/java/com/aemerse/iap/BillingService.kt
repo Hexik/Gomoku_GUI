@@ -274,9 +274,9 @@ class BillingService(
                     skusDetails[it.sku] = it
                 }
 
-                skusDetails.mapNotNull { entry ->
-                    entry.value?.let {
-                        entry.key to DataWrappers.SkuDetails(
+                skusDetails.mapNotNull { (key, value) ->
+                    value?.let {
+                        key to DataWrappers.SkuDetails(
                             title = it.title,
                             description = it.description,
                             priceCurrencyCode = it.priceCurrencyCode,

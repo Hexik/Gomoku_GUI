@@ -192,6 +192,11 @@ class GameTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
+    fun from_stream_null() {
+        Game(BOARD_SIZE_MAX).fromStream(null)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
     fun from_stream_empty() {
         Game(BOARD_SIZE_MAX).fromStream("")
     }

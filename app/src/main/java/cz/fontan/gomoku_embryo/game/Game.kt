@@ -261,7 +261,7 @@ class Game(
      * @throws IllegalArgumentException
      */
     fun fromStream(data: String?): Game {
-        data ?: return this
+        data ?: throw IllegalArgumentException()
 
         val lines = data.reader().readLines()
         require(lines.size >= 3)
