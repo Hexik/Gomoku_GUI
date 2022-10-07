@@ -70,6 +70,16 @@ class GameTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
+    fun undoEmptyMove() {
+        Game(BOARD_SIZE_MAX).undoMove()
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun redoEmptyMove() {
+        Game(BOARD_SIZE_MAX).redoMove()
+    }
+
+    @Test(expected = IllegalArgumentException::class)
     fun undo2Move() {
         Game(BOARD_SIZE_MAX).makeMove(Move(1, 1, EnumMove.Black)).undoMove().undoMove()
     }
