@@ -13,6 +13,12 @@ class MoveListTest {
         assert(list.size() == 0)
     }
 
+    @Test(expected = IllegalArgumentException::class)
+    fun emptyGet() {
+        val list = MoveList()
+        list.getCurrentMove()
+    }
+
     @Test
     fun add() {
         val list = MoveList()

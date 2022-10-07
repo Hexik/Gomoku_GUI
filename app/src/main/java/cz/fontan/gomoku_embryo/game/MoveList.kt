@@ -21,10 +21,8 @@ class MoveList : Iterator<Move> {
      */
     fun getCurrentMove(): Move {
         require(isValid())
-        return when (currentMoveIndex) {
-            -1 -> Move()
-            else -> moveList[currentMoveIndex]
-        }
+        require(canUndo())
+        return moveList[currentMoveIndex]
     }
 
     /**

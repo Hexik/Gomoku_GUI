@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val factory = ViewModelProvider.AndroidViewModelFactory(application)
-        viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
         binding.boardView.gameDelegate = viewModel
     }
 
