@@ -5,14 +5,14 @@ package cz.fontan.gomoku_embryo.game
  */
 class MoveList : Iterator<Move> {
     private val moveList: ArrayList<Move> = arrayListOf()
-    private var lastMoveIndex: Int = -1
+    private var highestMoveIndex: Int = -1
     private var currentMoveIndex: Int = -1
 
     /**
      * Invariant check
      */
     fun isValid(): Boolean {
-        return -1 <= currentMoveIndex && currentMoveIndex <= lastMoveIndex && lastMoveIndex < moveList.size
+        return -1 <= currentMoveIndex && currentMoveIndex <= highestMoveIndex && highestMoveIndex < moveList.size
     }
 
     /**
@@ -34,7 +34,7 @@ class MoveList : Iterator<Move> {
     fun reset() {
         moveList.clear()
         currentMoveIndex = -1
-        lastMoveIndex = -1
+        highestMoveIndex = -1
         check(isValid())
     }
 
@@ -71,7 +71,7 @@ class MoveList : Iterator<Move> {
      * Checks if can forward one move
      */
     fun canRedo(): Boolean {
-        return currentMoveIndex < lastMoveIndex
+        return currentMoveIndex < highestMoveIndex
     }
 
     /**
@@ -99,7 +99,7 @@ class MoveList : Iterator<Move> {
                 moveList[++currentMoveIndex] = move  // replace existing move
             }
         }
-        lastMoveIndex = currentMoveIndex
+        highestMoveIndex = currentMoveIndex
         check(isValid())
     }
 
@@ -113,8 +113,8 @@ class MoveList : Iterator<Move> {
     /**
      * Get index of last valid move, can be != size - 1
      */
-    fun getLastIndex(): Int {
-        return lastMoveIndex
+    fun getHighestIndex(): Int {
+        return highestMoveIndex
     }
 
     /**

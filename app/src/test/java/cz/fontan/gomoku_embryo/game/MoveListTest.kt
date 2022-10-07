@@ -8,9 +8,8 @@ class MoveListTest {
     fun empty() {
         val list = MoveList()
         assert(list.isValid())
-        assert(list.getCurrentMove() == Move())
         assert(list.getIndex() == -1)
-        assert(list.getLastIndex() == -1)
+        assert(list.getHighestIndex() == -1)
         assert(list.size() == 0)
     }
 
@@ -20,11 +19,11 @@ class MoveListTest {
         list.add(Move(1, 1, EnumMove.Black))
         assert(list.getCurrentMove() == Move(1, 1, EnumMove.Black))
         assert(list.getIndex() == 0)
-        assert(list.getLastIndex() == 0)
+        assert(list.getHighestIndex() == 0)
         list.add(Move(2, 2, EnumMove.White))
         assert(list.getCurrentMove() == Move(2, 2, EnumMove.White))
         assert(list.getIndex() == 1)
-        assert(list.getLastIndex() == 1)
+        assert(list.getHighestIndex() == 1)
         assert(list.size() == 2)
     }
 
@@ -85,9 +84,8 @@ class MoveListTest {
         list.add(Move(2, 2, EnumMove.White))
         list.reset()
         assert(list.isValid())
-        assert(list.getCurrentMove() == Move())
         assert(list.getIndex() == -1)
-        assert(list.getLastIndex() == -1)
+        assert(list.getHighestIndex() == -1)
         assert(list.size() == 0)
     }
 
@@ -100,11 +98,10 @@ class MoveListTest {
         list.undo()
         assert(list.getCurrentMove() == Move(1, 1, EnumMove.Black))
         assert(list.getIndex() == 0)
-        assert(list.getLastIndex() == 1)
+        assert(list.getHighestIndex() == 1)
         list.undo()
-        assert(list.getCurrentMove() == Move())
         assert(list.getIndex() == -1)
-        assert(list.getLastIndex() == 1)
+        assert(list.getHighestIndex() == 1)
         assert(list.size() == 2)
     }
 
@@ -119,11 +116,11 @@ class MoveListTest {
         list.redo()
         assert(list.getCurrentMove() == Move(1, 1, EnumMove.Black))
         assert(list.getIndex() == 0)
-        assert(list.getLastIndex() == 1)
+        assert(list.getHighestIndex() == 1)
         list.redo()
         assert(list.getCurrentMove() == Move(2, 2, EnumMove.White))
         assert(list.getIndex() == 1)
-        assert(list.getLastIndex() == 1)
+        assert(list.getHighestIndex() == 1)
     }
 
     @Test
@@ -140,12 +137,12 @@ class MoveListTest {
 
         assert(list.getCurrentMove() == Move(4, 4, EnumMove.White))
         assert(list.getIndex() == 1)
-        assert(list.getLastIndex() == 1)
+        assert(list.getHighestIndex() == 1)
 
         list.add(Move(5, 5, EnumMove.Black))
         assert(list.getCurrentMove() == Move(5, 5, EnumMove.Black))
         assert(list.getIndex() == 2)
-        assert(list.getLastIndex() == 2)
+        assert(list.getHighestIndex() == 2)
         assert(list.size() == 3)
     }
 
@@ -159,7 +156,7 @@ class MoveListTest {
         list.add(Move(5, 5, EnumMove.Black))
         assert(list.getCurrentMove() == Move(5, 5, EnumMove.Black))
         assert(list.getIndex() == 4)
-        assert(list.getLastIndex() == 4)
+        assert(list.getHighestIndex() == 4)
         assert(list.size() == 5)
         for (it in list) {
             assert(it != Move())
