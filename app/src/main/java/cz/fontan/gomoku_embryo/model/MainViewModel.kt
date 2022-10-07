@@ -7,10 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
-import cz.fontan.gomoku_embryo.InterfaceMainViewModel
-import cz.fontan.gomoku_embryo.NativeInterface
-import cz.fontan.gomoku_embryo.ProfiVersion
-import cz.fontan.gomoku_embryo.R
+import cz.fontan.gomoku_embryo.*
 import cz.fontan.gomoku_embryo.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_embryo.game.EnumMove
 import cz.fontan.gomoku_embryo.game.Game
@@ -264,7 +261,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private fun readSettings() {
         autoBlack = sharedPreferences.getBoolean("check_box_preference_AI_black", false)
         autoWhite = sharedPreferences.getBoolean("check_box_preference_AI_white", false)
-        showForbid = sharedPreferences.getBoolean("check_box_preference_forbidden", false)
+        showForbid = sharedPreferences.getBoolean(
+            "check_box_preference_forbidden",
+            false
+        ) && BuildConfig.FLAVOR.equals("renju")
         (sharedPreferences.getString("list_preference_time", "1000")?.toInt()
             ?: 1000).also { moveTime = it }
         val tmpDim = getDimension()

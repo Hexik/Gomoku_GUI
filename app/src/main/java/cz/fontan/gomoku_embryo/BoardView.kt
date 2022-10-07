@@ -205,7 +205,9 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         drawBlockMoves(canvas)
         drawLoserMoves(canvas)
         drawBestMove(canvas)
-        drawForbid(canvas)
+        if (BuildConfig.FLAVOR.equals("renju")) {
+            drawForbid(canvas)
+        }
 
         for (i in 0 until (safeDelegate.moveCount())) {
             val p = move2Point(safeDelegate.getIthMove(i))
