@@ -2,6 +2,7 @@ package cz.fontan.gomoku_embryo
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.BeforeClass
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -29,7 +30,7 @@ class NativeCatch2 {
         assert(0 == NativeInterface.runCatch2Test("Config*"))
     }
 
-    @Test
+    @Test @Ignore("Too long")
     fun engine() {
         assert(0 == NativeInterface.runCatch2Test("Engine*"))
     }
@@ -44,7 +45,7 @@ class NativeCatch2 {
         assert(0 == NativeInterface.runCatch2Test("Ray*"))
     }
 
-    @Test
+    @Test @Ignore("Too long")
     fun all() {
         assert(0 == NativeInterface.runCatch2Test("*"))
     }

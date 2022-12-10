@@ -84,14 +84,16 @@ class MainActivityUITest {
         // Play clicked
         for (i in 0..10) {
             Espresso.onView(ViewMatchers.withId(R.id.button_play)).perform(click())
-            Thread.sleep(2000)
+            Thread.sleep(2500)
         }
+        Thread.sleep(100)
         // Undo clicked
         for (i in 0..10) {
             Espresso.onView(ViewMatchers.withId(R.id.button_undo))
                 .check(matches(ViewMatchers.isEnabled())).perform(click())
-            Thread.sleep(100)
+            Thread.sleep(200)
         }
+        Thread.sleep(200)
         Espresso.onView(ViewMatchers.withId(R.id.button_redo))
             .check(matches(ViewMatchers.isEnabled()))
         Espresso.onView(ViewMatchers.withId(R.id.button_undo))
