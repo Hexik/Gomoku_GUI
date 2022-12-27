@@ -30,7 +30,8 @@ class NativeCatch2 {
         assert(0 == NativeInterface.runCatch2Test("Config*"))
     }
 
-    @Test @Ignore("Too long")
+    @Test
+    @Ignore("Too long")
     fun engine() {
         assert(0 == NativeInterface.runCatch2Test("Engine*"))
     }
@@ -45,7 +46,8 @@ class NativeCatch2 {
         assert(0 == NativeInterface.runCatch2Test("Ray*"))
     }
 
-    @Test @Ignore("Too long")
+    @Test
+    @Ignore("Too long")
     fun all() {
         assert(0 == NativeInterface.runCatch2Test("*"))
     }

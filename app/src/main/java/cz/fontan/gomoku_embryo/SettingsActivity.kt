@@ -113,9 +113,9 @@ class SettingsActivity : AppCompatActivity(),
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.board_preferences, rootKey)
             preferenceScreen.findPreference<Preference>("check_box_preference_forbidden")?.isEnabled =
-                BuildConfig.FLAVOR.equals("renju")
+                BuildConfig.FLAVOR == "renju"
             preferenceScreen.findPreference<Preference>("check_box_preference_forbidden")?.isVisible =
-                BuildConfig.FLAVOR.equals("renju")
+                BuildConfig.FLAVOR == "renju"
         }
     }
 

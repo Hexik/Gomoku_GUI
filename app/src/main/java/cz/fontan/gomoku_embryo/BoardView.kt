@@ -205,7 +205,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
         drawBlockMoves(canvas)
         drawLoserMoves(canvas)
         drawBestMove(canvas)
-        if (BuildConfig.FLAVOR.equals("renju")) {
+        if (BuildConfig.FLAVOR == "renju") {
             drawForbid(canvas)
         }
 

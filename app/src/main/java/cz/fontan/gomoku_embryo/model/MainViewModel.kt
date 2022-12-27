@@ -264,7 +264,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         showForbid = sharedPreferences.getBoolean(
             "check_box_preference_forbidden",
             false
-        ) && BuildConfig.FLAVOR.equals("renju")
+        ) && BuildConfig.FLAVOR == "renju"
         (sharedPreferences.getString("list_preference_time", "1000")?.toInt()
             ?: 1000).also { moveTime = it }
         val tmpDim = getDimension()
@@ -382,12 +382,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private fun parseForbid(response: String) {
         try {
             require(response.length % 4 == 0)
+            require(response.all { char -> char.isDigit() })
             game.forbid = response
             _isDirty.value = true
         } catch (e: IllegalArgumentException) {
             Log.wtf("Forbid", response)
         }
-
     }
 
     private fun parseMessage(response: String) {
@@ -579,10 +579,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     }
 
     private fun getDimension(): Int {
-        val defaultDimension = getResourceString(R.string.default_board).toInt()
+        val defaultDimension = getResourceString(R.string.default_board)
         return sharedPreferences.getString(
             "list_preference_board_size",
-            defaultDimension.toString()
-        )?.toInt() ?: defaultDimension
+            defaultDimension
+        )?.toInt() ?: defaultDimension.toInt()
     }
 }
