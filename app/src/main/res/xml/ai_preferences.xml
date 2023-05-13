@@ -1,5 +1,12 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/type_entries"
+        android:entryValues="@array/type_values"
+        android:key="list_preference_game_type"
+        android:title="@string/game_type" />
     <CheckBoxPreference
         app:defaultValue="@string/default_false"
         app:key="check_box_preference_AI_black"

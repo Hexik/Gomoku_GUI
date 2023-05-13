@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flow
  * Read all data from C++ brain as flow
  * @property inTest longer delay in test mode, should be at least 15ms to make Espresso happy
  */
-class AnswersRepository(val inTest: Boolean) {
+class AnswersRepository(private val inTest: Boolean) {
     /**
      * This method is used to get data from brain in pseudo real time
      */

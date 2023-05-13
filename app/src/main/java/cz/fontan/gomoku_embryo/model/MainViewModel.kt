@@ -5,9 +5,17 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
-import cz.fontan.gomoku_embryo.*
+import cz.fontan.gomoku_embryo.BuildConfig
+import cz.fontan.gomoku_embryo.InterfaceMainViewModel
+import cz.fontan.gomoku_embryo.NativeInterface
+import cz.fontan.gomoku_embryo.ProfiVersion
+import cz.fontan.gomoku_embryo.R
 import cz.fontan.gomoku_embryo.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_embryo.game.EnumMove
 import cz.fontan.gomoku_embryo.game.Game
@@ -143,6 +151,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private var moveTime: Int = 1000
     private var cacheSize: Int = 64
     private var threadNum: Int = 0
+    private var gameRule: Int = 0
 
     private var stopWasPressed = false
     private var inSearch: Boolean = false
@@ -230,6 +239,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         stopWasPressed = false
         showStatus = true
         NativeInterface.writeToBrain("yxhashclear")
+        gameRule =
+            sharedPreferences.getString("list_preference_game_type", "1")?.toInt() ?: 1
+        NativeInterface.writeToBrain("INFO RULE $gameRule")
+
         NativeInterface.writeToBrain("start ${game.dim}")
         afterAction()
         setSearchTime()
@@ -272,6 +285,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             game.dim = tmpDim
             newGame()
         }
+        val tmpGameRule =
+            sharedPreferences.getString("list_preference_game_type", "1")?.toInt() ?: 1
+        if (tmpGameRule != gameRule) {
+            gameRule = tmpGameRule
+            NativeInterface.writeToBrain("INFO RULE $gameRule")
+        }
         val tmpCacheSize = sharedPreferences.getString("list_preference_cache", "64")?.toInt() ?: 64
         if (tmpCacheSize != cacheSize) {
             cacheSize = tmpCacheSize
@@ -308,9 +327,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             isPlayer && autoBlack && game.playerToMove == EnumMove.Black && _canSearch.value == true -> startSearch(
                 false
             )
+
             isPlayer && autoWhite && game.playerToMove == EnumMove.White && _canSearch.value == true -> startSearch(
                 false
             )
+
             else -> setIdleStatus()
         }
         stopWasPressed = false
@@ -370,6 +391,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
             upper.startsWith("FORBID ") -> parseForbid(
                 upper.removePrefix("FORBID ").removeSuffix(".")
             )
+
             upper.startsWith("MESSAGE ") -> parseMessage(upper.removePrefix("MESSAGE "))
             upper.startsWith("OK") -> return
             upper.startsWith("SUGGEST ") -> return
@@ -439,6 +461,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
                     Log.wtf("Res", response)
                 }
             }
+
             response.startsWith("LOSE ") -> {
                 val splitted = response.removePrefix("LOSE ").split(",")
                 try {
@@ -455,11 +478,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
                     Log.wtf("Res", response)
                 }
             }
+
             response.startsWith("POS  ") -> return
             response.startsWith("PV  ") -> return
             response.startsWith("REFRESH") -> {
                 game.loserMoves.clear()
             }
+
             else -> return
         }
     }

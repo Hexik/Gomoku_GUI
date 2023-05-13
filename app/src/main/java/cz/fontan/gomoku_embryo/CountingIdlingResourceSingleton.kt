@@ -1,5 +1,3 @@
-@file:Suppress("MemberVisibilityCanBePrivate")
-
 package cz.fontan.gomoku_embryo
 
 import androidx.test.espresso.idling.CountingIdlingResource

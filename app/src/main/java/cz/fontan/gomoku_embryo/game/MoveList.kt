@@ -93,6 +93,7 @@ class MoveList : Iterator<Move> {
                 moveList.add(move)
                 ++currentMoveIndex
             }
+
             else -> {
                 moveList[++currentMoveIndex] = move  // replace existing move
             }

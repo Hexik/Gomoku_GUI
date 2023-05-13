@@ -1,5 +1,22 @@
 <resources>
     <!-- Level Preference -->
+    <string-array name="type_entries">
+        <item>Freestyle</item>
+        <item>Standard</item>
+        <item>Renju</item>
+        <item>Caro6</item>
+        <item>Caro5</item>
+    </string-array>
+
+    <string-array name="type_values">
+        <item>0</item>
+        <item>1</item>
+        <item>4</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <!-- Level Preference -->
     <string-array name="level_entries">
         <item>0,1 second per move</item>
         <item>1 second per move</item>

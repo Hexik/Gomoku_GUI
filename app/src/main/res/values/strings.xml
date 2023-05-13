@@ -32,6 +32,7 @@
     <string name="forbidden_moves">Forbidden moves</string>
     <string name="forbidden_moves_off">Forbidden moves are not displayed</string>
     <string name="forbidden_moves_on">Show forbidden moves</string>
+    <string name="game_type">Game type</string>
     <string name="level">Playing Level</string>
     <string name="losing_moves">Show losing moves</string>
     <string name="losing_moves_off">Losing moves are not displayed</string>

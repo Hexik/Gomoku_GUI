@@ -176,6 +176,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
                     Log.d(TAG, "Down ${nextMove.x},${nextMove.y}")
                 }
             }
+
             MotionEvent.ACTION_UP -> {
                 if (!zoomAllowed || !zoomMode) {
                     if (longClick && blockAllowed) {
