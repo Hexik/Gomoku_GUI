@@ -21,7 +21,7 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdk 33
-    buildToolsVersion '33.0.0'
+    buildToolsVersion '33.0.2'
     signingConfigs {
         release {
             storeFile file(keystoreProperties['storeFile'])
@@ -29,6 +29,11 @@ android {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
         }
+    }
+
+
+    buildFeatures {
+        buildConfig = true
     }
 
     defaultConfig {
@@ -138,12 +143,17 @@ android {
         }
     }
 
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     compileOptions {
-        sourceCompatibility "11"
-        targetCompatibility "11"
+        sourceCompatibility '17'
+        targetCompatibility '17'
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
     externalNativeBuild {
         cmake {
@@ -154,7 +164,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-    ndkVersion '24.0.8215888'
+    ndkVersion '25.2.9519653'
     sourceSets {
         renju {
             res {
@@ -186,22 +196,22 @@ android {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.20'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.21'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.preference:preference-ktx:1.2.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     implementation 'androidx.preference:preference-ktx:1.2.0'
-    implementation 'androidx.test.espresso:espresso-idling-resource:3.5.0'
-    implementation 'androidx.core:core-splashscreen:1.0.0'
-    implementation 'com.google.android.gms:play-services-ads:21.4.0'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.5.1'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation 'com.google.android.gms:play-services-ads:22.0.0'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.5.1'
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
     implementation project(':iap')
 

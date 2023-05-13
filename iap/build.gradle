@@ -6,11 +6,24 @@ plugins {
 
 android {
     compileSdk 33
-    buildToolsVersion '33.0.0'
+    buildToolsVersion '33.0.2'
 
     defaultConfig {
         minSdk 16
         targetSdk 33
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    compileOptions {
+        sourceCompatibility '17'
+        targetCompatibility '17'
+    }
+    kotlinOptions {
+        jvmTarget = '17'
     }
 
     buildTypes {
@@ -25,11 +38,11 @@ android {
 dependencies {
     implementation 'com.android.billingclient:billing-ktx:4.0.0'
 
-    implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
 
     testImplementation 'junit:junit:4.13.2'
 }

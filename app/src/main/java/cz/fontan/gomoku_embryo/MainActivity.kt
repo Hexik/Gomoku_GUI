@@ -2,7 +2,12 @@ package cz.fontan.gomoku_embryo
 
 import android.app.Activity
 import android.content.Intent
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Environment
+import android.os.Handler
+import android.os.Looper
+import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import android.provider.DocumentsContract
@@ -14,18 +19,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewbinding.BuildConfig
 import com.aemerse.iap.BillingClientConnectionListener
 import com.aemerse.iap.DataWrappers
 import com.aemerse.iap.IapConnector
 import com.aemerse.iap.PurchaseServiceListener
-import com.google.android.gms.ads.*
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import cz.fontan.gomoku_embryo.databinding.ActivityMainBinding
 import cz.fontan.gomoku_embryo.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_embryo.model.MainViewModel
-import java.io.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.BufferedReader
+import java.io.BufferedWriter
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 import kotlin.random.Random
 import kotlin.system.exitProcess
 
@@ -136,6 +152,7 @@ class MainActivity : AppCompatActivity() {
                     "profi_version" -> {
                         ProfiVersion.isActive = true
                     }
+
                     else -> {}
                 }
             }
@@ -307,9 +324,13 @@ class MainActivity : AppCompatActivity() {
                     Log.i("Save game", result.toString())
                     val outputStream = contentResolver.openOutputStream(result)
                     val bw = BufferedWriter(OutputStreamWriter(outputStream))
-                    bw.write(viewModel.getGameAsStream())
-                    bw.flush()
-                    bw.close()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        runCatching {
+                            bw.write(viewModel.getGameAsStream())
+                            bw.flush()
+                            bw.close()
+                        }
+                    }
                 } catch (e: IOException) {
                     Log.e("Save game", result.toString())
                     e.printStackTrace()
