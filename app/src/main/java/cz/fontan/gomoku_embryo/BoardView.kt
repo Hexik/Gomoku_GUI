@@ -106,8 +106,7 @@ class BoardView(context: Context?, attrs: AttributeSet?) :
     /**
      * Draw the view, playing board and stones
      */
-    override fun onDraw(canvas: Canvas?) {
-        canvas ?: return
+    override fun onDraw(canvas: Canvas) {
         if (zoomAllowed) {
             canvas.concat(if (zoomMode) zoomingMatrix else originalMatrix)
         }

@@ -20,7 +20,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdk 33
+    compileSdk 34
     buildToolsVersion '33.0.2'
     signingConfigs {
         release {
@@ -39,7 +39,7 @@ android {
     defaultConfig {
         applicationId "cz.fontan.gomoku_embryo"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode gitVersionCode
         versionName gitVersionName
         buildConfigField 'String', 'BUILD_TIME', 'new java.text.SimpleDateFormat("yyyy-MM-dd\'T\'HH:mm:ssZ", java.util.Locale.getDefault()).format(new java.util.Date(' + System.currentTimeMillis() + 'L))'
@@ -196,18 +196,18 @@ android {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.21'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha03'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
     implementation 'androidx.test.espresso:espresso-idling-resource:3.5.1'
     implementation 'androidx.core:core-splashscreen:1.0.1'
-    implementation 'com.google.android.gms:play-services-ads:22.0.0'
+    implementation 'com.google.android.gms:play-services-ads:22.4.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

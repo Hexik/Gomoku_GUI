@@ -2,8 +2,6 @@ package cz.fontan.gomoku_embryo.game
 
 import android.util.Log
 
-// TODO MF add game type to fromStream(), toStream(), now is fixed line(2) = 1
-
 private const val TAG = "Game"
 
 /**
@@ -42,6 +40,11 @@ class Game(
      * List of forbidden moves
      */
     var forbid: String = String()
+
+    /**
+     * Type of the game
+     */
+    var gameRule: Int = 1
 
     init {
         Log.d(TAG, "Init")
@@ -241,7 +244,7 @@ class Game(
         require(moveList.isValid())
 
         val sb =
-            StringBuilder().appendLine(dim).appendLine(dim).appendLine("1")
+            StringBuilder().appendLine(dim).appendLine(dim).appendLine(gameRule)
 
         for (it in blockMoves) {
             sb.appendLine("${it.x} ${it.y} 1")
@@ -270,7 +273,7 @@ class Game(
         require(lines[0].toInt() == dim)
         require(lines[1].toInt() == dim)
         require(lines[0].toInt() == lines[1].toInt())
-        require(lines[2].toInt() == 1)
+        require(lines[2].toInt() == gameRule)
 
         reset()
         blockMoves.clear()

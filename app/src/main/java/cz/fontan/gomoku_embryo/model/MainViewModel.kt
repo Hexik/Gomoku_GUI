@@ -151,7 +151,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private var moveTime: Int = 1000
     private var cacheSize: Int = 64
     private var threadNum: Int = 0
-    private var gameRule: Int = 0
 
     private var stopWasPressed = false
     private var inSearch: Boolean = false
@@ -239,9 +238,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         stopWasPressed = false
         showStatus = true
         NativeInterface.writeToBrain("yxhashclear")
-        gameRule =
+        game.gameRule =
             sharedPreferences.getString("list_preference_game_type", "1")?.toInt() ?: 1
-        NativeInterface.writeToBrain("INFO RULE $gameRule")
+        NativeInterface.writeToBrain("INFO RULE $game.gameRule")
 
         NativeInterface.writeToBrain("start ${game.dim}")
         afterAction()
@@ -287,9 +286,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         }
         val tmpGameRule =
             sharedPreferences.getString("list_preference_game_type", "1")?.toInt() ?: 1
-        if (tmpGameRule != gameRule) {
-            gameRule = tmpGameRule
-            NativeInterface.writeToBrain("INFO RULE $gameRule")
+        if (tmpGameRule != game.gameRule) {
+            game.gameRule = tmpGameRule
+            NativeInterface.writeToBrain("INFO RULE $game.gameRule")
         }
         val tmpCacheSize = sharedPreferences.getString("list_preference_cache", "64")?.toInt() ?: 64
         if (tmpCacheSize != cacheSize) {

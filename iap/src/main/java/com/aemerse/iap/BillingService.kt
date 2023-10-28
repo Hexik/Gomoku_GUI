@@ -125,8 +125,10 @@ class BillingService(
                 log("onPurchasesUpdated. purchase: $purchases")
                 processPurchases(purchases)
             }
+
             BillingClient.BillingResponseCode.USER_CANCELED ->
                 log("onPurchasesUpdated: User canceled the purchase")
+
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
                 log("onPurchasesUpdated: The user already owns this item")
                 //item already owned? call queryPurchases to verify and process all such items
@@ -134,6 +136,7 @@ class BillingService(
                     queryPurchases()
                 }
             }
+
             BillingClient.BillingResponseCode.DEVELOPER_ERROR ->
                 Log.e(
                     TAG, "onPurchasesUpdated: Developer error means that Google Play " +
@@ -171,6 +174,7 @@ class BillingService(
                                         BillingClient.BillingResponseCode.OK -> {
                                             productOwned(getPurchaseInfo(purchase), false)
                                         }
+
                                         else -> {
                                             Log.d(
                                                 TAG,
@@ -183,6 +187,7 @@ class BillingService(
                                 productOwned(getPurchaseInfo(purchase), isRestore)
                             }
                         }
+
                         BillingClient.SkuType.SUBS -> {
                             subscriptionOwned(getPurchaseInfo(purchase), isRestore)
                         }

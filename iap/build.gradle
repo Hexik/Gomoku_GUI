@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
     buildToolsVersion '33.0.2'
 
     defaultConfig {
         minSdk 16
-        targetSdk 33
+        targetSdk 34
     }
 
     java {
@@ -33,16 +33,17 @@ android {
         }
     }
     namespace 'com.aemerse.iap'
+    ndkVersion '25.2.9519653'
 }
 
 dependencies {
     implementation 'com.android.billingclient:billing-ktx:4.0.0'
 
-    implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha03'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
 
     testImplementation 'junit:junit:4.13.2'
 }
