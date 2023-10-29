@@ -1,4 +1,4 @@
-package com.aemerse.iap
+package com.limurse.iap
 
 interface PurchaseServiceListener : BillingServiceListener {
     /**
@@ -6,7 +6,7 @@ interface PurchaseServiceListener : BillingServiceListener {
      *
      * @param iapKeyPrices - a map with available products
      */
-    override fun onPricesUpdated(iapKeyPrices: Map<String, DataWrappers.SkuDetails>)
+    override fun onPricesUpdated(iapKeyPrices: Map<String, List<DataWrappers.ProductDetails>>)
 
     /**
      * Callback will be triggered when a product purchased successfully

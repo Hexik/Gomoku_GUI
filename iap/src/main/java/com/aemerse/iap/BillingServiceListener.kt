@@ -1,4 +1,4 @@
-package com.aemerse.iap
+package com.limurse.iap
 
 interface BillingServiceListener {
     /**
@@ -6,5 +6,5 @@ interface BillingServiceListener {
      *
      * @param iapKeyPrices - a map with available products
      */
-    fun onPricesUpdated(iapKeyPrices: Map<String, DataWrappers.SkuDetails>)
+    fun onPricesUpdated(iapKeyPrices: Map<String, List<DataWrappers.ProductDetails>>)
 }

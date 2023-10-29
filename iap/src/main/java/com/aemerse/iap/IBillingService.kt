@@ -1,4 +1,4 @@
-package com.aemerse.iap
+package com.limurse.iap
 
 import android.app.Activity
 import android.os.Handler
@@ -8,10 +8,8 @@ import androidx.annotation.CallSuper
 abstract class IBillingService {
 
     private val purchaseServiceListeners: MutableList<PurchaseServiceListener> = mutableListOf()
-    private val subscriptionServiceListeners: MutableList<SubscriptionServiceListener> =
-        mutableListOf()
-    private val billingClientConnectedListeners: MutableList<BillingClientConnectionListener> =
-        mutableListOf()
+    private val subscriptionServiceListeners: MutableList<SubscriptionServiceListener> = mutableListOf()
+    private val billingClientConnectedListeners: MutableList<BillingClientConnectionListener> = mutableListOf()
 
     fun addBillingClientConnectionListener(billingClientConnectionListener: BillingClientConnectionListener) {
         billingClientConnectedListeners.add(billingClientConnectionListener)
@@ -38,8 +36,8 @@ abstract class IBillingService {
     }
 
     /**
-     * @param purchaseInfo       - product specifier
-     * @param isRestore - a flag indicating whether it's a fresh purchase or restored product
+     * @param purchaseInfo Product specifier
+     * @param isRestore Flag indicating whether it's a fresh purchase or restored product
      */
     fun productOwned(purchaseInfo: DataWrappers.PurchaseInfo, isRestore: Boolean) {
         findUiHandler().post {
@@ -58,8 +56,8 @@ abstract class IBillingService {
     }
 
     /**
-     * @param purchaseInfo       - subscription specifier
-     * @param isRestore - a flag indicating whether it's a fresh purchase or restored subscription
+     * @param purchaseInfo Subscription specifier
+     * @param isRestore Flag indicating whether it's a fresh purchase or restored subscription
      */
     fun subscriptionOwned(purchaseInfo: DataWrappers.PurchaseInfo, isRestore: Boolean) {
         findUiHandler().post {
@@ -67,10 +65,7 @@ abstract class IBillingService {
         }
     }
 
-    private fun subscriptionOwnedInternal(
-        purchaseInfo: DataWrappers.PurchaseInfo,
-        isRestore: Boolean
-    ) {
+    private fun subscriptionOwnedInternal(purchaseInfo: DataWrappers.PurchaseInfo, isRestore: Boolean) {
         for (subscriptionServiceListener in subscriptionServiceListeners) {
             if (isRestore) {
                 subscriptionServiceListener.onSubscriptionRestored(purchaseInfo)
@@ -88,24 +83,24 @@ abstract class IBillingService {
         }
     }
 
-    fun updatePrices(iapkeyPrices: Map<String, DataWrappers.SkuDetails>) {
+    fun updatePrices(iapKeyPrices: Map<String, List<DataWrappers.ProductDetails>>) {
         findUiHandler().post {
-            updatePricesInternal(iapkeyPrices)
+            updatePricesInternal(iapKeyPrices)
         }
     }
 
-    private fun updatePricesInternal(iapkeyPrices: Map<String, DataWrappers.SkuDetails>) {
+    private fun updatePricesInternal(iapKeyPrices: Map<String, List<DataWrappers.ProductDetails>>) {
         for (billingServiceListener in purchaseServiceListeners) {
-            billingServiceListener.onPricesUpdated(iapkeyPrices)
+            billingServiceListener.onPricesUpdated(iapKeyPrices)
         }
         for (billingServiceListener in subscriptionServiceListeners) {
-            billingServiceListener.onPricesUpdated(iapkeyPrices)
+            billingServiceListener.onPricesUpdated(iapKeyPrices)
         }
     }
 
     abstract fun init(key: String?)
-    abstract fun buy(activity: Activity, sku: String)
-    abstract fun subscribe(activity: Activity, sku: String)
+    abstract fun buy(activity: Activity, sku: String, obfuscatedAccountId: String?, obfuscatedProfileId: String?)
+    abstract fun subscribe(activity: Activity, sku: String, obfuscatedAccountId: String?, obfuscatedProfileId: String?)
     abstract fun unsubscribe(activity: Activity, sku: String)
     abstract fun enableDebugLogging(enable: Boolean)
 

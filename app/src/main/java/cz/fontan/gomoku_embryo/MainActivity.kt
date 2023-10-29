@@ -19,10 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import com.aemerse.iap.BillingClientConnectionListener
-import com.aemerse.iap.DataWrappers
-import com.aemerse.iap.IapConnector
-import com.aemerse.iap.PurchaseServiceListener
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -31,6 +27,10 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.limurse.iap.BillingClientConnectionListener
+import com.limurse.iap.DataWrappers
+import com.limurse.iap.IapConnector
+import com.limurse.iap.PurchaseServiceListener
 import cz.fontan.gomoku_embryo.databinding.ActivityMainBinding
 import cz.fontan.gomoku_embryo.game.BOARD_SIZE_MAX
 import cz.fontan.gomoku_embryo.model.MainViewModel
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         iapConnector.addPurchaseListener(object : PurchaseServiceListener {
-            override fun onPricesUpdated(iapKeyPrices: Map<String, DataWrappers.SkuDetails>) {
+            override fun onPricesUpdated(iapKeyPrices: Map<String, List<DataWrappers.ProductDetails>>) {
                 // list of available products will be received here, so you can update UI with prices if needed
             }
 
