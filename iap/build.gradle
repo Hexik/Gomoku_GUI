@@ -6,10 +6,9 @@ plugins {
 
 android {
     compileSdk 34
-    buildToolsVersion '33.0.2'
 
     defaultConfig {
-        minSdk 16
+        minSdk 21
         targetSdk 34
     }
 
@@ -34,6 +33,7 @@ android {
     }
     namespace 'com.aemerse.iap'
     ndkVersion '25.2.9519653'
+    buildToolsVersion = '34.0.0'
 }
 
 dependencies {
